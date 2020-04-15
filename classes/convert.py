@@ -1,10 +1,9 @@
+import pandas as pd
 import PIL as pl
 from tkinter import *
 from tkinter import messagebox, filedialog
 from functools import partial
 from docx2pdf import convert
-import pandas as pd
-from moviepy.editor import *
 
 class ConvertManager:
     def __init__(self, mainWindow):
