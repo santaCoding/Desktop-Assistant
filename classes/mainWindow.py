@@ -25,10 +25,10 @@ class MainWindow:
             self.frame_user, padx=10, pady=7, text = 'Сказать',
             highlightbackground='#0077ff', fg='#0c3b70', font=(self.font, 14, 'bold'),
             bg = '#0077ff')
-        self.INPUT = Entry(self.frame_user, width = 43, font=(self.font, 16), bg='#a8a8a8', fg='white')
+        self.INPUT = Entry(self.frame_user, width = 50, font=(self.font, 16), bg='#a8a8a8', fg='white')
         self.INPUT.bind('<Return>', bot.getResponse)
         self.BUTTON.bind('<Button-1>', bot.getResponse)
-        self.RIGHT_LABEL = Label(self.right_part, width = 50, height = 2, bg = self.BG_DARK, text = 'Скажите Боту что-то сделать', fg='#95a7f2', font = (self.font, 16, 'bold'), pady=260)
+        self.RIGHT_LABEL = Label(self.right_part, width = 65, height = 2, bg = self.BG_DARK, text = 'Скажите Боту что-то сделать', fg='#95a7f2', font = (self.font, 16, 'bold'), pady=260)
         self.INPUT.focus_set()
         self.top_frame.pack(side=TOP, fill=BOTH)
         self.left_part.pack(side=LEFT, fill=BOTH)

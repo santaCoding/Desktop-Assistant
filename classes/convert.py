@@ -30,7 +30,7 @@ class ConvertManager:
         self.BUTTON_TO_BMP.pack()
         self.BUTTON_DOCX_TO_PDF.pack()
         self.BUTTON_TXT_TO_CSV.pack()
-        self.BUTTON_EXIT.place(x = 160, y = 500)
+        self.BUTTON_EXIT.place(x = 175, y = 500)
 
         self.BUTTON_TO_PNG.bind('<Button-1>', partial(self.JPGandPNG, extension='.png', title='JPG в PNG', text = 'Для конвертирования в PNG,\nВы можете выбрать форматы JPEG\JPG\BMP.\nРасположение так же выборочно. Допустим множественныц выбор.'))
         self.BUTTON_TO_JPG.bind('<Button-1>', partial(self.JPGandPNG, extension='.jpeg', title='PNG в JPG', text = 'Для конвертирования в JPG,\nВы можете выбрать форматы PNG\BMP\JPEG.\nРасположение так же выборочно. Допустим множественныц выбор.'))
@@ -129,7 +129,7 @@ class ConvertManager:
         def convertToCSV(event):
             if self.files_paths:
                 for path in self.files_paths:
-                    try:
+                    
                         read_file = pd.read_csv(path)
                         export_file = filedialog.asksaveasfilename(defaultextension='.csv')
                         if export_file:
@@ -137,8 +137,7 @@ class ConvertManager:
                             self.LABEL_NOTE['text'] = 'Готово!'
                         else:
                             messagebox.showerror('Ошибка', 'Введите имя файла')
-                    except:
-                        messagebox.showerror('Ошибка', 'Неверный формат файла!')
+                    
             else:
                 messagebox.showerror('Ошибка', 'Не выбрано ни одного файла!')
             self.files_paths = None

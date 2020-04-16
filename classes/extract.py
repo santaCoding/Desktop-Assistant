@@ -7,7 +7,7 @@ from moviepy.editor import *
 
 class Extraction:
     def __init__(self, mainWindow):
-        self.title = 'Менеджер Излвечения'
+        self.title = 'Менеджер Извлечения'
         self.mainWindow = mainWindow
 
     def exit(self):
@@ -18,13 +18,13 @@ class Extraction:
         self.LABEL_NOTE.destroy()
         self.mainWindow.RIGHT_LABEL['text'] = 'Скажите Боту что-то сделать'
         self.mainWindow.RIGHT_LABEL['pady'] = 260
-        self.mainWindow.RIGHT_LABEL['font'] = ('Gilroy', 16, 'bold')
+        self.mainWindow.RIGHT_LABEL['font'] = ('Arial', 16, 'bold')
         self.mainWindow.LABEL['text'] = 'Да да?'
 
     def extract(self):
         self.mainWindow.RIGHT_LABEL['text'] = self.title
         self.mainWindow.RIGHT_LABEL['pady'] = 20
-        self.mainWindow.RIGHT_LABEL['font'] = ('Gilroy', 20, 'bold')
+        self.mainWindow.RIGHT_LABEL['font'] = ('Arial', 20, 'bold')
 
         self.LABEL_CHOICE = Label(self.mainWindow.right_part, text = 'Что вы хотите извлечь?', font = ('Gilroy', 15, 'bold'), bg='#5164b1', fg='#0e131a', pady=20)
         self.TXT_FROM_PDF = Button(self.mainWindow.right_part, text = 'Текст из PDF', width = 20, height = 2, highlightbackground='#0077ff', fg='#0c3b70', font=('Gilroy', 14))
@@ -34,7 +34,7 @@ class Extraction:
         self.LABEL_CHOICE.pack()
         self.TXT_FROM_PDF.pack()
         self.MP3_FROM_MP4.pack()
-        self.BUTTON_EXIT.place(x = 160, y = 500)
+        self.BUTTON_EXIT.place(x = 175, y = 500)
 
         self.TXT_FROM_PDF['command'] = self.TXTfromPDF
         self.MP3_FROM_MP4['command'] = self.MP3fromMP4
