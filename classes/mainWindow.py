@@ -9,26 +9,26 @@ class MainWindow:
         self.initUI(bot)
 
     def initUI(self, bot):
-        self.font = 'Arial'
-        self.BG_DARK = '#5164b1'
+        self.font = 'Trebuchet MS'
+        self.BG_DARK = 'white'
         self.BG_LIGHT = '#304559'
         self.logoImage = ImageTk.PhotoImage(file="bot.png")
         self.top_frame = Frame(self.app, width = 1100, height = 50, bg='#373737')
-        self.left_part = Frame(self.app, width = 550, height = 600, bg = 'white')
+        self.left_part = Frame(self.app, width = 550, height = 600, bg = '#e3e3e3')
         self.right_part = Frame(self.app, width = 550, height = 600, bg = self.BG_DARK)
-        self.frame_bot = Frame(self.left_part, width = 550, bg = 'white', height = 700)
-        self.frame_user = Frame(self.left_part, height = 300, width = 550, bg = 'white')
-        self.LOGO = Label(self.frame_bot, width = 70, height = 70, pady = 248, image = self.logoImage, bg = 'white')
-        self.LABEL = Label(self.frame_bot, width = 50, height = 23, text = random.choice(bot.cong),
-        fg = '#3b7597', font = (self.font, 16, 'bold'), bg='white', justify = LEFT)
+        self.frame_bot = Frame(self.left_part, width = 550, bg = '#e3e3e3', height = 700)
+        self.frame_user = Frame(self.left_part, height = 300, width = 550, bg = '#e3e3e3')
+        self.LOGO = Label(self.frame_bot, width = 70, height = 70, pady = 248, image = self.logoImage, bg = '#e3e3e3')
+        self.LABEL = Label(self.frame_bot, width = 45, height = 23, text = random.choice(bot.cong),
+        fg = '#486994', font = (self.font, 16, 'bold'), bg='#e3e3e3', justify = LEFT)
         self.BUTTON = Button(
             self.frame_user, padx=10, pady=7, text = 'Сказать',
-            highlightbackground='#0077ff', fg='#0c3b70', font=(self.font, 14, 'bold'),
+            highlightbackground='#0077ff', fg='#0c3b70', font=('Arial', 14, 'bold'),
             bg = '#0077ff')
-        self.INPUT = Entry(self.frame_user, width = 50, font=(self.font, 16), bg='#a8a8a8', fg='white')
+        self.INPUT = Entry(self.frame_user, width = 50, font=(self.font, 16), bg='#bfbfbf', fg='#292929')
         self.INPUT.bind('<Return>', bot.getResponse)
         self.BUTTON.bind('<Button-1>', bot.getResponse)
-        self.RIGHT_LABEL = Label(self.right_part, width = 65, height = 2, bg = self.BG_DARK, text = 'Скажите Боту что-то сделать', fg='#95a7f2', font = (self.font, 16, 'bold'), pady=260)
+        self.RIGHT_LABEL = Label(self.right_part, width = 65, height = 2, bg = self.BG_DARK, text = 'Скажите Боту что-то сделать', fg='#7e92ab', font = (self.font, 16, 'bold'), pady=260)
         self.INPUT.focus_set()
         self.top_frame.pack(side=TOP, fill=BOTH)
         self.left_part.pack(side=LEFT, fill=BOTH)
