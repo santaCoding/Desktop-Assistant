@@ -7,7 +7,7 @@ class ModuleWindow:
         self.initUI(app, adminStatus, content)
 
     def initUI(self, app, adminStatus, content):
-        self.moduleWindowTk.configure(background = '#5164b1')
+        self.moduleWindowTk.configure(background = '#e3e3e3')
         self.center()
         self.contentModuleWindow(adminStatus, content) #функция контента модульного окна
         self.MODULE_LABEL.pack()
@@ -37,12 +37,12 @@ class ModuleWindow:
                     self.flag = False
 
         self.MODULE_BUTTON = Button(self.moduleWindowTk, width = 15, text = content['textButton'], bg='#0077ff', highlightbackground='#0077ff', fg='#0c3b70', font=('Trebuchet MS', 14, 'bold'), pady = 7, padx = 10)
-        self.MODULE_INPUT = Entry(self.moduleWindowTk, width = 50, font=('Trebuchet MS', 16), bg='white')
+        self.MODULE_INPUT = Entry(self.moduleWindowTk, width = 50, font=('Trebuchet MS', 16), bg='#bfbfbf', fg='#292929')
         if content['show']:
             self.MODULE_INPUT['show'] = '*'
         self.MODULE_INPUT.bind('<Return>', eval(content['func']))
         self.MODULE_BUTTON.bind('<Button-1>', eval(content['func']))
-        self.MODULE_LABEL = Label(self.moduleWindowTk, width = 40, text = content['textLabel'], bg = '#5164b1', fg = 'white', font = ('Trebuchet MS', 15))
+        self.MODULE_LABEL = Label(self.moduleWindowTk, width = 40, text = content['textLabel'], bg = '#e3e3e3', fg = '#486994', font = ('Trebuchet MS', 15))
         
 
     def getValue(self):
