@@ -1,31 +1,13 @@
 from tkinter import *
 from time import sleep
 
-class Singleton:
-    def __init__(self, decorated, user, app, right_frame, mainWindow):
-        self._decorated = decorated
-
-    def instance(self, user, app, right_frame, mainWindow):
-        try:
-            return self._instance
-        except AttributeError:
-            self._instance = self._decorated()
-            return self._instance
-
-    def __call__(self):
-        raise TypeError('Singleton должен быть вызван через \'.instance()\'')
-
-    def __instancecheck__(self, inst):
-        return isinstance(inst, self._decorated)
-
-
 class AuthorizationManager:
     def __init__(self, user, app):
         self.title = 'Менеджер Авторизаций'
         self.owner = user
         self.items = [] #список ссылок на экземпляры пунктов
 
-    def showContent(self, right_frame):
+    def showContent(self, right_frame, mainWindow):
         if self.items:
             for item in self.items:
                 ITEM_FRAME = Frame(right_frame, width = 550, bg='#5164b1', padx = 150)
@@ -33,22 +15,23 @@ class AuthorizationManager:
                 LABEL_SITE = Label(ITEM_FRAME, text = f'Сайт: {item.site}')
                 LABEL_SITE.pack()
         else:
-            return 'Менеджер Авторизаций пуст!'
+            mainWindow.RIGHT_LABEL['text'] = 'Менеджер авторизаций пуст!'
+            return 'Упс!'
 
     #def clearFrame(self, right_frame, mainWindow):
         
 
-
     def addItem(self, right_frame, mainWindow) -> str:
-        #self.clearFrame(right_frame, mainWindow)
         mainWindow.RIGHT_LABEL['text'] = self.title
         mainWindow.RIGHT_LABEL['pady'] = 50
-        mainWindow.RIGHT_LABEL['font'] = ('Gilroy', 23, 'bold')
+        mainWindow.RIGHT_LABEL['font'] = ('Trebuchet MS', 20, 'bold')
         self.site = None
         self.login = None
         self.password = None
+
+        # проверка 
         def check() -> bool:
-            if self.site is not None and self.login is not None and self.password is not None:
+            if (self.site != '' and self.site is not None) and (self.login != '' and self.login is not None) and (self.password != '' and self.password is not None):
                 self.LABEL_LOGIN.destroy()
                 self.LABEL_SITE.destroy()
                 self.LABEL_PASSWORD.destroy()
@@ -66,45 +49,65 @@ class AuthorizationManager:
 
         def addSite(event):
             self.site = self.INPUT_SITE.get()
-            self.INPUT_SITE.destroy()
-            self.INPUT_SITE = None
-            self.LABEL_SITE['text'] = f'Сайт: {self.site}'
-            if not check():
-                if self.INPUT_LOGIN is not None:
-                    self.INPUT_LOGIN.focus_set()
-                else:
-                    self.INPUT_PASSWORD.focus_set()
+            if self.site != '':
+                self.INPUT_SITE.destroy()
+                self.INPUT_SITE = None
+                self.LABEL_SITE['text'] = f'Сайт: {self.site}'
+                if not check():
+                    if self.INPUT_LOGIN is not None:
+                        self.INPUT_LOGIN.focus_set()
+                    else:
+                        self.INPUT_PASSWORD.focus_set()
+            else:
+                self.WARNING['text'] = 'Вы не ввели сайт!'
+                self.WARNING['bg'] = '#b54141'
+                
 
         def addLogin(event):
             self.login = self.INPUT_LOGIN.get()
-            self.INPUT_LOGIN.destroy()
-            self.INPUT_LOGIN = None
-            self.LABEL_LOGIN['text'] = f'Логин: {self.login}'
-            if not check():
-                if self.INPUT_SITE is not None:
-                    self.INPUT_SITE.focus_set()
-                else:
-                    self.INPUT_PASSWORD.focus_set()
+            if self.login != '':
+                self.INPUT_LOGIN.destroy()
+                self.INPUT_LOGIN = None
+                self.LABEL_LOGIN['text'] = f'Логин: {self.login}'
+                if not check():
+                    if self.INPUT_SITE is not None:
+                        self.INPUT_SITE.focus_set()
+                    else:
+                        self.INPUT_PASSWORD.focus_set()
+            else:
+                self.WARNING['text'] = 'Вы не ввели логин!'
+                self.WARNING['bg'] = '#b54141'
+                
 
         def addPassword(event):
             self.password = self.INPUT_PASSWORD.get()
-            self.INPUT_PASSWORD.destroy()
-            self.INPUT_PASSWORD = None
-            self.LABEL_PASSWORD['text'] = f'Пароль: {self.password}'
-            if not check():
-                if self.INPUT_SITE is not None:
-                    self.INPUT_SITE.focus_set()
-                else:
-                    self.INPUT_LOGIN.focus_set()
+            if self.password != '':
+                self.INPUT_PASSWORD.destroy()
+                self.INPUT_PASSWORD = None
+                self.LABEL_PASSWORD['text'] = f'Пароль: {self.password}'
+                if not check():
+                    if self.INPUT_SITE is not None:
+                        self.INPUT_SITE.focus_set()
+                    else:
+                        self.INPUT_LOGIN.focus_set()
+            else:
+                self.WARNING['text'] = 'Вы не ввели пароль!'
+                self.WARNING['bg'] = '#b54141'
 
-        self.ITEM_FRAME = Frame(right_frame, width = 550, bg='#5164b1', padx = 150)
+        def delWarning(event):
+            self.WARNING['text'] = ''
+            self.WARNING['bg'] = 'white'
+
+        self.ITEM_FRAME = Frame(right_frame, width = 550, bg='white', padx = 150)
         self.ITEM_FRAME.pack()
-        self.INPUT_SITE = Entry(self.ITEM_FRAME, bg = 'white', fg = 'black', width = 20, font = ('Gilroy', 16))
-        self.INPUT_LOGIN = Entry(self.ITEM_FRAME, bg = 'white', fg = 'black', width = 20, font = ('Gilroy', 16))
-        self.INPUT_PASSWORD = Entry(self.ITEM_FRAME, bg = 'white', fg = 'black', width = 20, font = ('Gilroy', 16))
-        self.LABEL_SITE = Label(self.ITEM_FRAME, text = 'Введите сайт:', fg = 'white', bg = '#5164b1', font = ('Gilroy', 16, 'bold'))
-        self.LABEL_LOGIN = Label(self.ITEM_FRAME, text = 'Введите логин:', fg = 'white', bg = '#5164b1', font = ('Gilroy', 16, 'bold'))
-        self.LABEL_PASSWORD = Label(self.ITEM_FRAME, text = 'Введите пароль:', fg = 'white', bg = '#5164b1', font = ('Gilroy', 16, 'bold'))
+        self.INPUT_SITE = Entry(self.ITEM_FRAME, bg = 'white', fg = 'black', width = 30, font = ('Trebuchet MS', 16))
+        self.INPUT_LOGIN = Entry(self.ITEM_FRAME, bg = 'white', fg = 'black', width = 30, font = ('Trebuchet MS', 16))
+        self.INPUT_PASSWORD = Entry(self.ITEM_FRAME, bg = 'white', fg = 'black', width = 30, font = ('Trebuchet MS', 16))
+        self.LABEL_SITE = Label(self.ITEM_FRAME, text = 'Введите сайт:', fg = '#333b4f', bg = 'white', font = ('Trebuchet MS', 14))
+        self.LABEL_LOGIN = Label(self.ITEM_FRAME, text = 'Введите логин:', fg = '#333b4f', bg = 'white', font = ('Trebuchet MS', 14))
+        self.LABEL_PASSWORD = Label(self.ITEM_FRAME, text = 'Введите пароль:', fg = '#333b4f', bg = 'white', font = ('Trebuchet MS', 14))
+        self.WARNING = Label(right_frame, text='', width=30, height = 2, font=('Trebuchet MS', 14), bg='white', fg='white')
+        self.WARNING.place(x=300, y=550)
         self.LABEL_SITE.pack()
         self.INPUT_SITE.pack()
         self.INPUT_SITE.focus_set()
@@ -116,6 +119,7 @@ class AuthorizationManager:
         self.INPUT_SITE.bind('<Return>', addSite)
         self.INPUT_LOGIN.bind('<Return>', addLogin)
         self.INPUT_PASSWORD.bind('<Return>', addPassword)
+        self.WARNING.bind('<Button-1>', delWarning)
 
         return 'Записываю новый пункт...'
 
