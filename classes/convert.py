@@ -12,25 +12,26 @@ class ConvertManager:
         self.files_paths = None
 
     def convert(self):
+        self.font = 'Trebuchet MS'
         self.mainWindow.RIGHT_LABEL['text'] = 'Конвертирование'
         self.mainWindow.RIGHT_LABEL['pady'] = 25
-        self.mainWindow.RIGHT_LABEL['font'] = ('Gilroy', 25, 'bold')
+        self.mainWindow.RIGHT_LABEL['font'] = (self.font, 25, 'bold')
 
-        self.LABEL_CHOICE = Label(self.mainWindow.right_part, text = 'Выберите тип конвертирования:', font = ('Gilroy', 15, 'bold'), bg='#5164b1', fg='#0e131a', pady=20)
+        self.LABEL_CHOICE = Label(self.mainWindow.right_part, text = 'Выберите тип конвертирования:', font = (self.font, 15, 'bold'), bg='white', fg='#0e131a', pady=20)
         self.LABEL_CHOICE.pack()
-        self.BUTTON_TO_PNG = Button(self.mainWindow.right_part, text = 'JPG в PNG', width = 20, height = 2, highlightbackground='#0077ff', fg='#0c3b70', font=('Gilroy', 14))
-        self.BUTTON_TO_JPG = Button(self.mainWindow.right_part, text = 'PNG в JPG', width = 20, height = 2, highlightbackground='#0077ff', fg='#0c3b70', font=('Gilroy', 14))
-        self.BUTTON_DOCX_TO_PDF = Button(self.mainWindow.right_part, text = 'DOCX в PDF', width = 20, height = 2, highlightbackground='#0077ff', fg='#0c3b70', font=('Gilroy', 14))
-        self.BUTTON_TXT_TO_CSV = Button(self.mainWindow.right_part, text = 'TXT в CSV', width = 20, height = 2, highlightbackground='#0077ff', fg='#0c3b70', font=('Gilroy', 14))
-        self.BUTTON_TO_BMP = Button(self.mainWindow.right_part, text = 'JPG в BMP', width = 20, height = 2, highlightbackground='#0077ff', fg='#0c3b70', font=('Gilroy', 14))
-        self.BUTTON_EXIT = Button(self.mainWindow.right_part, text = 'Выход', width = 20, height = 2, highlightbackground='#0077ff', fg='#0c3b70', font=('Gilroy', 14, 'bold'))
-        self.LABEL_NOTE = Label(self.mainWindow.right_part, text = '', font = ('Gilroy', 14), bg='#5164b1', fg='#8ea2d4', pady=20)
+        self.BUTTON_TO_PNG = Button(self.mainWindow.right_part, text = 'JPG в PNG', width = 20, height = 2, highlightbackground='#0077ff', fg='#0c3b70', font=(self.font, 14))
+        self.BUTTON_TO_JPG = Button(self.mainWindow.right_part, text = 'PNG в JPG', width = 20, height = 2, highlightbackground='#0077ff', fg='#0c3b70', font=(self.font, 14))
+        self.BUTTON_DOCX_TO_PDF = Button(self.mainWindow.right_part, text = 'DOCX в PDF', width = 20, height = 2, highlightbackground='#0077ff', fg='#0c3b70', font=(self.font, 14))
+        self.BUTTON_TXT_TO_CSV = Button(self.mainWindow.right_part, text = 'TXT в CSV', width = 20, height = 2, highlightbackground='#0077ff', fg='#0c3b70', font=(self.font, 14))
+        self.BUTTON_TO_BMP = Button(self.mainWindow.right_part, text = 'JPG в BMP', width = 20, height = 2, highlightbackground='#0077ff', fg='#0c3b70', font=(self.font, 14))
+        self.BUTTON_EXIT = Button(self.mainWindow.right_part, text = 'Выход', width = 20, height = 2, highlightbackground='#0077ff', fg='#0c3b70', font=(self.font, 14, 'bold'))
+        self.LABEL_NOTE = Label(self.mainWindow.right_part, text = '', font = (self.font, 14), bg='white', fg='#8ea2d4', pady=20)
         self.BUTTON_TO_PNG.pack()
         self.BUTTON_TO_JPG.pack()
         self.BUTTON_TO_BMP.pack()
         self.BUTTON_DOCX_TO_PDF.pack()
         self.BUTTON_TXT_TO_CSV.pack()
-        self.BUTTON_EXIT.place(x = 175, y = 500)
+        self.BUTTON_EXIT.place(x = 200, y = 500)
 
         self.BUTTON_TO_PNG.bind('<Button-1>', partial(self.JPGandPNG, extension='.png', title='JPG в PNG', text = 'Для конвертирования в PNG,\nВы можете выбрать форматы JPEG\JPG\BMP.\nРасположение так же выборочно. Допустим множественныц выбор.'))
         self.BUTTON_TO_JPG.bind('<Button-1>', partial(self.JPGandPNG, extension='.jpeg', title='PNG в JPG', text = 'Для конвертирования в JPG,\nВы можете выбрать форматы PNG\BMP\JPEG.\nРасположение так же выборочно. Допустим множественныц выбор.'))
@@ -51,7 +52,7 @@ class ConvertManager:
         self.LABEL_CHOICE.destroy()
         self.mainWindow.RIGHT_LABEL['text'] = 'Скажите Боту что-то сделать'
         self.mainWindow.RIGHT_LABEL['pady'] = 260
-        self.mainWindow.RIGHT_LABEL['font'] = ('Gilroy', 16, 'bold')
+        self.mainWindow.RIGHT_LABEL['font'] = (self.font, 16, 'bold')
         self.BUTTON_EXIT.destroy()
         self.mainWindow.LABEL['text'] = 'Да да?'
 
@@ -129,7 +130,6 @@ class ConvertManager:
         def convertToCSV(event):
             if self.files_paths:
                 for path in self.files_paths:
-                    
                         read_file = pd.read_csv(path)
                         export_file = filedialog.asksaveasfilename(defaultextension='.csv')
                         if export_file:

@@ -12,7 +12,7 @@ class MainWindow:
         self.font = 'Trebuchet MS'
         self.BG_LIGHT = 'white'
         self.logoImage = ImageTk.PhotoImage(file="bot.png")
-        self.top_frame = Frame(self.app, width = 1100, height = 50, bg='#373737')
+        self.top_frame = Frame(self.app, width = 1100, height = 50, bg='#4a4a4a')
         self.left_part = Frame(self.app, width = 550, height = 600, bg = '#e3e3e3')
         self.right_part = Frame(self.app, width = 550, height = 600, bg = self.BG_LIGHT)
         self.frame_bot = Frame(self.left_part, width = 550, bg = '#e3e3e3', height = 700)
