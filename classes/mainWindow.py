@@ -18,7 +18,7 @@ class MainWindow:
         self.frame_bot = Frame(self.left_part, width = 550, bg = '#e3e3e3', height = 700)
         self.frame_user = Frame(self.left_part, height = 300, width = 550, bg = '#e3e3e3')
         self.LOGO = Label(self.frame_bot, width = 70, height = 70, pady = 248, image = self.logoImage, bg = '#e3e3e3')
-        self.LABEL = Label(self.frame_bot, width = 45, height = 23, text = random.choice(bot.cong),
+        self.LABEL = Label(self.frame_bot, width = 40, height = 23, text = random.choice(bot.cong),
         fg = '#486994', font = (self.font, 16, 'bold'), bg='#e3e3e3', justify = LEFT)
         self.BUTTON = Button(
             self.frame_user, padx=10, pady=7, text = 'Сказать',
