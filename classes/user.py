@@ -33,7 +33,7 @@ class User:
 
         mainWindow.RIGHT_LABEL['text'] = 'Введите имя: '
         INPUT = mainWindow.setFrameInput()
-        INPUT.place(x=100, y=300)
+        INPUT.place(x=125, y=300)
         INPUT.bind('<Return>', set)
         return 'Жду ввода имени...'
     
