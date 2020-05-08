@@ -20,14 +20,6 @@ class AuthorizationManager:
             return 'Упс!'
 
     def exit(self, mainWindow, event):
-        if self.INPUT_LOGIN is not None:
-            self.INPUT_LOGIN.destroy()
-        self.INPUT_PASSWORD.destroy()
-        self.INPUT_SITE.destroy()
-        self.LABEL_LOGIN.destroy()
-        self.LABEL_PASSWORD.destroy()
-        self.LABEL_SITE.destroy()
-        self.WARNING.destroy()
         self.ITEM_FRAME.destroy()
         self.EXIT.destroy()
         mainWindow.RIGHT_LABEL['text'] = 'Скажите Боту что-то сделать'
@@ -50,7 +42,6 @@ class AuthorizationManager:
                 self.LABEL_LOGIN.destroy()
                 self.LABEL_SITE.destroy()
                 self.LABEL_PASSWORD.destroy()
-                self.ITEM_FRAME.destroy()
                 mainWindow.RIGHT_LABEL['text'] = 'Готово'
                 mainWindow.RIGHT_LABEL['pady'] = 260
                 item = AuthorizationItem(self.site, self.login, self.password)
