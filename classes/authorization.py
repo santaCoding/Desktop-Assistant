@@ -1,5 +1,4 @@
 from tkinter import *
-from time import sleep
 from functools import partial
 
 class AuthorizationManager:
