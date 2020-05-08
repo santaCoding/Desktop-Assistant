@@ -20,7 +20,8 @@ class AuthorizationManager:
             return 'Упс!'
 
     def exit(self, mainWindow, event):
-        self.INPUT_LOGIN.destroy()
+        if self.INPUT_LOGIN is not None:
+            self.INPUT_LOGIN.destroy()
         self.INPUT_PASSWORD.destroy()
         self.INPUT_SITE.destroy()
         self.LABEL_LOGIN.destroy()
