@@ -141,23 +141,22 @@ class AuthorizationManager:
 
 #-------------------------------------------------------------------------------------#
 
+class ItemDescriptor:
+    def __get__(self, instance, owner):
+        return instance.__dict__[self.name]
 
+    def __set__(self, instance, value):
+        instance.__dict__[self.name] = value
+
+    def __set_name__(self, owner, name):
+        self.name = name
+        
+#-------------------------------------------------------------------------------------#
 
 class AuthorizationItem:
+    site, login, password = ItemDescriptor(), ItemDescriptor(), ItemDescriptor()
+    
     def __init__(self, site, login, password):
-        self._site = site
-        self._login = login
-        self._password = password
-    
-    @property
-    def site(self):
-        return self._site
-
-    @property
-    def login(self):
-        return self._login
-
-    @property
-    def password(self):
-        return self._password
-    
+        self.site = site
+        self.login = login
+        self.password = password
