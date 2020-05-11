@@ -10,15 +10,18 @@ class AuthorizationManager:
     def showContent(self, right_frame, mainWindow):
         if self.items:
             for item in self.items:
-                ITEM_FRAME = Frame(right_frame, width = 550, bg='#5164b1', padx = 150)
-                ITEM_FRAME.pack()
-                LABEL_SITE = Label(ITEM_FRAME, text = f'Сайт: {item.site}')
-                LABEL_SITE.pack()
+                mainWindow.RIGHT_LABEL['text'] = self.title
+                mainWindow.RIGHT_LABEL['pady'] = 50
+                LABEL_SITE = Label(right_frame, bg='#ffdf5a', width=50, text = f'Сайт: {item.site}\nЛогин: {item.login}\nПароль: {item.password}', fg='white', font = ('Trebuchet MS', 16, 'bold'))
+                LABEL_SITE.pack(pady = 5)
+            return 'М.А.'
         else:
             mainWindow.RIGHT_LABEL['text'] = 'Менеджер авторизаций пуст!'
             return 'Упс!'
 
     def exit(self, mainWindow, event):
+        if self.WARNING is not None:
+            self.WARNING.destroy()
         self.ITEM_FRAME.destroy()
         self.EXIT.destroy()
         mainWindow.RIGHT_LABEL['text'] = 'Скажите Боту что-то сделать'
@@ -112,7 +115,7 @@ class AuthorizationManager:
         self.LABEL_LOGIN = Label(self.ITEM_FRAME, text = 'Введите логин:', fg = '#333b4f', bg = 'white', font = ('Trebuchet MS', 14))
         self.LABEL_PASSWORD = Label(self.ITEM_FRAME, text = 'Введите пароль:', fg = '#333b4f', bg = 'white', font = ('Trebuchet MS', 14))
         self.WARNING = Label(right_frame, text='', width=30, height = 2, font=('Trebuchet MS', 14), bg='white', fg='white')
-        self.EXIT =Button(right_frame, text='Выход', width=20, height = 2, font=('Trebuchet MS', 14), highlightbackground='#0077ff', fg='white')
+        self.EXIT = Button(right_frame, text='Выход', width=20, height = 2, font=('Trebuchet MS', 14), highlightbackground='#0077ff', fg='white')
         self.WARNING.place(x=300, y=550)
         self.EXIT.place(x= 200, y=500)
         self.LABEL_SITE.pack()
