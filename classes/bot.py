@@ -59,7 +59,6 @@ class Assistant:
             'новая_авторизация авторизация занести_авторизацию занести_логин_и_пароль запомнить_авторизацию новый_вход новая_авторизация \new' : 'self.autho.addItem(self.mainWindow.right_part, self.mainWindow)',
             'менеджер_авторизаций покажи_авторизации покажи_логины покажи_пароли логины пароли \m' : 'self.autho.showContent(self.mainWindow.right_part, self.mainWindow)',
             'какой_логин какой_пароль какая_авторизация какой_пункт' : 'self.autho.getItem()',
-            'удали_авторизацию удали_вход удалить_авторизацию удали_пункт' : 'self.autho.delItem()',
             'очистить_менеджер удалить_пункты удалить_все_пункты очистить_пункты' : 'self.autho.clearManager()',
             'конверт' : 'self.convert.convert()',
             'извлечь извлечение' : 'self.extract.extract()'

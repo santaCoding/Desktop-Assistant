@@ -1,5 +1,6 @@
 from tkinter import *
 from functools import partial
+from tkinter import messagebox, filedialog
 
 class AuthorizationManager:
     def __init__(self, user, app):
@@ -9,11 +10,14 @@ class AuthorizationManager:
 
     def showContent(self, right_frame, mainWindow):
         if self.items:
-            for item in self.items:
+            for item in range(len(self.items)):
                 mainWindow.RIGHT_LABEL['text'] = self.title
                 mainWindow.RIGHT_LABEL['pady'] = 50
-                LABEL_SITE = Label(right_frame, bg='#ffdf5a', width=50, text = f'Сайт: {item.site}\nЛогин: {item.login}\nПароль: {item.password}', fg='white', font = ('Trebuchet MS', 16, 'bold'))
-                LABEL_SITE.pack(pady = 5)
+                self.ITEM_FRAME = Frame(right_frame, width=50, bg='#ffdf5a')
+                self.ITEM_FRAME.pack(pady = 5)
+                LABEL_SITE = Label(self.ITEM_FRAME, bg='#ffdf5a', width=50, text = f'Сайт: {self.items[item].site}\nЛогин: {self.items[item].login}\nПароль: {self.items[item].password}', fg='white', font = ('Trebuchet MS', 16, 'bold'))
+                LABEL_SITE.bind('<Button-1>', partial(self.delItem, right_frame, mainWindow, self.items[item].site))
+                LABEL_SITE.pack()
             return 'М.А.'
         else:
             mainWindow.RIGHT_LABEL['text'] = 'Менеджер авторизаций пуст!'
@@ -134,6 +138,10 @@ class AuthorizationManager:
 
         return 'Записываю новый пункт...'
 
+    def delItem(self, right_frame, mainWindow, site, event):
+        answer = messagebox.askyesno('Удаление', f'Удалить вход для {site}?')
+        if answer == True:
+            print('удалено')
 
         
         
