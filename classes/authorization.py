@@ -9,7 +9,7 @@ class AuthorizationManager:
         self.items = [] #список ссылок на экземпляры пунктов
 
     def showContent(self, right_frame, mainWindow):
-        self.ITEMS_FRAME = Frame(right_frame, width=50, bg='#ffdf5a')
+        self.ITEMS_FRAME = Frame(right_frame, width=50, bg='white')
         self.ITEMS_FRAME.pack()
         if self.items:
             for item in range(len(self.items)):
@@ -18,14 +18,18 @@ class AuthorizationManager:
                 self.ITEM_FRAME = Frame(self.ITEMS_FRAME, width=50, bg='#ffdf5a')
                 self.ITEM_FRAME.pack(pady = 5)
                 LABEL_SITE = Label(self.ITEM_FRAME, bg='#ffdf5a', width=50, text = f'Сайт: {self.items[item].site}\nЛогин: {self.items[item].login}\nПароль: {self.items[item].password}', fg='white', font = ('Trebuchet MS', 16, 'bold'))
-                LABEL_SITE.bind('<Button-1>', partial(self.delItem, right_frame, mainWindow, self.items[item].site))
+                LABEL_SITE.bind('<Button-1>', partial(self.delItem, right_frame, mainWindow, self.items[item]))
                 LABEL_SITE.pack()
+            self.LABEL_PROMPT = Label(right_frame, bg='white', text=f'Чтобы удалить вход, нажмите на него', fg='#8ea2d4', font = ('Trebuchet MS', 14, 'bold'))
+            self.LABEL_PROMPT.place(x=150, y=550)
             return 'М.А.'
         else:
             mainWindow.RIGHT_LABEL['pady'] = 260
             mainWindow.RIGHT_LABEL['text'] = 'Менеджер авторизаций пуст!'
             if self.ITEMS_FRAME is not None or self.ITEMS_FRAME == True:
                 self.ITEMS_FRAME.destroy()
+            if self.LABEL_PROMPT is not None or self.LABEL_PROMPT == True:
+                self.LABEL_PROMPT.destroy()
             return 'Упс!'
 
     def exit(self, mainWindow, event):
@@ -59,7 +63,6 @@ class AuthorizationManager:
                 self.items.append(item)
                 mainWindow.LABEL['text'] = f'Пункт авторизации\nдля сайта {self.site} сохранен!'
                 mainWindow.INPUT.focus_set()
-
                 return True
             else:
                 return False
@@ -143,16 +146,17 @@ class AuthorizationManager:
 
         return 'Записываю новый пункт...'
 
-    def delItem(self, right_frame, mainWindow, site, event):
-        answer = messagebox.askyesno('Удаление', f'Удалить вход для {site}?')
+    def delItem(self, right_frame, mainWindow, adress, event):
+        answer = messagebox.askyesno('Удаление', f'Удалить вход для {adress.site}?')
         if answer == True:
+            print(self.items)
             for item in range(len(self.items)):
-                if self.items[item].site == site:
+                if self.items[item] == adress:
+                    item_list = self.items[item]
                     del self.items[item]
                     index = item
                     break
-            print(self.items)
-            messagebox.showinfo('Удаление', f'Вход для {site} удален!')
+            messagebox.showinfo('Удаление', f'Вход для {adress.site} удален!')
             self.ITEMS_FRAME.destroy()
             self.showContent(right_frame, mainWindow)
 
