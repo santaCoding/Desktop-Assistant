@@ -3,39 +3,45 @@ from functools import partial
 from tkinter import messagebox, filedialog
 
 class AuthorizationManager:
-    def __init__(self, user, app):
+    def __init__(self, user):
         self.title = 'Менеджер Авторизаций'
         self.owner = user
         self.items = [] #список ссылок на экземпляры пунктов
 
     def showContent(self, right_frame, mainWindow):
-        self.ITEMS_FRAME = Frame(right_frame, width=50, bg='white')
-        self.ITEMS_FRAME.pack()
-        if self.items:
+        mainWindow.RIGHT_LABEL['text'] = self.title
+        mainWindow.RIGHT_LABEL['pady'] = 40
+        def show_data():
             for item in range(len(self.items)):
-                mainWindow.RIGHT_LABEL['text'] = self.title
-                mainWindow.RIGHT_LABEL['pady'] = 50
-                self.ITEM_FRAME = Frame(self.ITEMS_FRAME, width=50, bg='#ffdf5a')
-                self.ITEM_FRAME.pack(pady = 5)
-                LABEL_SITE = Label(self.ITEM_FRAME, bg='#ffdf5a', width=50, text = f'Сайт: {self.items[item].site}\nЛогин: {self.items[item].login}\nПароль: {self.items[item].password}', fg='white', font = ('Trebuchet MS', 16, 'bold'))
-                LABEL_SITE.bind('<Button-1>', partial(self.delItem, right_frame, mainWindow, self.items[item]))
-                LABEL_SITE.pack()
-            self.LABEL_PROMPT = Label(right_frame, bg='white', text=f'Чтобы удалить вход, нажмите на него', fg='#8ea2d4', font = ('Trebuchet MS', 14, 'bold'))
-            self.LABEL_PROMPT.place(x=150, y=550)
-            return 'М.А.'
-        else:
-            mainWindow.RIGHT_LABEL['pady'] = 260
-            mainWindow.RIGHT_LABEL['text'] = 'Менеджер авторизаций пуст!'
-            if self.ITEMS_FRAME is not None or self.ITEMS_FRAME == True:
-                self.ITEMS_FRAME.destroy()
-            if self.LABEL_PROMPT is not None or self.LABEL_PROMPT == True:
-                self.LABEL_PROMPT.destroy()
-            return 'Упс!'
+                self.LABEL_SITE = Label(frame, bg='#ffdf5a', width=50, text = f'Сайт: {self.items[item].site}\nЛогин: {self.items[item].login}\nПароль: {self.items[item].password}', fg='white', font = ('Trebuchet MS', 16, 'bold'))
+                self.LABEL_SITE.bind('<Button-1>', partial(self.delItem, right_frame, mainWindow, self.items[item]))
+                self.LABEL_SITE.pack(pady=5)
+
+        def myfunction(event):
+            self.CANVAS.configure(scrollregion = self.CANVAS.bbox("all"), width=510, height=400)
+
+        self.ITEMS_FRAME=Frame(right_frame, relief=GROOVE, width=200, bd=1)
+        self.ITEMS_FRAME.pack()
+
+        self.CANVAS = Canvas(self.ITEMS_FRAME)
+        frame = Frame(self.CANVAS)
+        myscrollbar = Scrollbar(self.ITEMS_FRAME, orient="vertical", command=self.CANVAS.yview)
+        self.CANVAS.configure(yscrollcommand=myscrollbar.set)
+
+        myscrollbar.pack(side="right", fill="y")
+        self.CANVAS.pack(side="left")
+        self.CANVAS.create_window((0,0), window=frame, anchor='nw')
+        frame.bind("<Configure>", myfunction)
+        show_data()
+        self.LABEL_PROMPT = Label(right_frame, bg='white', text=f'Чтобы удалить вход, нажмите на него', fg='#8ea2d4', font = ('Trebuchet MS', 14, 'bold'))
+        self.LABEL_PROMPT.place(x=150, y=550)
+        return 'М.А.'
 
     def exit(self, mainWindow, event):
         if self.WARNING is not None:
             self.WARNING.destroy()
-        self.ITEM_FRAME.destroy()
+        if self.ITEMS_FRAME is not None:
+            self.ITEMS_FRAME.destroy()
         self.EXIT.destroy()
         mainWindow.RIGHT_LABEL['text'] = 'Скажите Боту что-то сделать'
         mainWindow.RIGHT_LABEL['pady'] = 260
@@ -146,17 +152,15 @@ class AuthorizationManager:
 
         return 'Записываю новый пункт...'
 
-    def delItem(self, right_frame, mainWindow, adress, event):
-        answer = messagebox.askyesno('Удаление', f'Удалить вход для {adress.site}?')
+    def delItem(self, right_frame, mainWindow, item_adress, event):
+        answer = messagebox.askyesno('Удаление', f'Удалить вход для {item_adress.site}?')
         if answer == True:
-            print(self.items)
             for item in range(len(self.items)):
-                if self.items[item] == adress:
-                    item_list = self.items[item]
+                if self.items[item] == item_adress:
                     del self.items[item]
                     index = item
                     break
-            messagebox.showinfo('Удаление', f'Вход для {adress.site} удален!')
+            messagebox.showinfo('Удаление', f'Вход для {item_adress.site} удален!')
             self.ITEMS_FRAME.destroy()
             self.showContent(right_frame, mainWindow)
 

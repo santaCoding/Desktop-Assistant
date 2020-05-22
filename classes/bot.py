@@ -9,7 +9,7 @@ class Assistant:
         self.cong = ['Здравствуй!', 'Здарова', 'Привет!', 'Здрасте здрасте)']
         self.mainWindow = mainWindow.MainWindow(self.app, self)
         self.user = user.User() # экземпляр пользователя
-        self.autho = authorization.AuthorizationManager(self.user, self.app)
+        self.autho = authorization.AuthorizationManager(self.user)
         self.convert = convert.ConvertManager(self.mainWindow)
         self.extract = extract.Extraction(self.mainWindow)
         self.name = 'Бот Alex'
