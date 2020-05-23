@@ -11,37 +11,61 @@ class AuthorizationManager:
     def showContent(self, right_frame, mainWindow):
         mainWindow.RIGHT_LABEL['text'] = self.title
         mainWindow.RIGHT_LABEL['pady'] = 40
-        def show_data():
-            for item in range(len(self.items)):
-                self.LABEL_SITE = Label(frame, bg='#ffdf5a', width=50, text = f'Сайт: {self.items[item].site}\nЛогин: {self.items[item].login}\nПароль: {self.items[item].password}', fg='white', font = ('Trebuchet MS', 16, 'bold'))
-                self.LABEL_SITE.bind('<Button-1>', partial(self.delItem, right_frame, mainWindow, self.items[item]))
-                self.LABEL_SITE.pack(pady=5)
+        if self.items:
+            self.ITEMS_FRAME=Frame(right_frame,relief=GROOVE,width=200,bd=1)
+            def data():
+                for item in range(len(self.items)):
+                    self.LABEL_SITE = Label(self.MAIN_FRAME, bg='#ffdf5a', width=50, text = f'Сайт: {self.items[item].site}\nЛогин: {self.items[item].login}\nПароль: {self.items[item].password}', fg='white', font = ('Trebuchet MS', 16, 'bold'))
+                    self.LABEL_SITE.bind('<Button-1>', partial(self.delItem, right_frame, mainWindow, self.items[item], self.ITEMS_FRAME))
+                    self.LABEL_SITE.pack(pady=5)
 
-        def myfunction(event):
-            self.CANVAS.configure(scrollregion = self.CANVAS.bbox("all"), width=510, height=400)
+            def myfunction(event):
+                self.CANVAS.configure(scrollregion=self.CANVAS.bbox("all"),width=510, height=400)
 
-        self.ITEMS_FRAME=Frame(right_frame, relief=GROOVE, width=200, bd=1)
-        self.ITEMS_FRAME.pack()
+            self.ITEMS_FRAME.pack()
+            self.CANVAS=Canvas(self.ITEMS_FRAME)
+            self.MAIN_FRAME=Frame(self.CANVAS)
+            self.SCROLLBAR=Scrollbar(self.ITEMS_FRAME,orient="vertical",command=self.CANVAS.yview)
+            self.CANVAS.configure(yscrollcommand=self.SCROLLBAR.set)
 
-        self.CANVAS = Canvas(self.ITEMS_FRAME)
-        frame = Frame(self.CANVAS)
-        myscrollbar = Scrollbar(self.ITEMS_FRAME, orient="vertical", command=self.CANVAS.yview)
-        self.CANVAS.configure(yscrollcommand=myscrollbar.set)
-
-        myscrollbar.pack(side="right", fill="y")
-        self.CANVAS.pack(side="left")
-        self.CANVAS.create_window((0,0), window=frame, anchor='nw')
-        frame.bind("<Configure>", myfunction)
-        show_data()
-        self.LABEL_PROMPT = Label(right_frame, bg='white', text=f'Чтобы удалить вход, нажмите на него', fg='#8ea2d4', font = ('Trebuchet MS', 14, 'bold'))
-        self.LABEL_PROMPT.place(x=150, y=550)
-        return 'М.А.'
+            self.SCROLLBAR.pack(side="right",fill="y")
+            self.CANVAS.pack(side="left")
+            self.CANVAS.create_window((0,0),window=self.MAIN_FRAME,anchor='nw')
+            self.MAIN_FRAME.bind("<Configure>",myfunction)
+            data()
+            self.LABEL_PROMPT = Label(right_frame, bg='white', text=f'Чтобы удалить вход, нажмите на него', fg='#8ea2d4', font = ('Trebuchet MS', 14, 'bold'))
+            self.LABEL_PROMPT.place(x=150, y=550)
+            self.EXIT = Button(right_frame, text='Выход', width=20, height = 2, font=('Trebuchet MS', 14), highlightbackground='#0077ff', fg='white')
+            self.EXIT.bind('<Button-1>', partial(self.exit, mainWindow))
+            self.EXIT.pack()
+            return 'М.А.'
+        else:
+            mainWindow.RIGHT_LABEL['pady'] = 260
+            mainWindow.RIGHT_LABEL['text'] = 'Менеджер авторизаций пуст!'
+            try:
+                self.LABEL_PROMPT.destroy()
+            except AttributeError:
+                pass
+            try:
+                self.ITEMS_FRAME.destroy()
+            except:
+                pass
+            return 'Упс!'
 
     def exit(self, mainWindow, event):
-        if self.WARNING is not None:
+        try:
             self.WARNING.destroy()
-        if self.ITEMS_FRAME is not None:
+        except:
+            pass
+        try:
             self.ITEMS_FRAME.destroy()
+        except:
+            pass
+        try:
+            self.LABEL_PROMPT.destroy()
+        except:
+            pass
+        self.ITEM_FRAME.destroy()
         self.EXIT.destroy()
         mainWindow.RIGHT_LABEL['text'] = 'Скажите Боту что-то сделать'
         mainWindow.RIGHT_LABEL['pady'] = 260
@@ -152,7 +176,7 @@ class AuthorizationManager:
 
         return 'Записываю новый пункт...'
 
-    def delItem(self, right_frame, mainWindow, item_adress, event):
+    def delItem(self, right_frame, mainWindow, item_adress, ITEMS_FRAME, event):
         answer = messagebox.askyesno('Удаление', f'Удалить вход для {item_adress.site}?')
         if answer == True:
             for item in range(len(self.items)):
@@ -161,7 +185,7 @@ class AuthorizationManager:
                     index = item
                     break
             messagebox.showinfo('Удаление', f'Вход для {item_adress.site} удален!')
-            self.ITEMS_FRAME.destroy()
+            ITEMS_FRAME.destroy()
             self.showContent(right_frame, mainWindow)
 
         
