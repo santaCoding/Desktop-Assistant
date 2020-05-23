@@ -34,10 +34,10 @@ class AuthorizationManager:
             self.MAIN_FRAME.bind("<Configure>",myfunction)
             data()
             self.LABEL_PROMPT = Label(right_frame, bg='white', text=f'Чтобы удалить вход, нажмите на него', fg='#8ea2d4', font = ('Trebuchet MS', 14, 'bold'))
-            self.LABEL_PROMPT.place(x=150, y=550)
-            self.EXIT = Button(right_frame, text='Выход', width=20, height = 2, font=('Trebuchet MS', 14), highlightbackground='#0077ff', fg='white')
+            self.LABEL_PROMPT.place(x=50, y=555)
+            self.EXIT = Button(right_frame, text='Выход', font=('Trebuchet MS', 14), highlightbackground='#3b6ecc', highlightthickness=30, fg='white')
             self.EXIT.bind('<Button-1>', partial(self.exit, mainWindow))
-            self.EXIT.pack()
+            self.EXIT.place(x= 400, y=545, width = 90, height = 40)
             return 'М.А.'
         else:
             mainWindow.RIGHT_LABEL['pady'] = 260
@@ -48,6 +48,10 @@ class AuthorizationManager:
                 pass
             try:
                 self.ITEMS_FRAME.destroy()
+            except:
+                pass
+            try:
+                self.EXIT.destroy()
             except:
                 pass
             return 'Упс!'
@@ -157,9 +161,9 @@ class AuthorizationManager:
         self.LABEL_LOGIN = Label(self.ITEM_FRAME, text = 'Введите логин:', fg = '#333b4f', bg = 'white', font = ('Trebuchet MS', 14))
         self.LABEL_PASSWORD = Label(self.ITEM_FRAME, text = 'Введите пароль:', fg = '#333b4f', bg = 'white', font = ('Trebuchet MS', 14))
         self.WARNING = Label(right_frame, text='', width=30, height = 2, font=('Trebuchet MS', 14), bg='white', fg='white')
-        self.EXIT = Button(right_frame, text='Выход', width=20, height = 2, font=('Trebuchet MS', 14), highlightbackground='#0077ff', fg='white')
+        self.EXIT = Button(right_frame, text='Выход', font=('Trebuchet MS', 14), highlightbackground='#3b6ecc', highlightthickness=30, fg='white')
         self.WARNING.place(x=300, y=550)
-        self.EXIT.place(x= 200, y=500)
+        self.EXIT.place(x= 230, y=500, width = 90, height = 40)
         self.LABEL_SITE.pack()
         self.INPUT_SITE.pack()
         self.INPUT_SITE.focus_set()

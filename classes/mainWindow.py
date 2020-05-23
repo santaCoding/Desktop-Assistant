@@ -21,9 +21,9 @@ class MainWindow:
         self.LABEL = Label(self.frame_bot, width = 40, height = 23, text = random.choice(bot.cong),
         fg = '#486994', font = (self.font, 16, 'bold'), bg='#e3e3e3', justify = LEFT)
         self.BUTTON = Button(
-            self.frame_user, padx=10, pady=7, text = 'Сказать',
-            highlightbackground='#0077ff', fg='#0c3b70', font=('Arial', 14, 'bold'),
-            bg = '#0077ff')
+            self.frame_user, padx=3, pady=7, text = 'Сказать',
+            highlightbackground='#3b6ecc', highlightthickness=16, fg='white', font=('Arial', 14),
+            bg = '#3b6ecc')
         self.INPUT = Entry(self.frame_user, width = 50, font=(self.font, 16), bg='#bfbfbf', fg='#292929')
         self.INPUT.bind('<Return>', bot.getResponse)
         self.BUTTON.bind('<Button-1>', bot.getResponse)

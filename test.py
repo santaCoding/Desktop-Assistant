@@ -1,9 +1,12 @@
-class F:
-    def __init__(self):
-        self.value = 2
-        self.name = 'A'
-        print(self.__dict__)
-        if self.__dict__['name'] is None:
-            print('name is None')
+from tkinter import *
+import platform
 
-f = F()
+
+if platform.system() == "Darwin":   ### if its a Mac
+    B = Button(text="Refersh All Windows", highlightbackground="Yellow", fg="Black", highlightthickness=30)
+else:  ### if its Windows or Linux
+    B = Button(text="Refresh All Windows", bg="Yellow", fg="Black")
+
+B.place(x=5, y=10, width=140, height=30)
+
+mainloop()
