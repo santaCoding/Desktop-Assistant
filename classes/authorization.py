@@ -17,7 +17,7 @@ class AuthorizationManager:
                 self.HEADER = Label(right_frame, bg='white', width=72, text = '%-10s%-30s%-35s%s' % ('#', 'Сайт', 'Логин', 'Пароль'), fg='black', font = ('Trebuchet MS', 12), justify=LEFT, anchor=W)
                 self.HEADER.place(x=10, y=90)
                 for item in range(len(self.items)):
-                    self.LABEL_SITE = Label(self.MAIN_FRAME, bg='#ababab', width=60, text = '%-8d%-15s%-25s%s' % (item+1, self.items[item].site, self.items[item].login, self.items[item].password), fg='white', font = ('Trebuchet MS', 16), anchor=W)
+                    self.LABEL_SITE = Label(self.MAIN_FRAME, bg='#ababab', cursor='X_cursor',width=60, text = '%-8d%-15s%-25s%s' % (item+1, self.items[item].site, self.items[item].login, self.items[item].password), fg='white', font = ('Trebuchet MS', 16), anchor=W)
                     self.LABEL_SITE.bind('<Button-1>', partial(self.delItem, right_frame, mainWindow, self.items[item], self.ITEMS_FRAME))
                     self.LABEL_SITE.pack(pady=5)
 
@@ -37,7 +37,7 @@ class AuthorizationManager:
             data()
             self.LABEL_PROMPT = Label(right_frame, bg='white', text=f'Чтобы удалить вход, нажмите на него', fg='#8ea2d4', font = ('Trebuchet MS', 14, 'bold'))
             self.LABEL_PROMPT.place(x=50, y=555)
-            self.EXIT = Button(right_frame, text='Выход', font=('Trebuchet MS', 14), highlightbackground='#3b6ecc', highlightthickness=30, fg='white')
+            self.EXIT = Button(right_frame, cursor='hand2', text='Выход', font=('Trebuchet MS', 14), highlightbackground='#3b6ecc', highlightthickness=30, fg='white')
             self.EXIT.bind('<Button-1>', partial(self.exit, mainWindow))
             self.EXIT.place(x= 400, y=545, width = 90, height = 40)
             return 'М.А.'
@@ -170,9 +170,9 @@ class AuthorizationManager:
         self.LABEL_SITE = Label(self.ITEM_FRAME, text = 'Введите сайт:', fg = '#333b4f', bg = 'white', font = ('Trebuchet MS', 14))
         self.LABEL_LOGIN = Label(self.ITEM_FRAME, text = 'Введите логин:', fg = '#333b4f', bg = 'white', font = ('Trebuchet MS', 14))
         self.LABEL_PASSWORD = Label(self.ITEM_FRAME, text = 'Введите пароль:', fg = '#333b4f', bg = 'white', font = ('Trebuchet MS', 14))
-        self.WARNING = Label(right_frame, text='', width=30, height = 2, font=('Trebuchet MS', 14), bg='white', fg='white')
-        self.EXIT = Button(right_frame, text='Выход', font=('Trebuchet MS', 14), highlightbackground='#3b6ecc', highlightthickness=30, fg='white')
-        self.WARNING.place(x=300, y=550)
+        self.WARNING = Label(right_frame, text='', cursor='X_cursor', width=30, height = 2, font=('Trebuchet MS', 14), bg='white', fg='white')
+        self.EXIT = Button(right_frame, cursor='hand2', text='Выход', font=('Trebuchet MS', 14), highlightbackground='#3b6ecc', highlightthickness=30, fg='white')
+        self.WARNING.place(x=285, y=550)
         self.EXIT.place(x= 230, y=500, width = 90, height = 40)
         self.LABEL_SITE.pack()
         self.INPUT_SITE.pack()

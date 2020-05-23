@@ -19,9 +19,9 @@ class MainWindow:
         self.frame_user = Frame(self.left_part, height = 300, width = 550, bg = '#e3e3e3')
         self.LOGO = Label(self.frame_bot, width = 70, height = 70, pady = 248, image = self.logoImage, bg = '#e3e3e3')
         self.LABEL = Label(self.frame_bot, width = 40, height = 23, text = random.choice(bot.cong),
-        fg = '#486994', font = (self.font, 16, 'bold'), bg='#e3e3e3', justify = LEFT)
+        fg = '#486994', font = (self.font, 16, 'bold'), bg='#d1d1d1', justify = LEFT)
         self.BUTTON = Button(
-            self.frame_user, padx=3, pady=7, text = 'Сказать',
+            self.frame_user, cursor='hand2', padx=3, pady=7, text = 'Сказать',
             highlightbackground='#3b6ecc', highlightthickness=16, fg='white', font=('Arial', 14),
             bg = '#3b6ecc')
         self.INPUT = Entry(self.frame_user, width = 50, font=(self.font, 16), bg='#bfbfbf', fg='#292929')
