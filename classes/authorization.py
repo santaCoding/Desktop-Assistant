@@ -14,10 +14,10 @@ class AuthorizationManager:
         if self.items:
             self.ITEMS_FRAME=Frame(right_frame,width=200,bd=1)
             def data():
-                self.HEADER = Label(right_frame, bg='white', width=72, text = '%-10s%-30s%-35s%s' % ('#', 'Сайт', 'Логин', 'Пароль'), fg='black', font = ('Trebuchet MS', 12), justify=LEFT, anchor=W)
+                self.HEADER = Label(right_frame, bg='white', width=72, text = '%-10s%-30s%-35s%s' % ('#', 'Сайт', 'Логин', 'Пароль'), fg='black', justify=LEFT, anchor=W)
                 self.HEADER.place(x=10, y=90)
                 for item in range(len(self.items)):
-                    self.LABEL_SITE = Label(self.MAIN_FRAME, bg='#ababab', cursor='X_cursor',width=60, text = '%-8d%-15s%-25s%s' % (item+1, self.items[item].site, self.items[item].login, self.items[item].password), fg='white', font = ('Trebuchet MS', 16), anchor=W)
+                    self.LABEL_SITE = Label(self.MAIN_FRAME, bg='#ababab', cursor='X_cursor',width=60, text = '%-8d%-15s%-25s%s' % (item+1, self.items[item].site, self.items[item].login, self.items[item].password), fg='white', anchor=W)
                     self.LABEL_SITE.bind('<Button-1>', partial(self.delItem, right_frame, mainWindow, self.items[item], self.ITEMS_FRAME))
                     self.LABEL_SITE.pack(pady=5)
 

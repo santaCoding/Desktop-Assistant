@@ -9,7 +9,7 @@ class MainWindow:
         self.initUI(bot)
 
     def initUI(self, bot):
-        self.font = 'Trebuchet MS'
+        self.font = None
         self.BG_LIGHT = 'white'
         self.logoImage = ImageTk.PhotoImage(file="bot.png")
         self.top_frame = Frame(self.app, width = 1100, height = 50, bg='#4a4a4a')
@@ -17,14 +17,14 @@ class MainWindow:
         self.right_part = Frame(self.app, width = 550, height = 600, bg = self.BG_LIGHT)
         self.frame_bot = Frame(self.left_part, width = 550, bg = '#e3e3e3', height = 700)
         self.frame_user = Frame(self.left_part, height = 300, width = 550, bg = '#e3e3e3')
-        self.LOGO = Label(self.frame_bot, width = 70, height = 70, pady = 248, image = self.logoImage, bg = '#e3e3e3')
-        self.LABEL = Label(self.frame_bot, width = 40, height = 23, text = random.choice(bot.cong),
+        self.LOGO = Label(self.frame_bot, padx=20, height = 70, pady = 248, image = self.logoImage, bg = '#e3e3e3', justify=LEFT, anchor = W)
+        self.LABEL = Label(self.frame_bot, width = 35, height = 23, text = random.choice(bot.cong),
         fg = '#486994', font = (self.font, 16, 'bold'), bg='#d1d1d1', justify = LEFT)
         self.BUTTON = Button(
             self.frame_user, cursor='hand2', padx=3, pady=7, text = 'Сказать',
             highlightbackground='#3b6ecc', highlightthickness=16, fg='white', font=('Arial', 14),
             bg = '#3b6ecc')
-        self.INPUT = Entry(self.frame_user, width = 50, font=(self.font, 16), bg='#bfbfbf', fg='#292929')
+        self.INPUT = Entry(self.frame_user, width = 40, font=(self.font, 16), bg='#bfbfbf', fg='#292929')
         self.INPUT.bind('<Return>', bot.getResponse)
         self.BUTTON.bind('<Button-1>', bot.getResponse)
         self.RIGHT_LABEL = Label(self.right_part, width = 65, height = 2, bg = self.BG_LIGHT, text = 'Скажите Боту что-то сделать', fg='#7e92ab', font = (self.font, 16, 'bold'), pady=260)

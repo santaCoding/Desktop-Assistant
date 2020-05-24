@@ -18,12 +18,12 @@ def addPaidOption(main_window, admin_access:bool) -> str:
         available_funcs = {'reminder()' : 'Менеджер Напоминания'}
         main_window.RIGHT_LABEL['text'] = 'Открыть платную функцию'
         main_window.RIGHT_LABEL['pady'] = 40
-        LABEL = Label(main_window.right_part, text='Список доступных функций:', font=('Trebuchet MS', 14))
+        LABEL = Label(main_window.right_part, text='Список доступных функций:')
         LABEL.pack()
         item = 0
         for function in available_funcs:
-            text = function + available_funcs.values()[item]
-            func = Label(main_window.right_part, text=text, bg='#485259', cursor='hand2')
+            text = function + ' : ' + list(available_funcs.values())[item]
+            func = Label(main_window.right_part, text=text, bg='#485259', cursor='hand2', fg='white', pady=10, padx=10)
             func.bind('<Button-1>', partial(functionOn))
             func.pack()
             item += 1
