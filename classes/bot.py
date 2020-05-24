@@ -55,7 +55,7 @@ class Assistant:
             'забудь' : 'self.forgetData()'
         }
         self.customFuncs = {
-            'я_админ зайти_в_админку доступ_админ админ_доступ \admin' : 'self.user.getAdminStatus(self.mainWindow)',
+            '\\admin я_админ зайти_в_админку доступ_админ админ_доступ' : 'self.user.getAdminStatus(self.mainWindow)',
             'выйти_из_админа выйти_из_администратора я_не_админ выйти_из_режима_администратора выйти_из_под_админа \exit' : 'self.user.exitAdmin(self.mainWindow)',
             'новая_авторизация авторизация занести_авторизацию занести_логин_и_пароль запомнить_авторизацию новый_вход новая_авторизация \new' : 'self.autho.addItem(self.mainWindow.right_part, self.mainWindow)',
             'менеджер_авторизаций покажи_авторизации покажи_логины покажи_пароли логины пароли \ma' : 'self.autho.showContent(self.mainWindow.right_part, self.mainWindow)',
@@ -64,7 +64,7 @@ class Assistant:
             'конверт \mc' : 'self.convert.convert()',
             'извлечь извлечение \me' : 'self.extract.extract()',
             'системная_информация \sys' : 'classes.customFuncs.system_info()',
-            'добавить_функцию добавить_опцию новая_функция новая_опция \nf' : 'classes.customFuncs.addPaidOption(self.main_window, self.user.admin)',
+            'добавить_функцию добавить_опцию новая_функция новая_опция \nf' : 'classes.customFuncs.addPaidOption(self.mainWindow, self.user.admin)',
             'показать_горячие показать_клавиши горячие быстрые_переходы команды команды_админа' : 'classes.customFuncs.showAdminComands(self.user.admin)'
         }
 

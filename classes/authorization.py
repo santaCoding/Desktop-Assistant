@@ -202,9 +202,8 @@ class AuthorizationManager:
             ITEMS_FRAME.destroy()
             self.showContent(right_frame, mainWindow)
 
+    #def getItem(self)
         
-        
-
 
 #-------------------------------------------------------------------------------------#
 
