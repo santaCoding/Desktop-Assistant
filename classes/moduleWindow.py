@@ -9,11 +9,7 @@ class ModuleWindow:
     def initUI(self, app, adminStatus, content):
         self.moduleWindowTk.configure(background = '#e3e3e3')
         self.center()
-        self.contentModuleWindow(adminStatus, content) #функция контента модульного окна
-        self.MODULE_LABEL.pack()
-        self.MODULE_INPUT.pack()
-        self.MODULE_INPUT.focus_set()
-        self.MODULE_BUTTON.pack()
+        self.accessModuleWindow(adminStatus, content) #функция контента модульного окна
         self.moduleWindowTk.transient(app)
         self.moduleWindowTk.grab_set()
         self.moduleWindowTk.focus_set()
@@ -25,7 +21,7 @@ class ModuleWindow:
         self.moduleWindowTk.geometry('400x100')
         self.moduleWindowTk.wm_geometry(f'+{width//2-200}+{height//2-70}')
 
-    def contentModuleWindow(self, adminStatus, content):
+    def accessModuleWindow(self, adminStatus, content):
         self.flag = False
         def check_password(event):
                 password = self.MODULE_INPUT.get()
@@ -43,6 +39,10 @@ class ModuleWindow:
         self.MODULE_INPUT.bind('<Return>', eval(content['func']))
         self.MODULE_BUTTON.bind('<Button-1>', eval(content['func']))
         self.MODULE_LABEL = Label(self.moduleWindowTk, width = 40, text = content['textLabel'], bg = '#e3e3e3', fg = '#486994', font = ('Trebuchet MS', 15))
+        self.MODULE_LABEL.pack()
+        self.MODULE_INPUT.pack()
+        self.MODULE_INPUT.focus_set()
+        self.MODULE_BUTTON.pack()
         
 
     def getValue(self):
