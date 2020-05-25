@@ -14,6 +14,7 @@ class Assistant:
         self.convert = convert.ConvertManager(self.mainWindow)
         self.extract = extract.Extraction(self.mainWindow)
         self.access_funcs = {'Менеджер Напоминания' : False, 'Менеджер Авторизации' : True, 'Менеджер Конвертирования' : True}
+        self.CF = classes.customFuncs.CustomFunctions(self.access_funcs)
         self.name = 'Бот Alex'
         self.info = {}
         self.deal = ['Неплохо, а Ваши как?', 'Все супер!', 'Очень даже хорошо)', 'Отлично!']
@@ -65,9 +66,16 @@ class Assistant:
             'конверт \mc' : 'self.convert.convert()',
             'извлечь извлечение \me' : 'self.extract.extract()',
             'системная_информация \sys' : 'classes.customFuncs.system_info()',
-            'добавить_функцию добавить_опцию новая_функция новая_опция \nf' : 'classes.customFuncs.addPaidOption(self.mainWindow, self.user.admin, self.access_funcs)',
-            'показать_горячие показать_клавиши горячие быстрые_переходы команды команды_админа' : 'classes.customFuncs.showAdminComands(self.user.admin)'
+            'добавить_функцию добавить_опцию новая_функция новая_опция \nf' : 'self.CF.addPaidOption(self.mainWindow, self.user.admin)',
+            'показать_горячие показать_клавиши горячие быстрые_переходы команды команды_админа' : 'self.CF.showAdminComands(self.user.admin)'
         }
+
+    def checkFuncs(self, new_funcs):
+        if self.access_funcs != new_funcs:
+            self.access_funcs = new_funcs
+            print('изменено')
+        else:
+            print('не изменено')
 
     def getName(self):
         return self.name
@@ -120,13 +128,8 @@ class Assistant:
                         response = varDict[key]
                     elif dictTitle == 'self.data' or dictTitle == 'self.customFuncs':
                         response = eval(varDict[key])
-                        if type(response) == dict:
-                            if self.access_funcs == response:
-                                self.access_funcs = response
-                                response = 'Функции не изменились'
-                            else:
-                                self.access_funcs = response
-                                response = 'Функции обновлены'
+                        #if varDict[key] == 'classes.customFuncs.addPaidOption(self.mainWindow, self.user.admin, self.access_funcs)':
+                            #self.checkFuncs(classes.customFuncs.funcs)
                     return response
                     break
         else:
