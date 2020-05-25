@@ -13,6 +13,7 @@ class Assistant:
         self.autho = authorization.AuthorizationManager(self.user)
         self.convert = convert.ConvertManager(self.mainWindow)
         self.extract = extract.Extraction(self.mainWindow)
+        self.access_funcs = {'Менеджер Напоминания' : False, 'Менеджер Авторизации' : True, 'Менеджер Конвертирования' : True}
         self.name = 'Бот Alex'
         self.info = {}
         self.deal = ['Неплохо, а Ваши как?', 'Все супер!', 'Очень даже хорошо)', 'Отлично!']
@@ -64,7 +65,7 @@ class Assistant:
             'конверт \mc' : 'self.convert.convert()',
             'извлечь извлечение \me' : 'self.extract.extract()',
             'системная_информация \sys' : 'classes.customFuncs.system_info()',
-            'добавить_функцию добавить_опцию новая_функция новая_опция \nf' : 'classes.customFuncs.addPaidOption(self.mainWindow, self.user.admin)',
+            'добавить_функцию добавить_опцию новая_функция новая_опция \nf' : 'classes.customFuncs.addPaidOption(self.mainWindow, self.user.admin, self.access_funcs)',
             'показать_горячие показать_клавиши горячие быстрые_переходы команды команды_админа' : 'classes.customFuncs.showAdminComands(self.user.admin)'
         }
 
@@ -119,6 +120,13 @@ class Assistant:
                         response = varDict[key]
                     elif dictTitle == 'self.data' or dictTitle == 'self.customFuncs':
                         response = eval(varDict[key])
+                        if type(response) == dict:
+                            if self.access_funcs == response:
+                                self.access_funcs = response
+                                response = 'Функции не изменились'
+                            else:
+                                self.access_funcs = response
+                                response = 'Функции обновлены'
                     return response
                     break
         else:
