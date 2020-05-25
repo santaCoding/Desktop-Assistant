@@ -70,13 +70,6 @@ class Assistant:
             'показать_горячие показать_клавиши горячие быстрые_переходы команды команды_админа' : 'self.CF.showAdminComands(self.user.admin)'
         }
 
-    def checkFuncs(self, new_funcs):
-        if self.access_funcs != new_funcs:
-            self.access_funcs = new_funcs
-            print('изменено')
-        else:
-            print('не изменено')
-
     def getName(self):
         return self.name
 
@@ -128,8 +121,6 @@ class Assistant:
                         response = varDict[key]
                     elif dictTitle == 'self.data' or dictTitle == 'self.customFuncs':
                         response = eval(varDict[key])
-                        #if varDict[key] == 'classes.customFuncs.addPaidOption(self.mainWindow, self.user.admin, self.access_funcs)':
-                            #self.checkFuncs(classes.customFuncs.funcs)
                     return response
                     break
         else:

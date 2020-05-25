@@ -18,11 +18,10 @@ class CustomFunctions:
         Принимает на вход ссылку на главное окно, статус админа и словарь функций
         Возвращает строку с результатом
         '''
-        self.LEFT_FRAME_FUNCS = Frame(main_window.right_part)
-        self.RIGHT_FRAME_FUNCS = Frame(main_window.right_part)
-
-        def exit():
+        def exit(EXIT_BUTTON, SAVE_BUTTON, event):
             self.LEFT_FRAME_FUNCS.destroy()
+            EXIT_BUTTON.destroy()
+            SAVE_BUTTON.destroy()
             self.RIGHT_FRAME_FUNCS.destroy()
             main_window.RIGHT_LABEL['text'] = 'Скажите Боту что-то сделать'
             main_window.RIGHT_LABEL['pady'] = 260
@@ -32,19 +31,23 @@ class CustomFunctions:
             self.SAVE_BUTTON['text'] = 'Сохранено'
             self.SAVE_BUTTON['highlightbackground'] = '#76a897'
             if self.funcs == self.updated_funcs:
+                self.funcs = self.updated_funcs
                 main_window.LABEL['text'] = 'Функции остались прежними!'
             else:
+                self.funcs = self.updated_funcs
                 main_window.LABEL['text'] = 'Функции обновлены!'
 
         def show_data():
+            self.LEFT_FRAME_FUNCS = Frame(main_window.right_part)
+            self.RIGHT_FRAME_FUNCS = Frame(main_window.right_part)
             self.LEFT_FRAME_FUNCS.place(x = 15, y = 100)
             self.RIGHT_FRAME_FUNCS.place(x = 290, y = 100)
             self.LEFT_LABEL = Label(self.LEFT_FRAME_FUNCS)
             self.RIGHT_LABEL = Label(self.RIGHT_FRAME_FUNCS)
-            self.EXIT_BUTTON = Button(main_window.right_part, cursor='hand2', text='Выход', highlightbackground='#3b6ecc', highlightthickness=30, fg='white')
-            self.EXIT_BUTTON.bind('<Button-1>', partial(exit))
             self.SAVE_BUTTON = Button(main_window.right_part, cursor='hand2', text='Сохранить', highlightbackground='#a8a8a8', highlightthickness=30, fg='black')
-            self.SAVE_BUTTON.bind('<Button-1>', partial(save))
+            self.SAVE_BUTTON.bind('<Button-1>', save)
+            self.EXIT_BUTTON = Button(main_window.right_part, cursor='hand2', text='Выход', highlightbackground='#3b6ecc', highlightthickness=30, fg='white')
+            self.EXIT_BUTTON.bind('<Button-1>', partial(exit, self.EXIT_BUTTON, self.SAVE_BUTTON))
             self.SAVE_BUTTON.place(x = 200, y = 545, width = 80, height = 30)
             self.EXIT_BUTTON.place(x = 400, y = 545, width = 90, height = 40)
             self.LEFT_LABEL.pack()
@@ -52,7 +55,7 @@ class CustomFunctions:
             item = 0
             falses = 0
             trues = 0
-            self.updated_funcs = self.funcs[:]
+            self.updated_funcs = self.funcs.copy()
             for function in self.updated_funcs:
                 if list(self.updated_funcs.values())[item] == False:
                     falses += 1
@@ -67,14 +70,18 @@ class CustomFunctions:
                 item += 1
             self.LEFT_LABEL['text'] = f'Список недоступных функций: [{falses}]'
             self.RIGHT_LABEL['text'] = f'Список включенных функций: [{trues}]'
-
+ 
         def functionOn(name_function, event):
+            self.SAVE_BUTTON['text'] = 'Сохранить'
+            self.SAVE_BUTTON['highlightbackground'] = '#a8a8a8'
             self.updated_funcs[name_function] = True
             self.LEFT_FRAME_FUNCS.destroy()
             self.RIGHT_FRAME_FUNCS.destroy()
             show_data()
 
         def functionOff(name_function, event):
+            self.SAVE_BUTTON['text'] = 'Сохранить'
+            self.SAVE_BUTTON['highlightbackground'] = '#a8a8a8'
             self.updated_funcs[name_function] = False
             self.LEFT_FRAME_FUNCS.destroy()
             self.RIGHT_FRAME_FUNCS.destroy()
