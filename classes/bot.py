@@ -13,8 +13,7 @@ class Assistant:
         self.autho = authorization.AuthorizationManager(self.user)
         self.convert = convert.ConvertManager(self.mainWindow)
         self.extract = extract.Extraction(self.mainWindow)
-        self.access_funcs = {'Менеджер Напоминания' : False, 'Менеджер Авторизации' : True, 'Менеджер Конвертирования' : True}
-        self.CF = classes.customFuncs.CustomFunctions(self.access_funcs)
+        self.CF = classes.customFuncs.CustomFunctions()
         self.name = 'Бот Alex'
         self.info = {}
         self.deal = ['Неплохо, а Ваши как?', 'Все супер!', 'Очень даже хорошо)', 'Отлично!']
@@ -66,7 +65,7 @@ class Assistant:
             'конверт \mc' : 'self.convert.convert()',
             'извлечь извлечение \me' : 'self.extract.extract()',
             'системная_информация \sys' : 'classes.customFuncs.system_info()',
-            'добавить_функцию добавить_опцию новая_функция новая_опция \nf' : 'self.CF.addPaidOption(self.mainWindow, self.user.admin)',
+            'добавить_функцию изменить_функцию добавить_опцию новая_функция новая_опция \nf' : 'self.CF.addPaidOption(self.mainWindow, self.user.admin)',
             'показать_горячие показать_клавиши горячие быстрые_переходы команды команды_админа' : 'self.CF.showAdminComands(self.user.admin)'
         }
 

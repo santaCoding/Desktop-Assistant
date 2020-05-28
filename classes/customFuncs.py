@@ -3,25 +3,26 @@ from tkinter import *
 from functools import partial
 
 class CustomFunctions:
-    def __init__(self, access):
-        self.funcs = access
+    def __init__(self):
+        self.access_funcs = {'Менеджер Напоминания' : False, 'Менеджер Авторизации' : True, 'Менеджер Конвертирования' : True}
 
-    def getAccess(self):
-        return self.funcs
+    def getAccess(self) -> dict:
+        return self.access_funcs
 
     def system_info(self):
         '''Возвращает все основные параметры системы'''
         return f'Платформа : {platform()}\nСистема : {system()},\nИздано : {release()},\nМашина : {machine()},\nПроцессор: : {processor()},\nАрхитектура : {architecture()[0]}'
 
     def addPaidOption(self, main_window, admin_access:bool) -> str:
+        self.copied_funcs = self.access_funcs.copy()
         '''
         Принимает на вход ссылку на главное окно, статус админа и словарь функций
         Возвращает строку с результатом
         '''
-        def exit(EXIT_BUTTON, SAVE_BUTTON, event):
+        def exit(event):
             self.LEFT_FRAME_FUNCS.destroy()
-            EXIT_BUTTON.destroy()
-            SAVE_BUTTON.destroy()
+            self.EXIT_BUTTON.destroy()
+            self.SAVE_BUTTON.destroy()
             self.RIGHT_FRAME_FUNCS.destroy()
             main_window.RIGHT_LABEL['text'] = 'Скажите Боту что-то сделать'
             main_window.RIGHT_LABEL['pady'] = 260
@@ -30,11 +31,11 @@ class CustomFunctions:
         def save(event):
             self.SAVE_BUTTON['text'] = 'Сохранено'
             self.SAVE_BUTTON['highlightbackground'] = '#76a897'
-            if self.funcs == self.updated_funcs:
-                self.funcs = self.updated_funcs
+            if self.access_funcs == self.copied_funcs:
+                self.access_funcs = self.copied_funcs
                 main_window.LABEL['text'] = 'Функции остались прежними!'
             else:
-                self.funcs = self.updated_funcs
+                self.access_funcs = self.copied_funcs
                 main_window.LABEL['text'] = 'Функции обновлены!'
 
         def show_data():
@@ -44,20 +45,15 @@ class CustomFunctions:
             self.RIGHT_FRAME_FUNCS.place(x = 290, y = 100)
             self.LEFT_LABEL = Label(self.LEFT_FRAME_FUNCS)
             self.RIGHT_LABEL = Label(self.RIGHT_FRAME_FUNCS)
-            self.SAVE_BUTTON = Button(main_window.right_part, cursor='hand2', text='Сохранить', highlightbackground='#a8a8a8', highlightthickness=30, fg='black')
-            self.SAVE_BUTTON.bind('<Button-1>', save)
-            self.EXIT_BUTTON = Button(main_window.right_part, cursor='hand2', text='Выход', highlightbackground='#3b6ecc', highlightthickness=30, fg='white')
-            self.EXIT_BUTTON.bind('<Button-1>', partial(exit, self.EXIT_BUTTON, self.SAVE_BUTTON))
-            self.SAVE_BUTTON.place(x = 200, y = 545, width = 80, height = 30)
-            self.EXIT_BUTTON.place(x = 400, y = 545, width = 90, height = 40)
             self.LEFT_LABEL.pack()
             self.RIGHT_LABEL.pack()
+
             item = 0
             falses = 0
             trues = 0
-            self.updated_funcs = self.funcs.copy()
-            for function in self.updated_funcs:
-                if list(self.updated_funcs.values())[item] == False:
+
+            for function in self.copied_funcs:
+                if list(self.copied_funcs.values())[item] == False:
                     falses += 1
                     func = Label(self.LEFT_FRAME_FUNCS, width = 25, text = function, bg='#485259', cursor='hand2', fg='white', pady=10, padx=10)
                     func.bind('<Button-1>', partial(functionOn, function))
@@ -74,7 +70,7 @@ class CustomFunctions:
         def functionOn(name_function, event):
             self.SAVE_BUTTON['text'] = 'Сохранить'
             self.SAVE_BUTTON['highlightbackground'] = '#a8a8a8'
-            self.updated_funcs[name_function] = True
+            self.copied_funcs[name_function] = True
             self.LEFT_FRAME_FUNCS.destroy()
             self.RIGHT_FRAME_FUNCS.destroy()
             show_data()
@@ -82,7 +78,7 @@ class CustomFunctions:
         def functionOff(name_function, event):
             self.SAVE_BUTTON['text'] = 'Сохранить'
             self.SAVE_BUTTON['highlightbackground'] = '#a8a8a8'
-            self.updated_funcs[name_function] = False
+            self.copied_funcs[name_function] = False
             self.LEFT_FRAME_FUNCS.destroy()
             self.RIGHT_FRAME_FUNCS.destroy()
             show_data()
@@ -90,6 +86,12 @@ class CustomFunctions:
         if admin_access:
             main_window.RIGHT_LABEL['text'] = 'Открыть платную функцию'
             main_window.RIGHT_LABEL['pady'] = 40
+            self.SAVE_BUTTON = Button(main_window.right_part, cursor='hand2', text='Сохранить', highlightbackground='#a8a8a8', highlightthickness=30, fg='black')
+            self.SAVE_BUTTON.bind('<Button-1>', save)
+            self.EXIT_BUTTON = Button(main_window.right_part, cursor='hand2', text='Выход', highlightbackground='#3b6ecc', highlightthickness=30, fg='white')
+            self.EXIT_BUTTON.bind('<Button-1>', exit)
+            self.SAVE_BUTTON.place(x = 200, y = 545, width = 80, height = 30)
+            self.EXIT_BUTTON.place(x = 400, y = 545, width = 90, height = 40)
             show_data()
             return 'Добавление функции (~ админ)'
         else:

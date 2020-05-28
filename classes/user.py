@@ -2,7 +2,7 @@ import tkinter
 
 class User:
     def __init__(self):
-        self.admin = False
+        self.admin = True
         self.name = None
         self.age = None
 
