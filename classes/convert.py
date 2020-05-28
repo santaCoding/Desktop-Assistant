@@ -11,36 +11,39 @@ class ConvertManager:
         self.mainWindow = mainWindow
         self.files_paths = None
 
-    def convert(self):
-        self.font = 'Arial'
-        self.mainWindow.RIGHT_LABEL['text'] = 'Конвертирование'
-        self.mainWindow.RIGHT_LABEL['pady'] = 25
-        self.mainWindow.RIGHT_LABEL['font'] = (self.font, 25, 'bold')
+    def convert(self, access):
+        if access['Менеджер Конвертирования'] == True:
+            self.font = 'Arial'
+            self.mainWindow.RIGHT_LABEL['text'] = 'Конвертирование'
+            self.mainWindow.RIGHT_LABEL['pady'] = 25
+            self.mainWindow.RIGHT_LABEL['font'] = (self.font, 25, 'bold')
 
-        self.LABEL_CHOICE = Label(self.mainWindow.right_part, text = 'Выберите тип конвертирования:', font = (self.font, 15, 'bold'), bg='white', fg='#0e131a', pady=20)
-        self.LABEL_CHOICE.pack()
-        self.BUTTON_TO_PNG = Button(self.mainWindow.right_part, cursor='hand2', text = 'JPG в PNG', width = 20, height = 2, highlightbackground='#0077ff', fg='#0c3b70', font=(self.font, 14))
-        self.BUTTON_TO_JPG = Button(self.mainWindow.right_part, cursor='hand2', text = 'PNG в JPG', width = 20, height = 2, highlightbackground='#0077ff', fg='#0c3b70', font=(self.font, 14))
-        self.BUTTON_DOCX_TO_PDF = Button(self.mainWindow.right_part,  cursor='hand2',text = 'DOCX в PDF', width = 20, height = 2, highlightbackground='#0077ff', fg='#0c3b70', font=(self.font, 14))
-        self.BUTTON_TXT_TO_CSV = Button(self.mainWindow.right_part, cursor='hand2', text = 'TXT в CSV', width = 20, height = 2, highlightbackground='#0077ff', fg='#0c3b70', font=(self.font, 14))
-        self.BUTTON_TO_BMP = Button(self.mainWindow.right_part, cursor='hand2', text = 'JPG в BMP', width = 20, height = 2, highlightbackground='#0077ff', fg='#0c3b70', font=(self.font, 14))
-        self.BUTTON_EXIT = Button(self.mainWindow.right_part, cursor='hand2', text='Выход', font=('Trebuchet MS', 14), highlightbackground='#3b6ecc', highlightthickness=30, fg='white')
-        self.LABEL_NOTE = Label(self.mainWindow.right_part, text = '', font = (self.font, 14), bg='white', fg='#8ea2d4', pady=20)
-        self.BUTTON_TO_PNG.pack()
-        self.BUTTON_TO_JPG.pack()
-        self.BUTTON_TO_BMP.pack()
-        self.BUTTON_DOCX_TO_PDF.pack()
-        self.BUTTON_TXT_TO_CSV.pack()
-        self.BUTTON_EXIT.place(x= 230, y=500, width = 90, height = 40)
+            self.LABEL_CHOICE = Label(self.mainWindow.right_part, text = 'Выберите тип конвертирования:', font = (self.font, 15, 'bold'), bg='white', fg='#0e131a', pady=20)
+            self.LABEL_CHOICE.pack()
+            self.BUTTON_TO_PNG = Button(self.mainWindow.right_part, cursor='hand2', text = 'JPG в PNG', width = 20, height = 2, highlightbackground='#0077ff', fg='#0c3b70', font=(self.font, 14))
+            self.BUTTON_TO_JPG = Button(self.mainWindow.right_part, cursor='hand2', text = 'PNG в JPG', width = 20, height = 2, highlightbackground='#0077ff', fg='#0c3b70', font=(self.font, 14))
+            self.BUTTON_DOCX_TO_PDF = Button(self.mainWindow.right_part,  cursor='hand2',text = 'DOCX в PDF', width = 20, height = 2, highlightbackground='#0077ff', fg='#0c3b70', font=(self.font, 14))
+            self.BUTTON_TXT_TO_CSV = Button(self.mainWindow.right_part, cursor='hand2', text = 'TXT в CSV', width = 20, height = 2, highlightbackground='#0077ff', fg='#0c3b70', font=(self.font, 14))
+            self.BUTTON_TO_BMP = Button(self.mainWindow.right_part, cursor='hand2', text = 'JPG в BMP', width = 20, height = 2, highlightbackground='#0077ff', fg='#0c3b70', font=(self.font, 14))
+            self.BUTTON_EXIT = Button(self.mainWindow.right_part, cursor='hand2', text='Выход', font=('Trebuchet MS', 14), highlightbackground='#3b6ecc', highlightthickness=30, fg='white')
+            self.LABEL_NOTE = Label(self.mainWindow.right_part, text = '', font = (self.font, 14), bg='white', fg='#8ea2d4', pady=20)
+            self.BUTTON_TO_PNG.pack()
+            self.BUTTON_TO_JPG.pack()
+            self.BUTTON_TO_BMP.pack()
+            self.BUTTON_DOCX_TO_PDF.pack()
+            self.BUTTON_TXT_TO_CSV.pack()
+            self.BUTTON_EXIT.place(x= 230, y=500, width = 90, height = 40)
 
-        self.BUTTON_TO_PNG.bind('<Button-1>', partial(self.JPGandPNG, extension='.png', title='JPG в PNG', text = 'Для конвертирования в PNG,\nВы можете выбрать форматы JPEG\JPG\BMP.\nРасположение так же выборочно. Допустим множественныц выбор.'))
-        self.BUTTON_TO_JPG.bind('<Button-1>', partial(self.JPGandPNG, extension='.jpeg', title='PNG в JPG', text = 'Для конвертирования в JPG,\nВы можете выбрать форматы PNG\BMP\JPEG.\nРасположение так же выборочно. Допустим множественныц выбор.'))
-        self.BUTTON_TO_BMP.bind('<Button-1>', partial(self.JPGandPNG, extension='.bmp', title='JPG/PNG в BMP', text='Для конвертирования в BMP,\nВы можете выбрать форматы PNG\JPG\JPEG.\nРасположение так же выборочно. Допустим множественныц выбор.'))
-        self.BUTTON_DOCX_TO_PDF.bind('<Button-1>', self.DOCXtoPDF)
-        self.BUTTON_TXT_TO_CSV.bind('<Button-1>', self.TXTtoCSV)
-        self.BUTTON_EXIT.bind('<Button-1>', self.exit)
+            self.BUTTON_TO_PNG.bind('<Button-1>', partial(self.JPGandPNG, extension='.png', title='JPG в PNG', text = 'Для конвертирования в PNG,\nВы можете выбрать форматы JPEG\JPG\BMP.\nРасположение так же выборочно. Допустим множественныц выбор.'))
+            self.BUTTON_TO_JPG.bind('<Button-1>', partial(self.JPGandPNG, extension='.jpeg', title='PNG в JPG', text = 'Для конвертирования в JPG,\nВы можете выбрать форматы PNG\BMP\JPEG.\nРасположение так же выборочно. Допустим множественныц выбор.'))
+            self.BUTTON_TO_BMP.bind('<Button-1>', partial(self.JPGandPNG, extension='.bmp', title='JPG/PNG в BMP', text='Для конвертирования в BMP,\nВы можете выбрать форматы PNG\JPG\JPEG.\nРасположение так же выборочно. Допустим множественныц выбор.'))
+            self.BUTTON_DOCX_TO_PDF.bind('<Button-1>', self.DOCXtoPDF)
+            self.BUTTON_TXT_TO_CSV.bind('<Button-1>', self.TXTtoCSV)
+            self.BUTTON_EXIT.bind('<Button-1>', self.exit)
 
-        return 'Конвертирование...'
+            return 'Конвертирование...'
+        else:
+            return 'К сожалению, администратор запретил\nдоступ к этому Менеджеру.\nЧтобы получить доступ\nтребуется купить эту функцию.'
 
     def exit(self, event):
         self.BUTTON_DOCX_TO_PDF.destroy()

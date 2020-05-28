@@ -21,27 +21,30 @@ class Extraction:
         self.mainWindow.RIGHT_LABEL['font'] = (self.font, 16, 'bold')
         self.mainWindow.LABEL['text'] = 'Да да?'
 
-    def extract(self):
-        self.font = 'Arial'
-        self.mainWindow.RIGHT_LABEL['text'] = self.title
-        self.mainWindow.RIGHT_LABEL['pady'] = 20
-        self.mainWindow.RIGHT_LABEL['font'] = (self.font, 20, 'bold')
+    def extract(self, access):
+        if access['Менеджер Извлечения'] == True:
+            self.font = 'Arial'
+            self.mainWindow.RIGHT_LABEL['text'] = self.title
+            self.mainWindow.RIGHT_LABEL['pady'] = 20
+            self.mainWindow.RIGHT_LABEL['font'] = (self.font, 20, 'bold')
 
-        self.LABEL_CHOICE = Label(self.mainWindow.right_part, text = 'Что вы хотите извлечь?', font = (self.font, 15, 'bold'), bg='white', fg='#0e131a', pady=20)
-        self.TXT_FROM_PDF = Button(self.mainWindow.right_part,  cursor='hand2',text = 'Текст из PDF', width = 20, height = 2, highlightbackground='#0077ff', fg='#0c3b70', font=(self.font, 14))
-        self.MP3_FROM_MP4 = Button(self.mainWindow.right_part, cursor='hand2', text = 'Звук из видео', width = 20, height = 2, highlightbackground='#0077ff', fg='#0c3b70', font=(self.font, 14))
-        self.BUTTON_EXIT = Button(self.mainWindow.right_part, cursor='hand2', text='Выход', font=('Trebuchet MS', 14), highlightbackground='#3b6ecc', highlightthickness=30, fg='white')
-        self.LABEL_NOTE = Label(self.mainWindow.right_part, text = '', font = (self.font, 14), bg='white', fg='#8ea2d4', pady=20)
-        self.LABEL_CHOICE.pack()
-        self.TXT_FROM_PDF.pack()
-        self.MP3_FROM_MP4.pack()
-        self.BUTTON_EXIT.place(x= 230, y=500, width = 90, height = 40)
+            self.LABEL_CHOICE = Label(self.mainWindow.right_part, text = 'Что вы хотите извлечь?', font = (self.font, 15, 'bold'), bg='white', fg='#0e131a', pady=20)
+            self.TXT_FROM_PDF = Button(self.mainWindow.right_part,  cursor='hand2',text = 'Текст из PDF', width = 20, height = 2, highlightbackground='#0077ff', fg='#0c3b70', font=(self.font, 14))
+            self.MP3_FROM_MP4 = Button(self.mainWindow.right_part, cursor='hand2', text = 'Звук из видео', width = 20, height = 2, highlightbackground='#0077ff', fg='#0c3b70', font=(self.font, 14))
+            self.BUTTON_EXIT = Button(self.mainWindow.right_part, cursor='hand2', text='Выход', font=('Trebuchet MS', 14), highlightbackground='#3b6ecc', highlightthickness=30, fg='white')
+            self.LABEL_NOTE = Label(self.mainWindow.right_part, text = '', font = (self.font, 14), bg='white', fg='#8ea2d4', pady=20)
+            self.LABEL_CHOICE.pack()
+            self.TXT_FROM_PDF.pack()
+            self.MP3_FROM_MP4.pack()
+            self.BUTTON_EXIT.place(x= 230, y=500, width = 90, height = 40)
 
-        self.TXT_FROM_PDF['command'] = self.TXTfromPDF
-        self.MP3_FROM_MP4['command'] = self.MP3fromMP4
-        self.BUTTON_EXIT['command'] = self.exit
+            self.TXT_FROM_PDF['command'] = self.TXTfromPDF
+            self.MP3_FROM_MP4['command'] = self.MP3fromMP4
+            self.BUTTON_EXIT['command'] = self.exit
 
-        return 'Извлечение...'
+            return 'Извлечение...'
+        else:
+            return 'К сожалению, администратор запретил\nдоступ к этому Менеджеру.\nЧтобы получить доступ\nтребуется купить эту функцию.'
 
     def TXTfromPDF(self):
         def getPDF():

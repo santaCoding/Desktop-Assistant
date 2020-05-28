@@ -4,14 +4,14 @@ from functools import partial
 
 class CustomFunctions:
     def __init__(self):
-        self.access_funcs = {'Менеджер Напоминания' : False, 'Менеджер Авторизации' : True, 'Менеджер Конвертирования' : True}
+        self.access_funcs = {'Менеджер Напоминания' : False, 'Менеджер Авторизации' : False, 'Менеджер Конвертирования' : False, 'Менеджер Извлечения' : False}
 
     def getAccess(self) -> dict:
         return self.access_funcs
 
     def system_info(self):
         '''Возвращает все основные параметры системы'''
-        return f'Платформа : {platform()}\nСистема : {system()},\nИздано : {release()},\nМашина : {machine()},\nПроцессор: : {processor()},\nАрхитектура : {architecture()[0]}'
+        return f'Платформа :\n{platform()}\nСистема : {system()},\nИздано : {release()},\nМашина : {machine()},\nПроцессор: : {processor()},\nАрхитектура : {architecture()[0]}'
 
     def addPaidOption(self, main_window, admin_access:bool) -> str:
         self.copied_funcs = self.access_funcs.copy()
@@ -24,6 +24,7 @@ class CustomFunctions:
             self.EXIT_BUTTON.destroy()
             self.SAVE_BUTTON.destroy()
             self.RIGHT_FRAME_FUNCS.destroy()
+            self.PROMPT.destroy()
             main_window.RIGHT_LABEL['text'] = 'Скажите Боту что-то сделать'
             main_window.RIGHT_LABEL['pady'] = 260
             main_window.LABEL['text'] = 'Да да?'
@@ -107,7 +108,7 @@ class CustomFunctions:
         '''
         if admin_access:
             return '\\admin - права админа\n\\nf - новая функция (админ)\n\\new - новый вход\n\sys - системная информация\
-                \n\ma - менеджер авторизаций\n\mc - менеджер конвертирования\n\me - менеджер извлечения\n\whoami - что знает бот\
-                \n\whoay - информация о боте\n\cany - что может бот \n\exit - выход из админа'
+                \n\ma - менеджер авторизаций\n\mc - менеджер конвертирования\n\me - менеджер извлечения\n\mr - менеджер напоминания\
+                \n\whoami - что знает бот\n\whoay - информация о боте\n\cany - что может бот \n\exit - выход из админа'
         else:
             return 'У Вас нет доступа к функциям такого типа!\nВойдите под администратором'

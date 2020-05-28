@@ -58,15 +58,16 @@ class Assistant:
         self.customFuncs = {
             '\\admin я_админ зайти_в_админку доступ_админ админ_доступ' : 'self.user.getAdminStatus(self.mainWindow)',
             'выйти_из_админа выйти_из_администратора я_не_админ выйти_из_режима_администратора выйти_из_под_админа \exit' : 'self.user.exitAdmin(self.mainWindow)',
-            'новая_авторизация авторизация занести_авторизацию занести_логин_и_пароль запомнить_авторизацию новый_вход новая_авторизация \new' : 'self.autho.addItem(self.mainWindow.right_part, self.mainWindow)',
-            'менеджер_авторизаций покажи_авторизации покажи_логины покажи_пароли логины пароли \ma' : 'self.autho.showContent(self.mainWindow.right_part, self.mainWindow)',
-            'какой_логин какой_пароль какая_авторизация какой_пункт' : 'self.autho.getItem()',
-            'очистить_менеджер удалить_пункты удалить_все_пункты очистить_пункты' : 'self.autho.clearManager()',
-            'конверт \mc' : 'self.convert.convert()',
-            'извлечь извлечение \me' : 'self.extract.extract()',
-            'системная_информация \sys' : 'classes.customFuncs.system_info()',
+            'новая_авторизация авторизация занести_авторизацию занести_логин_и_пароль запомнить_авторизацию новый_вход новая_авторизация \new' : 'self.autho.addItem(self.mainWindow.right_part, self.mainWindow, self.CF.getAccess())',
+            'менеджер_авторизаций покажи_авторизации покажи_логины покажи_пароли логины пароли \ma' : 'self.autho.showContent(self.mainWindow.right_part, self.mainWindow, self.CF.getAccess())',
+            'какой_логин какой_пароль какая_авторизация какой_пункт' : 'self.autho.getItem(self.CF.getAccess())',
+            'очистить_менеджер удалить_пункты удалить_все_пункты очистить_пункты' : 'self.autho.clearManager(self.CF.getAccess())',
+            'конверт \mc' : 'self.convert.convert(self.CF.getAccess())',
+            'извлечь извлечение \me' : 'self.extract.extract(self.CF.getAccess())',
+            'системная_информация \sys' : 'self.CF.system_info()',
             'добавить_функцию изменить_функцию добавить_опцию новая_функция новая_опция \nf' : 'self.CF.addPaidOption(self.mainWindow, self.user.admin)',
-            'показать_горячие показать_клавиши горячие быстрые_переходы команды команды_админа' : 'self.CF.showAdminComands(self.user.admin)'
+            'показать_горячие показать_клавиши горячие быстрые_переходы команды команды_админа' : 'self.CF.showAdminComands(self.user.admin)',
+            '\\u' : 'self.CF.getAccess()'
         }
 
     def getName(self):
