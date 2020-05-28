@@ -12,7 +12,7 @@ class ConvertManager:
         self.files_paths = None
 
     def convert(self):
-        self.font = 'Trebuchet MS'
+        self.font = 'Arial'
         self.mainWindow.RIGHT_LABEL['text'] = 'Конвертирование'
         self.mainWindow.RIGHT_LABEL['pady'] = 25
         self.mainWindow.RIGHT_LABEL['font'] = (self.font, 25, 'bold')

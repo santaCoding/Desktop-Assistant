@@ -90,8 +90,10 @@ class CustomFunctions:
             self.SAVE_BUTTON.bind('<Button-1>', save)
             self.EXIT_BUTTON = Button(main_window.right_part, cursor='hand2', text='Выход', highlightbackground='#3b6ecc', highlightthickness=30, fg='white')
             self.EXIT_BUTTON.bind('<Button-1>', exit)
-            self.SAVE_BUTTON.place(x = 200, y = 545, width = 80, height = 30)
+            self.SAVE_BUTTON.place(x = 50, y = 545, width = 80, height = 30)
             self.EXIT_BUTTON.place(x = 400, y = 545, width = 90, height = 40)
+            self.PROMPT = Label(main_window.right_part, text = 'По окончанию изменения доступа к функциям, нажмите кнопку "Сохранить"', fg='#a8a8a8')
+            self.PROMPT.place(x = 30, y = 500)
             show_data()
             return 'Добавление функции (~ админ)'
         else:

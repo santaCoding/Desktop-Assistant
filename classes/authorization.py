@@ -35,9 +35,9 @@ class AuthorizationManager:
             self.CANVAS.create_window((0,0),window=self.MAIN_FRAME,anchor='nw')
             self.MAIN_FRAME.bind("<Configure>",myfunction)
             data()
-            self.LABEL_PROMPT = Label(right_frame, bg='white', text=f'Чтобы удалить вход, нажмите на него', fg='#8ea2d4', font = ('Trebuchet MS', 14, 'bold'))
+            self.LABEL_PROMPT = Label(right_frame, bg='white', text=f'Чтобы удалить вход, нажмите на него', fg='#8ea2d4', font = ('Arial', 14, 'bold'))
             self.LABEL_PROMPT.place(x=50, y=555)
-            self.EXIT = Button(right_frame, cursor='hand2', text='Выход', font=('Trebuchet MS', 14), highlightbackground='#3b6ecc', highlightthickness=30, fg='white')
+            self.EXIT = Button(right_frame, cursor='hand2', text='Выход', font=('Arial', 14), highlightbackground='#3b6ecc', highlightthickness=30, fg='white')
             self.EXIT.bind('<Button-1>', partial(self.exit, mainWindow))
             self.EXIT.place(x= 400, y=545, width = 90, height = 40)
             return 'М.А.'
@@ -83,14 +83,14 @@ class AuthorizationManager:
         self.EXIT.destroy()
         mainWindow.RIGHT_LABEL['text'] = 'Скажите Боту что-то сделать'
         mainWindow.RIGHT_LABEL['pady'] = 260
-        mainWindow.RIGHT_LABEL['font'] = ('Trebuchet MS', 16, 'bold')
+        mainWindow.RIGHT_LABEL['font'] = ('Arial', 16, 'bold')
         mainWindow.LABEL['text'] = 'Да да?'
         
 
     def addItem(self, right_frame, mainWindow) -> str:
         mainWindow.RIGHT_LABEL['text'] = self.title
         mainWindow.RIGHT_LABEL['pady'] = 50
-        mainWindow.RIGHT_LABEL['font'] = ('Trebuchet MS', 20, 'bold')
+        mainWindow.RIGHT_LABEL['font'] = ('Arial', 20, 'bold')
         self.site = None
         self.login = None
         self.password = None
@@ -106,6 +106,8 @@ class AuthorizationManager:
                 item = AuthorizationItem(self.site, self.login, self.password)
                 self.items.append(item)
                 mainWindow.LABEL['text'] = f'Пункт авторизации\nдля сайта {self.site} сохранен!'
+                self.EXIT.destroy()
+                self.WARNING.destroy()
                 mainWindow.INPUT.focus_set()
                 return True
             else:
@@ -164,14 +166,14 @@ class AuthorizationManager:
 
         self.ITEM_FRAME = Frame(right_frame, width = 550, bg='white', padx = 150)
         self.ITEM_FRAME.pack()
-        self.INPUT_SITE = Entry(self.ITEM_FRAME, bg = 'white', fg = 'black', width = 30, font = ('Trebuchet MS', 16))
-        self.INPUT_LOGIN = Entry(self.ITEM_FRAME, bg = 'white', fg = 'black', width = 30, font = ('Trebuchet MS', 16))
-        self.INPUT_PASSWORD = Entry(self.ITEM_FRAME, bg = 'white', fg = 'black', width = 30, font = ('Trebuchet MS', 16))
-        self.LABEL_SITE = Label(self.ITEM_FRAME, text = 'Введите сайт:', fg = '#333b4f', bg = 'white', font = ('Trebuchet MS', 14))
-        self.LABEL_LOGIN = Label(self.ITEM_FRAME, text = 'Введите логин:', fg = '#333b4f', bg = 'white', font = ('Trebuchet MS', 14))
-        self.LABEL_PASSWORD = Label(self.ITEM_FRAME, text = 'Введите пароль:', fg = '#333b4f', bg = 'white', font = ('Trebuchet MS', 14))
-        self.WARNING = Label(right_frame, text='', cursor='X_cursor', width=30, height = 2, font=('Trebuchet MS', 14), bg='white', fg='white')
-        self.EXIT = Button(right_frame, cursor='hand2', text='Выход', font=('Trebuchet MS', 14), highlightbackground='#3b6ecc', highlightthickness=30, fg='white')
+        self.INPUT_SITE = Entry(self.ITEM_FRAME, bg = 'white', fg = 'black', width = 30, font = ('Arial', 16))
+        self.INPUT_LOGIN = Entry(self.ITEM_FRAME, bg = 'white', fg = 'black', width = 30, font = ('Arial', 16))
+        self.INPUT_PASSWORD = Entry(self.ITEM_FRAME, bg = 'white', fg = 'black', width = 30, font = ('Arial', 16))
+        self.LABEL_SITE = Label(self.ITEM_FRAME, text = 'Введите сайт:', fg = '#333b4f', bg = 'white', font = ('Arial', 14))
+        self.LABEL_LOGIN = Label(self.ITEM_FRAME, text = 'Введите логин:', fg = '#333b4f', bg = 'white', font = ('Arial', 14))
+        self.LABEL_PASSWORD = Label(self.ITEM_FRAME, text = 'Введите пароль:', fg = '#333b4f', bg = 'white', font = ('Arial', 14))
+        self.WARNING = Label(right_frame, text='', cursor='X_cursor', width=30, height = 2, font=('Arial', 14), bg='white', fg='white')
+        self.EXIT = Button(right_frame, cursor='hand2', text='Выход', font=('Arial', 14), highlightbackground='#3b6ecc', highlightthickness=30, fg='white')
         self.WARNING.place(x=285, y=550)
         self.EXIT.place(x= 230, y=500, width = 90, height = 40)
         self.LABEL_SITE.pack()

@@ -22,7 +22,7 @@ class Extraction:
         self.mainWindow.LABEL['text'] = 'Да да?'
 
     def extract(self):
-        self.font = 'Trebuchet MS'
+        self.font = 'Arial'
         self.mainWindow.RIGHT_LABEL['text'] = self.title
         self.mainWindow.RIGHT_LABEL['pady'] = 20
         self.mainWindow.RIGHT_LABEL['font'] = (self.font, 20, 'bold')
