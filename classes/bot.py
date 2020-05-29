@@ -9,7 +9,7 @@ class Assistant:
         self.app = app
         self.cong = ['Здравствуй!', 'Здарова', 'Привет!', 'Здрасте здрасте)']
         self.mainWindow = mainWindow.MainWindow(self.app, self)
-        self.user = user.User() # экземпляр пользователя
+        self.user = user.User(None, None) # экземпляр пользователя
         self.autho = authorization.AuthorizationManager(self.user)
         self.convert = convert.ConvertManager(self.mainWindow)
         self.extract = extract.Extraction(self.mainWindow)
@@ -46,12 +46,12 @@ class Assistant:
         }
         self.data = {
             'твое_имя тебя_зовут' : 'f\'Меня зовут {self.getName()}\'',
-            'как_меня_зовут как_мое_имя' : 'self.user.getName()',
+            'как_меня_зовут как_мое_имя' : 'self.user.name',
             'меня_зовут запиши_мое_имя запомни_мое_имя' : 'self.user.setName(self.mainWindow)',
             'забудь_мое_имя удали_мое_имя забудь_меня забудь_как_меня_зовут' : 'self.user.delData(self.mainWindow, \'name\', \'Мне забыть что Вас зовут \')',
             'запомни_мой_возраст запиши_мой_возраст запомни_сколько_мне_лет запиши_сколько_мне_лет' : 'self.user.setAge(self.mainWindow)',
             'забудь_мой_возраст удали_мой_возраст' : 'self.user.delData(self.mainWindow, \'age\', \'Мне забыть что Вам \')',
-            'сколько_мне_лет мой_возраст' : 'self.user.getAge()',
+            'сколько_мне_лет мой_возраст' : 'self.user.age',
             'что_ты_знаешь что_ты_помнишь \whoami' : 'self.getInfo()',
             'забудь' : 'self.forgetData()'
         }
@@ -66,7 +66,8 @@ class Assistant:
             'извлечь извлечение \me' : 'self.extract.extract(self.CF.getAccess())',
             'системная_информация \sys' : 'self.CF.system_info()',
             'добавить_функцию изменить_функцию добавить_опцию новая_функция новая_опция \nf' : 'self.CF.addPaidOption(self.mainWindow, self.user.admin)',
-            'показать_горячие показать_клавиши горячие быстрые_переходы команды команды_админа' : 'self.CF.showAdminComands(self.user.admin)'
+            'показать_горячие показать_клавиши горячие быстрые_переходы команды команды_админа' : 'self.CF.showAdminComands(self.user.admin)',
+            'купить покупка купить_функцию донат \buy' : 'self.CF.showFuncsToBuy(self.mainWindow, self.user)'
         }
 
     def getName(self):
@@ -75,9 +76,9 @@ class Assistant:
     def getInfo(self):
         response = ''
         if self.user.name is not None:
-            self.info['Имя'] = self.user.getName()
+            self.info['Имя'] = self.user.name
         if self.user.age is not None:
-            self.info['Возраст'] = self.user.getAge()
+            self.info['Возраст'] = self.user.age
         for label in self.info:
             response += (f'\n{label} : {self.info[label]}')
 

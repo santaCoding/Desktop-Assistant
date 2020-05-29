@@ -260,7 +260,6 @@ class AuthorizationManager:
         else:
             return 'К сожалению, администратор запретил\nдоступ к этому Менеджеру.\nЧтобы получить доступ\nтребуется купить эту функцию.'
                 
-
     def clearManager(self, access):
         if access['Менеджер Авторизации'] == True:
             if self.items:

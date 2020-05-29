@@ -1,10 +1,12 @@
 from platform import *
 from tkinter import *
 from functools import partial
+from tkinter import messagebox
 
 class CustomFunctions:
     def __init__(self):
         self.access_funcs = {'Менеджер Напоминания' : False, 'Менеджер Авторизации' : True, 'Менеджер Конвертирования' : False, 'Менеджер Извлечения' : False}
+        self.price = 50
 
     def getAccess(self) -> dict:
         return self.access_funcs
@@ -12,6 +14,42 @@ class CustomFunctions:
     def system_info(self):
         '''Возвращает все основные параметры системы'''
         return f'Платформа :\n{platform()}\nСистема : {system()},\nИздано : {release()},\nМашина : {machine()},\nПроцессор: : {processor()},\nАрхитектура : {architecture()[0]}'
+
+    def showFuncsToBuy(self, main_window, user):
+        '''
+        Принимает ссылку на главное окно
+        Показывает функции для пользовательской покупки
+        Изменяет словарь функций если функция была куплена
+        '''
+        def buyFunc(name_function, user, event):
+            answer = messagebox.askyesno('Покупка функции', f'Купить функцию {name_function}?')
+            if answer:
+                if user.balance >= self.price:
+                    user.balance -= self.price
+                    self.access_funcs[name_function] = True
+                    messagebox.showinfo('Покупка', f'Вы приобрели функцию {name_function}!')
+                    return f'Спасибо за покупку!'
+                else:
+                    messagebox.showerror('Ошибка', 'На Вашем счету недостаточно средств!')
+                    return '('
+                    
+
+
+        main_window.RIGHT_LABEL['text'] = 'Купить платную функцию'
+        main_window.RIGHT_LABEL['pady'] = 40
+        self.FRAME = Frame(main_window.right_part)
+        self.FRAME.pack()
+        self.LABEL = Label(self.FRAME, text='Доступны такие функции для покупки:', font=('Arial', 14), fg='#a8a8a8')
+        self.LABEL.pack(pady=5)
+
+        item=0
+        for manager in self.access_funcs:
+            if list(self.access_funcs.values())[item] == False:
+                func = Label(self.FRAME, width = 25, text = manager, bg='#485259', cursor='hand2', fg='white', pady=10, padx=10)
+                func.bind('<Button-1>', partial(buyFunc, manager, user))
+                func.pack(pady = 5)
+        return 'Вас счет чуть выше'
+
 
     def addPaidOption(self, main_window, admin_access:bool) -> str:
         self.copied_funcs = self.access_funcs.copy()
@@ -109,6 +147,7 @@ class CustomFunctions:
         if admin_access:
             return '\\admin - права админа\n\\nf - новая функция (админ)\n\\new - новый вход\n\sys - системная информация\
                 \n\ma - менеджер авторизаций\n\mc - менеджер конвертирования\n\me - менеджер извлечения\n\mr - менеджер напоминания\
-                \n\whoami - что знает бот\n\whoay - информация о боте\n\cany - что может бот \n\exit - выход из админа'
+                \n\whoami - что знает бот\n\whoay - информация о боте\n\cany - что может бот \n\exit - выход из админа\
+                \n\buy - покупка функций'
         else:
             return 'У Вас нет доступа к функциям такого типа!\nВойдите под администратором'

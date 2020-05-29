@@ -1,6 +1,2 @@
-import platform
-
-print(platform.platform())
-print(platform.system())
-print(platform.processor())
-print(platform.architecture())
+d = 'dwdwd22'
+print(int in list(d))
