@@ -2,7 +2,7 @@ import tkinter
 
 class User:
     def __init__(self):
-        self.admin = True
+        self.admin = False
         self.name = None
         self.age = None
 
@@ -77,9 +77,10 @@ class User:
         INPUT.bind('<Return>', set)
         return 'Жду ввода возраста...'
 
-    def getAdminStatus(self, mainWindow):
+    def getAdminStatus(self, mainWindow, app):
         if self.admin is False:
             self.admin = mainWindow.setModuleWindow(self.admin, content = {'textButton' : 'Подтвердить', 'textLabel' : 'Введите пароль:', 'show' : True, 'func' : 'check_password'})
+            app.focus_set()
             mainWindow.INPUT.focus_set()
             if self.admin:
                 mainWindow.app.title('Бот Alex ~ admin')

@@ -56,7 +56,7 @@ class Assistant:
             'забудь' : 'self.forgetData()'
         }
         self.customFuncs = {
-            '\\admin я_админ зайти_в_админку доступ_админ админ_доступ' : 'self.user.getAdminStatus(self.mainWindow)',
+            '\\admin я_админ зайти_в_админку доступ_админ админ_доступ' : 'self.user.getAdminStatus(self.mainWindow, self.app)',
             'выйти_из_админа выйти_из_администратора я_не_админ выйти_из_режима_администратора выйти_из_под_админа \exit' : 'self.user.exitAdmin(self.mainWindow)',
             'новая_авторизация авторизация занести_авторизацию занести_логин_и_пароль запомнить_авторизацию новый_вход новая_авторизация \new' : 'self.autho.addItem(self.mainWindow.right_part, self.mainWindow, self.CF.getAccess())',
             'менеджер_авторизаций покажи_авторизации покажи_логины покажи_пароли логины пароли \ma' : 'self.autho.showContent(self.mainWindow.right_part, self.mainWindow, self.CF.getAccess())',

@@ -82,8 +82,17 @@ class AuthorizationManager:
             self.HEADER.destroy()
         except:
             pass
+        try:
+            self.INPUT.destroy()
+        except:
+            pass
+        try:
+            self.LABEL.destroy()
+        except:
+            pass
         self.ITEM_FRAME.destroy()
         self.EXIT.destroy()
+        mainWindow.INPUT.focus_set()
         mainWindow.RIGHT_LABEL['text'] = 'Скажите Боту что-то сделать'
         mainWindow.RIGHT_LABEL['pady'] = 260
         mainWindow.RIGHT_LABEL['font'] = ('Arial', 16, 'bold')
@@ -239,6 +248,9 @@ class AuthorizationManager:
                 mainWindow.RIGHT_LABEL['font'] = ('Arial', 20, 'bold')
                 self.LABEL = Label(mainWindow.right_part, text = 'Введите название сайта:', font=('Arial', 16, 'bold'), fg='#24628f')
                 self.INPUT = Entry(mainWindow.right_part, width=30, font=('Arial', 16, 'bold'))
+                self.EXIT = Button(mainWindow.right_part, cursor='hand2', text='Выход', font=('Arial', 14), highlightbackground='#3b6ecc', highlightthickness=30, fg='white')
+                self.EXIT.bind('<Button-1>', partial(self.exit, mainWindow))
+                self.EXIT.place(x= 400, y=545, width = 90, height = 40)
                 self.LABEL.pack()
                 self.INPUT.focus_set()
                 self.INPUT.bind('<Return>', getSite)
