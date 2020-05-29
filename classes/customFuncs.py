@@ -4,7 +4,7 @@ from functools import partial
 
 class CustomFunctions:
     def __init__(self):
-        self.access_funcs = {'Менеджер Напоминания' : False, 'Менеджер Авторизации' : False, 'Менеджер Конвертирования' : False, 'Менеджер Извлечения' : False}
+        self.access_funcs = {'Менеджер Напоминания' : False, 'Менеджер Авторизации' : True, 'Менеджер Конвертирования' : False, 'Менеджер Извлечения' : False}
 
     def getAccess(self) -> dict:
         return self.access_funcs

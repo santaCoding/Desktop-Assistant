@@ -6,7 +6,7 @@ class AuthorizationManager:
     def __init__(self, user):
         self.title = 'Менеджер Авторизаций'
         self.owner = user
-        self.items = [] #список ссылок на экземпляры пунктов
+        self.items = [] # список ссылок на экземпляры пунктов
 
     def showContent(self, right_frame, mainWindow, access):
         if access['Менеджер Авторизации'] == True:
@@ -23,12 +23,12 @@ class AuthorizationManager:
                         self.LABEL_SITE.pack(pady=5)
 
                 def myfunction(event):
-                    self.CANVAS.configure(scrollregion=self.CANVAS.bbox("all"),width=510, height=400)
+                    self.CANVAS.configure(scrollregion = self.CANVAS.bbox("all"), width=510, height=400)
 
                 self.ITEMS_FRAME.pack()
                 self.CANVAS=Canvas(self.ITEMS_FRAME)
                 self.MAIN_FRAME=Frame(self.CANVAS)
-                self.SCROLLBAR=Scrollbar(self.ITEMS_FRAME,orient="vertical",command=self.CANVAS.yview)
+                self.SCROLLBAR = Scrollbar(self.ITEMS_FRAME, orient = "vertical", command = self.CANVAS.yview)
                 self.CANVAS.configure(yscrollcommand=self.SCROLLBAR.set)
 
                 self.SCROLLBAR.pack(side="right",fill="y")
@@ -210,12 +210,52 @@ class AuthorizationManager:
             ITEMS_FRAME.destroy()
             self.showContent(right_frame, mainWindow)
 
-    #def getItem(self, access)
+    def getItem(self, mainWindow, access):
+        if access['Менеджер Авторизации'] == True:
+            if self.items:
+
+                def getSite(event):
+                    try:
+                        self.FRAME.destroy()
+                    except:
+                        pass
+                    searched_site = self.INPUT.get()
+                    self.INPUT.delete(0, END)
+                    if searched_site:
+                        self.FRAME = Frame(mainWindow.right_part)
+                        self.FRAME.pack()
+                        success = False
+                        for item in self.items:
+                            if item.site == searched_site:
+                                lab = Label(self.FRAME, width=20, pady=5, padx=5, text = f'Логин: {item.login}\nПароль: {item.password}', font=('Arial', 14), fg='white', bg='#ababab', justify=LEFT, anchor=W)
+                                lab.pack(pady=5)
+                                success = True
+                        if success == False:
+                            lab = Label(self.FRAME, text = f'Информации о сайте {searched_site} нет(', font=('Arial', 14), fg='#b54141')
+                            lab.pack()
+
+                mainWindow.RIGHT_LABEL['text'] = self.title
+                mainWindow.RIGHT_LABEL['pady'] = 50
+                mainWindow.RIGHT_LABEL['font'] = ('Arial', 20, 'bold')
+                self.LABEL = Label(mainWindow.right_part, text = 'Введите название сайта:', font=('Arial', 16, 'bold'), fg='#24628f')
+                self.INPUT = Entry(mainWindow.right_part, width=30, font=('Arial', 16, 'bold'))
+                self.LABEL.pack()
+                self.INPUT.focus_set()
+                self.INPUT.bind('<Return>', getSite)
+                self.INPUT.pack()
+            else:
+                return 'Менеджер Авторизации пуст('
+        else:
+            return 'К сожалению, администратор запретил\nдоступ к этому Менеджеру.\nЧтобы получить доступ\nтребуется купить эту функцию.'
+                
+                
+
+
 
     #def clearManager(self, access):
         
 
-#-------------------------------------------------------------------------------------#
+#-------------------------------------Descriptor-------------------------------------------#
 
 class ItemDescriptor:
     def __get__(self, instance, owner):
