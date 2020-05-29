@@ -21,33 +21,41 @@ class CustomFunctions:
         Показывает функции для пользовательской покупки
         Изменяет словарь функций если функция была куплена
         '''
+        def showData():
+            self.FRAME = Frame(main_window.right_part)
+            self.FRAME.pack()
+            self.LABEL = Label(self.FRAME, text='Доступны такие функции для покупки:', font=('Arial', 14), fg='#a8a8a8')
+            self.LABEL.pack(pady=5)
+            item=0
+
+            for manager in self.access_funcs:
+                if list(self.access_funcs.values())[item] == False:
+                    func = Label(self.FRAME, width = 25, text = manager, bg='#485259', cursor='hand2', fg='white', pady=10, padx=10)
+                    func.bind('<Button-1>', partial(buyFunc, manager, user))
+                    func.pack(pady = 5)
+                item+=1
+
         def buyFunc(name_function, user, event):
             answer = messagebox.askyesno('Покупка функции', f'Купить функцию {name_function}?')
             if answer:
                 if user.balance >= self.price:
                     user.balance -= self.price
+                    print(user.balance)
+                    print(self.access_funcs[name_function])
                     self.access_funcs[name_function] = True
+                    print(self.access_funcs[name_function])
+                    print(f'self.access_funcs: {self.access_funcs}')
                     messagebox.showinfo('Покупка', f'Вы приобрели функцию {name_function}!')
+                    self.FRAME.destroy()
+                    showData()
                     return f'Спасибо за покупку!'
                 else:
                     messagebox.showerror('Ошибка', 'На Вашем счету недостаточно средств!')
                     return '('
-                    
-
 
         main_window.RIGHT_LABEL['text'] = 'Купить платную функцию'
         main_window.RIGHT_LABEL['pady'] = 40
-        self.FRAME = Frame(main_window.right_part)
-        self.FRAME.pack()
-        self.LABEL = Label(self.FRAME, text='Доступны такие функции для покупки:', font=('Arial', 14), fg='#a8a8a8')
-        self.LABEL.pack(pady=5)
-
-        item=0
-        for manager in self.access_funcs:
-            if list(self.access_funcs.values())[item] == False:
-                func = Label(self.FRAME, width = 25, text = manager, bg='#485259', cursor='hand2', fg='white', pady=10, padx=10)
-                func.bind('<Button-1>', partial(buyFunc, manager, user))
-                func.pack(pady = 5)
+        showData()
         return 'Вас счет чуть выше'
 
 

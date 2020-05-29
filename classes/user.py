@@ -2,18 +2,15 @@ import tkinter
 
 class UserDescriptor:
     def __get__(self, instance, owner):
-        print('__get__')
         if instance.__dict__[self.name] is None:
             return 'Я не знаю эту информацию,\nк сожалению'
         else:
             return instance.__dict__[self.name]
 
     def __set__(self, instance, value):
-        print('__set__')
         instance.__dict__[self.name] = value
 
     def __set_name__(self, owner, name):
-        print('__set__')
         self.name = name
 
 class User:
