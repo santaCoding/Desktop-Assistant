@@ -13,6 +13,10 @@ class MainWindow:
         self.BG_LIGHT = 'white'
         self.logoImage = ImageTk.PhotoImage(file="bot.png")
         self.top_frame = Frame(self.app, width = 1100, height = 50, bg='#4a4a4a')
+        self.NAME = Label(self.top_frame, text='', font=('Arial', 18, 'bold'), fg='white', bg='#4a4a4a')
+        self.NAME.pack(pady=10, padx = 10, side=LEFT)
+        self.BALANCE = Label(self.top_frame, text='', font=('Arial', 15), fg='white', bg='#4a4a4a')
+        self.BALANCE.pack(pady=12, padx = 10, side=LEFT)
         self.left_part = Frame(self.app, width = 550, height = 600, bg = '#e3e3e3')
         self.right_part = Frame(self.app, width = 550, height = 600, bg = self.BG_LIGHT)
         self.frame_bot = Frame(self.left_part, width = 550, bg = '#e3e3e3', height = 700)
@@ -41,7 +45,7 @@ class MainWindow:
         self.RIGHT_LABEL.pack(side=TOP)
 
     def setFrameInput(self):
-        self.INPUT_FRAME = Entry(self.right_part, width = 30, font=(self.font, 16, 'bold'))
+        self.INPUT_FRAME = Entry(self.right_part, width = 20, font=(self.font, 16, 'bold'))
         self.INPUT_FRAME.pack()
         self.INPUT_FRAME.focus_set()
         return self.INPUT_FRAME

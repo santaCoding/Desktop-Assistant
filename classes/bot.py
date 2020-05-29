@@ -10,6 +10,7 @@ class Assistant:
         self.cong = ['Здравствуй!', 'Здарова', 'Привет!', 'Здрасте здрасте)']
         self.mainWindow = mainWindow.MainWindow(self.app, self)
         self.user = user.User(None, None) # экземпляр пользователя
+        self.mainWindow.BALANCE['text'] =  'Ваш баланс равен ' + str(self.user.balance)
         self.autho = authorization.AuthorizationManager(self.user)
         self.convert = convert.ConvertManager(self.mainWindow)
         self.extract = extract.Extraction(self.mainWindow)

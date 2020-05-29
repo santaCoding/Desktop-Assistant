@@ -32,12 +32,13 @@ class User:
                 mainWindow.LABEL['text'] = 'Вы ничего не ввели'
             else:
                 mainWindow.LABEL['text'] = f'Я запомнил, что Вас зовут {self.name}!'
+                mainWindow.NAME['text'] = 'Здравствуйте, ' + self.name
             mainWindow.RIGHT_LABEL['text'] = 'Скажите Боту что-то сделать'
             INPUT.destroy()
 
         mainWindow.RIGHT_LABEL['text'] = 'Введите имя: '
         INPUT = mainWindow.setFrameInput()
-        INPUT.place(x=125, y=300)
+        INPUT.place(x=160, y=300)
         INPUT.bind('<Return>', set)
         return 'Жду ввода имени...'
     
