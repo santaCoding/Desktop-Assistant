@@ -5,7 +5,7 @@ from tkinter import messagebox
 
 class CustomFunctions:
     def __init__(self):
-        self.access_funcs = {'Менеджер Напоминания' : True, 'Менеджер Авторизации' : True, 'Менеджер Конвертирования' : True, 'Менеджер Извлечения' : True}
+        self.access_funcs = {'Менеджер Парсинга' : True, 'Менеджер Авторизации' : True, 'Менеджер Конвертирования' : True, 'Менеджер Извлечения' : True}
         self.price = 50
 
     def getAccess(self) -> dict:
@@ -27,13 +27,16 @@ class CustomFunctions:
             self.LABEL = Label(self.FRAME, text='Доступны такие функции для покупки:', font=('Arial', 14), fg='#a8a8a8')
             self.LABEL.pack(pady=5)
             item=0
-
+            empty = True
             for manager in self.access_funcs:
                 if list(self.access_funcs.values())[item] == False:
                     func = Label(self.FRAME, width = 25, text = manager, bg='#485259', cursor='hand2', fg='white', pady=10, padx=10)
                     func.bind('<Button-1>', partial(buyFunc, manager, user))
                     func.pack(pady = 5)
+                    empty = False
                 item+=1
+            if empty:
+                self.LABEL['text'] = 'Все функции доступны!'
 
         def buyFunc(name_function, user, event):
             answer = messagebox.askyesno('Покупка функции', f'Купить функцию {name_function}?')
