@@ -48,23 +48,26 @@ class ProgrammingManager:
     def Go(self, mainWindow, event):
         pass
 
-    def showContent(self, access, mainWindow):
+    def showContent(self, access:dict, mainWindow):
         def selectLangs(event):
             self.FRAME = Frame(mainWindow.right_part)
             self.FRAME.pack()
+            iteration = 0
             for lang in self.builtin:
-                lang_label = Label(self.FRAME, text = lang, image=self.logos[lang], font=('Arial', 13), fg='grey')
-                if lang == 'Cpp':
-                    lang_label['text'] = 'C++'
-                elif lang == 'Csh':
-                    lang_label['text'] = 'C#'
+                if iteration % 2 == 0:
+                    self.labels_frame = Frame(self.FRAME)
+                    self.labels_frame.pack(pady=10)
+                lang_label = Label(self.labels_frame, image=self.logos[lang], cursor='hand2')
                 lang_label.bind('<Button-1>', partial(eval(f'self.{lang}'), mainWindow))
-                lang_label.pack(pady = 5)
+                lang_label.pack(side=LEFT, padx=60)
+                iteration += 1 
 
         if access['Менеджер Программирования'] == True:
             if not self.user_languages:
                 mainWindow.RIGHT_LABEL['text'] = self.title
-                mainWindow.RIGHT_LABEL['pady'] = 40
+                mainWindow.RIGHT_LABEL['pady'] = 30
+                self.PROMPT = Label(mainWindow.right_part, text='Выберите язык программирования', font=('Arial', 14), fg='grey')
+                self.PROMPT.pack(pady=10)
                 selectLangs(None)
             else:
                 pass
