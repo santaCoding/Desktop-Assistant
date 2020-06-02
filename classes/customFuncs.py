@@ -5,7 +5,7 @@ from tkinter import messagebox
 
 class CustomFunctions:
     def __init__(self):
-        self.access_funcs = {'Менеджер Программиста' : True, 'Менеджер Авторизации' : True, 'Менеджер Конвертирования' : True, 'Менеджер Извлечения' : True}
+        self.access_funcs = {'Менеджер Программирования' : True, 'Менеджер Авторизации' : True, 'Менеджер Конвертирования' : True, 'Менеджер Извлечения' : True}
         self.price = 50
 
     def getAccess(self) -> dict:

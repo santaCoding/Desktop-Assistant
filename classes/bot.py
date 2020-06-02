@@ -11,6 +11,8 @@ class Assistant:
         self.mainWindow = mainWindow.MainWindow(self.app, self)
         self.user = user.User(None, None) # экземпляр пользователя
         self.mainWindow.BALANCE['text'] =  'Ваш баланс равен ' + str(self.user.balance)
+        if self.user.name is None:
+            self.mainWindow.NAME['text'] = 'Представьтесь, пожалуйста'
         self.autho = authorization.AuthorizationManager(self.user)
         self.convert = convert.ConvertManager(self.mainWindow)
         self.extract = extract.Extraction(self.mainWindow)
@@ -69,7 +71,8 @@ class Assistant:
             'системная_информация \sys' : 'self.CF.system_info()',
             'добавить_функцию изменить_функцию добавить_опцию новая_функция новая_опция \nf' : 'self.CF.addPaidOption(self.mainWindow, self.user.admin)',
             'показать_горячие показать_клавиши горячие быстрые_переходы команды команды_админа' : 'self.CF.showAdminComands(self.user.admin)',
-            'купить покупка купить_функцию донат платные_функции \buy' : 'self.CF.showFuncsToBuy(self.mainWindow, self.user)'
+            'купить покупка купить_функцию донат платные_функции \buy' : 'self.CF.showFuncsToBuy(self.mainWindow, self.user)',
+            '\mp менеджер_программиста менеджер_программирования язык программирование' : 'self.programmer.showContent(self.CF.getAccess(), self.mainWindow)'
         }
 
     def getName(self):
