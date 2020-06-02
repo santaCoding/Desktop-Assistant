@@ -3,7 +3,7 @@ import tkinter
 class UserDescriptor:
     def __get__(self, instance, owner):
         if instance.__dict__[self.name] is None:
-            return 'Я не знаю эту информацию,\nк сожалению'
+            return None
         else:
             return instance.__dict__[self.name]
 
