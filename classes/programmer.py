@@ -129,13 +129,32 @@ class ProgrammingManager:
 class ProgrammingRecourses:
     def __init__(self, manager):
         self.manager = manager
+        self.books = {
+            'Python' : ['Django: практика создания Web-сайтов на Python (2018)', ]
+        }
 
     def WEBPython(self, mainWindow, event):
+        try:
+            self.manager.ADD_LANG1.destroy()
+            self.manager.ADD_LANG2.destroy()
+        except:
+            self.manager.DELETE_LANG.destroy()
         self.manager.FRAME.destroy()
         self.manager.PROMPT.destroy()
-        self.FRAME = Frame(mainWindow.right_part)
-        self.FRAME.pack()
-        django = ImageTk.PhotoImage(file='img/Django.png')
+        self.FRAME1 = Frame(mainWindow.right_part)
+        self.FRAME1.pack()
+        self.FRAME2 = Frame(mainWindow.right_part)
+        self.FRAME2.pack()
+        self.TEXT = Label(self.FRAME2, text='Согласно данным опроса разработчиков Python в 2019,\nDjango и Flask являются самыми популярными веб фреймворками\nсреди разработчиков.\nВы вряд ли ошибетесь, выбрав один из этих фреймворков\nдля работы с вашим новым веб приложением.\nХотя выбор того, какой из них будет лучше работать для вас\nи ваших целей, есть ряд явных отличий, которые нужно иметь в виду,\nперед тем как сделать выбор.', font=('Arial', 16), fg='#33465e', justify=LEFT, anchor=W)
+        self.TEXT.pack(pady=10)
+        self.django = ImageTk.PhotoImage(file='img/Django.png')
+        self.flask = ImageTk.PhotoImage(file='img/Flask.jpg')
         mainWindow.RIGHT_LABEL['text'] = 'WEB-Python'
-        djangoLogo = Label(self.FRAME, image=django)
-        djangoLogo.pack()
+        djangoLogo = Label(self.FRAME1, image=self.django)
+        flaskLogo = Label(self.FRAME1, image=self.flask)
+        djangoLogo.pack(side=LEFT, padx=10)
+        flaskLogo.pack(side=LEFT, padx=10)
+        PROMPT = Label(mainWindow.right_part, text='Полезные книги:\t\tПолезные ссылки:', font=('Arial', 16, 'bold'), fg='#33465e')
+        PROMPT.pack(pady=5)
+
+        
