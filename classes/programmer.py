@@ -72,6 +72,9 @@ class ProgrammingManager:
         self.FRAME.pack()
         self.PROMPT['text'] = 'Выберите категорию применения языка'
         self.checkExistence(mainWindow, name_lang)
+        BACKEND = Label(self.FRAME, text = 'BackEnd разработка', font=('Arial', 17), fg='#3573a6', cursor='hand2', bg='#cfd3ff')
+        BACKEND.bind('<Button-1>', partial(self.recourses.PHP, mainWindow))
+        BACKEND.pack(pady=40)
         
         
 
@@ -127,12 +130,14 @@ class ProgrammingRecourses:
         self.books = {
             'WEBPython' : ['Django: практика создания Web-сайтов на Python (2018)', 'Владимир Дронов: Django. Практика создания веб-сайтов на Python', 'Разработка веб-приложений с использованием Flask на языке Python'],
             'MLPython' : ['Python и машинное обучение', 'Гудфеллоу Я., Бенджио И., Курвилль А. − Глубокое обучение, 2017 г.', 'Орельен Жерон − Прикладное машинное обучение, 2018 г.', 'Адриан Роузброк − Deep Learning for Computer Vision with Python, 2017 г.'],
-            'APPython' : ['Автоматизация рутинных задач с помощью Python - Эл Свейгарт']
+            'APPython' : ['Автоматизация рутинных задач с помощью Python - Эл Свейгарт'],
+            'PHP' : ['Изучаем PHP и MySQL (Линн Бейли)', 'PHP. Объекты, шаблоны и методики программирования (Мэт Зандстра)', 'Самоучитель PHP 7 – Игорь Симдянов', 'Изучаем PHP 7 – Дэвид Скляр']
         }
         self.links = {
             'WEBPython' : ['https://habr.com/ru/post/346306/', 'https://python-scripts.com/flask-or-django', 'https://developer.mozilla.org/ru/docs/Learn/Server-side/Django'],
             'MLPython' : ['https://habr.com/ru/post/319288/', 'https://tproger.ru/experts/how-to-learn-machine-learning/', 'https://netology.ru/blog/2019-01-machine-learning-python'],
-            'APPython' : ['https://habr.com/ru/company/huawei/blog/314008/', 'https://python-scripts.com/web-automation-with-python-and-selenium']
+            'APPython' : ['https://habr.com/ru/company/huawei/blog/314008/', 'https://python-scripts.com/web-automation-with-python-and-selenium'],
+            'PHP' : ['https://www.php.net/manual/ru/intro-whatis.php', 'https://web-creator.ru/articles/php', 'https://skillbox.ru/media/code/5_zabluzhdeniy_o_razrabotke_na_php/']
         }
     def callLink(self, link, event):
         webbrowser.open_new_tab(link)
@@ -168,6 +173,13 @@ class ProgrammingRecourses:
             linksLbl.bind('<Button-1>', partial(self.callLink, link))
             linksLbl.pack()
             item+=1
+    
+    def PHP(self, mainWindow, event):
+        self.routine()
+        mainWindow.RIGHT_LABEL['text'] = 'BackEnd - разработка'
+        self.TEXT['text'] = 'Статические сайты, как правило, используются на сайтах\nвизитках либо для документации. Для чего-то более серьезного\nуже нужен динамический сайт. Что его характеризует?\nДанные отделены от логики работы сайта и\nнаходятся в хранилище. Например, если на сайте есть\nраздел со статьями, то для вывода статьи существует\nровно один обработчик (код, который отвечает за этот вывод),\nа данные при этом зависят от ссылки,\nпо которой открыта статья. То есть в динамических сайтах однотипные\nстраницы генерируются из одного места с подстановкой\nразных данных. В случае статического сайта, каждая ссылка была\nбы представлена физическим файлом с вбитым в него контентом.'
+        self.TEXT.pack()
+        self.showContent('PHP', mainWindow)
 
     def APPython(self, mainWindow, event):
         self.routine()
