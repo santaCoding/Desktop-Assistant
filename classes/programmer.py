@@ -7,7 +7,8 @@ class ProgrammingManager:
     def __init__(self):
         self.title = 'Менеджер Программирования'
         self.user_languages = []
-        self.logos = {'Python' : ImageTk.PhotoImage(file='Python.png'),
+        self.recourses = ProgrammingRecourses(self)
+        self.logos = {'Python' : ImageTk.PhotoImage(file='img/Python.png'),
         'PHP' : ImageTk.PhotoImage(file='img/PHP.png'),
         'Cpp' : ImageTk.PhotoImage(file='img/Cpp.png'),
         'Java' : ImageTk.PhotoImage(file='img/Java.png'),
@@ -46,7 +47,7 @@ class ProgrammingManager:
             self.DELETE_LANG.place(x=338, y=56, width=15, height=5)
 
     def Python(self, mainWindow, name_lang, event):
-        mainWindow.RIGHT_LABEL['text'] = 'PYTHON'
+        mainWindow.RIGHT_LABEL['text'] = 'Python'
         mainWindow.RIGHT_LABEL['font'] = ('Arial', 25, 'bold')
         mainWindow.RIGHT_LABEL['fg'] = '#3573a6'
         self.FRAME.destroy()
@@ -57,17 +58,20 @@ class ProgrammingManager:
         WEB_LBL = Label(self.FRAME, text = 'WEB-разработка', font=('Arial', 17), fg='#3573a6', cursor='hand2', bg='#cfd3ff')
         ML_LBL = Label(self.FRAME, text = 'Machine Learning', font=('Arial', 17), fg='#3573a6', cursor='hand2', bg='#cfd3ff')
         AP_LBL = Label(self.FRAME, text = 'Автоматизация процессов', font=('Arial', 17), fg='#3573a6', cursor='hand2', bg='#cfd3ff')
-        WEB_LBL.bind('Button-1')
+        WEB_LBL.bind('<Button-1>', partial(self.recourses.WEBPython, mainWindow))
         WEB_LBL.pack(pady=10)
         ML_LBL.pack(pady=10)
         AP_LBL.pack(pady=10)
 
     def PHP(self, mainWindow, name_lang, event):
+        mainWindow.RIGHT_LABEL['text'] = 'PHP'
+        mainWindow.RIGHT_LABEL['font'] = ('Arial', 25, 'bold')
+        mainWindow.RIGHT_LABEL['fg'] = '#3573a6'
         self.FRAME.destroy()
         self.FRAME = Frame(mainWindow.right_part)
         self.FRAME.pack()
         self.PROMPT['text'] = 'Выберите категорию применения языка'
-        self.ADD_LANG.bind('<Button-1>', partial(self.add, name_lang))
+        self.checkExistence(mainWindow, name_lang)
         
 
     def Cpp(self, mainWindow, event):
@@ -115,5 +119,23 @@ class ProgrammingManager:
                 self.PROMPT = Label(mainWindow.right_part, text='Выберите язык программирования', font=('Arial', 14), fg='grey')
                 self.PROMPT.pack(pady=7)
                 selectLangs(None)
+                return 'Менеджер Программирования'
             else:
                 pass
+        else:
+            return 'К сожалению, администратор запретил\nдоступ к этому Менеджеру.\nЧтобы получить доступ\nтребуется купить эту функцию.'
+
+
+class ProgrammingRecourses:
+    def __init__(self, manager):
+        self.manager = manager
+
+    def WEBPython(self, mainWindow, event):
+        self.manager.FRAME.destroy()
+        self.manager.PROMPT.destroy()
+        self.FRAME = Frame(mainWindow.right_part)
+        self.FRAME.pack()
+        django = ImageTk.PhotoImage(file='img/Django.png')
+        mainWindow.RIGHT_LABEL['text'] = 'WEB-Python'
+        djangoLogo = Label(self.FRAME, image=django)
+        djangoLogo.pack()
