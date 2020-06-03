@@ -17,7 +17,7 @@ class Assistant:
         self.convert = convert.ConvertManager(self.mainWindow)
         self.extract = extract.Extraction(self.mainWindow)
         self.CF = classes.customFuncs.CustomFunctions()
-        self.programmer = programmer.ProgrammingManager()
+        self.programmer = programmer.ProgrammingManager(self.mainWindow)
         self.name = 'Бот Alex'
         self.info = {}
         self.deal = ['Неплохо, а Ваши как?', 'Все супер!', 'Очень даже хорошо)', 'Отлично!']

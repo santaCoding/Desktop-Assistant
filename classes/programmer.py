@@ -2,22 +2,20 @@ from tkinter import *
 from functools import partial
 from PIL import ImageTk
 from tkinter import messagebox
+import webbrowser
 
 class ProgrammingManager:
-    def __init__(self):
+    def __init__(self, mainWindow):
         self.title = 'Менеджер Программирования'
         self.user_languages = []
-        self.recourses = ProgrammingRecourses(self)
+        self.recourses = ProgrammingRecourses(self, mainWindow)
         self.logos = {'Python' : ImageTk.PhotoImage(file='img/Python.png'),
         'PHP' : ImageTk.PhotoImage(file='img/PHP.png'),
         'Cpp' : ImageTk.PhotoImage(file='img/Cpp.png'),
         'Java' : ImageTk.PhotoImage(file='img/Java.png'),
         'JavaScript' : ImageTk.PhotoImage(file='img/JavaScript.png'),
-        'Csh' : ImageTk.PhotoImage(file='img/Csh.png'),
-        'Perl' : ImageTk.PhotoImage(file='img/Perl.png'),
-        'Swift' : ImageTk.PhotoImage(file='img/Swift.png'),
-        'Kotlin' : ImageTk.PhotoImage(file='img/Kotlin.png'),
-        'Go' : ImageTk.PhotoImage(file='img/Go.png')}
+        'Csh' : ImageTk.PhotoImage(file='img/Csh.png')
+        }
 
     def add(self, mainWindow, name_lang, event):
         self.user_languages.append(name_lang)
@@ -59,6 +57,8 @@ class ProgrammingManager:
         ML_LBL = Label(self.FRAME, text = 'Machine Learning', font=('Arial', 17), fg='#3573a6', cursor='hand2', bg='#cfd3ff')
         AP_LBL = Label(self.FRAME, text = 'Автоматизация процессов', font=('Arial', 17), fg='#3573a6', cursor='hand2', bg='#cfd3ff')
         WEB_LBL.bind('<Button-1>', partial(self.recourses.WEBPython, mainWindow))
+        ML_LBL.bind('<Button-1>', partial(self.recourses.MLPython, mainWindow))
+        AP_LBL.bind('<Button-1>', partial(self.recourses.APPython, mainWindow))
         WEB_LBL.pack(pady=10)
         ML_LBL.pack(pady=10)
         AP_LBL.pack(pady=10)
@@ -73,6 +73,7 @@ class ProgrammingManager:
         self.PROMPT['text'] = 'Выберите категорию применения языка'
         self.checkExistence(mainWindow, name_lang)
         
+        
 
     def Cpp(self, mainWindow, event):
         pass
@@ -86,22 +87,11 @@ class ProgrammingManager:
     def Csh(self, mainWindow, event):
         pass
 
-    def Perl(self, mainWindow, event):
-        pass
-
-    def Swift(self, mainWindow, event):
-        pass
-
-    def Kotlin(self, mainWindow, event):
-        pass
-
-    def Go(self, mainWindow, event):
-        pass
 
     def showContent(self, access:dict, mainWindow):
         def selectLangs(event):
             self.FRAME = Frame(mainWindow.right_part)
-            self.FRAME.pack()
+            self.FRAME.pack(pady=40)
             iteration = 0
             for lang in list(self.logos.keys()):
                 if iteration % 2 == 0:
@@ -127,16 +117,27 @@ class ProgrammingManager:
 
 
 class ProgrammingRecourses:
-    def __init__(self, manager):
+    def __init__(self, manager, mainWindow):
         self.manager = manager
+        self.FRAME1 = Frame(mainWindow.right_part)
+        self.FRAME1.pack()
+        self.FRAME2 = Frame(mainWindow.right_part)
+        self.FRAME2.pack()
+        self.TEXT = Label(self.FRAME2, text='', font=('Arial', 16), fg='#33465e', justify=LEFT, anchor=W)
         self.books = {
-            'Python' : ['Django: практика создания\nWeb-сайтов на Python (2018)', 'Владимир Дронов: Django. Практика\nсоздания веб-сайтов на Python', 'Разработка веб-приложений\nс использованием Flask на языке Python']
+            'WEBPython' : ['Django: практика создания Web-сайтов на Python (2018)', 'Владимир Дронов: Django. Практика создания веб-сайтов на Python', 'Разработка веб-приложений с использованием Flask на языке Python'],
+            'MLPython' : ['Python и машинное обучение', 'Гудфеллоу Я., Бенджио И., Курвилль А. − Глубокое обучение, 2017 г.', 'Орельен Жерон − Прикладное машинное обучение, 2018 г.', 'Адриан Роузброк − Deep Learning for Computer Vision with Python, 2017 г.'],
+            'APPython' : ['Автоматизация рутинных задач с помощью Python - Эл Свейгарт']
         }
         self.links = {
-            'Python' : ['https://...']
+            'WEBPython' : ['https://habr.com/ru/post/346306/', 'https://python-scripts.com/flask-or-django', 'https://developer.mozilla.org/ru/docs/Learn/Server-side/Django'],
+            'MLPython' : ['https://habr.com/ru/post/319288/', 'https://tproger.ru/experts/how-to-learn-machine-learning/', 'https://netology.ru/blog/2019-01-machine-learning-python'],
+            'APPython' : ['https://habr.com/ru/company/huawei/blog/314008/', 'https://python-scripts.com/web-automation-with-python-and-selenium']
         }
+    def callLink(self, link, event):
+        webbrowser.open_new_tab(link)
 
-    def WEBPython(self, mainWindow, event):
+    def routine(self):
         try:
             self.manager.ADD_LANG1.destroy()
             self.manager.ADD_LANG2.destroy()
@@ -144,12 +145,52 @@ class ProgrammingRecourses:
             self.manager.DELETE_LANG.destroy()
         self.manager.FRAME.destroy()
         self.manager.PROMPT.destroy()
-        self.FRAME1 = Frame(mainWindow.right_part)
-        self.FRAME1.pack()
-        self.FRAME2 = Frame(mainWindow.right_part)
-        self.FRAME2.pack()
-        self.TEXT = Label(self.FRAME2, text='Согласно данным опроса разработчиков Python в 2019,\nDjango и Flask являются самыми популярными веб фреймворками\nсреди разработчиков.\nВы вряд ли ошибетесь, выбрав один из этих фреймворков\nдля работы с вашим новым веб приложением.\nХотя выбор того, какой из них будет лучше работать для вас\nи ваших целей, есть ряд явных отличий, которые нужно иметь в виду,\nперед тем как сделать выбор.', font=('Arial', 16), fg='#33465e', justify=LEFT, anchor=W)
-        self.TEXT.pack(pady=10)
+
+    def showContent(self, category, mainWindow):
+        PROMPT_BOOKS = Label(mainWindow.right_part, text='Полезные книги:', font=('Arial', 16, 'bold'), fg='#1c3a61')
+        PROMPT_BOOKS.pack(pady=5)
+        books = ''
+        item=1
+        for book in self.books[category]:
+            books += str(item) + '. ' + book
+            if self.books[category].index(book) != len(self.books[category]) - 1:
+                books += '\n\n'
+            item+=1
+        booksLbl = Label(mainWindow.right_part, text=books, fg='#262626', font=('Arial', 13), justify=LEFT, anchor=W)
+        booksLbl.pack()
+        item=1
+        links = ''
+        PROMPT_LINKS = Label(mainWindow.right_part, text='Полезные ссылки:', font=('Arial', 16, 'bold'), fg='#1c3a61')
+        PROMPT_LINKS.pack(pady=5)
+
+        for link in self.links[category]:
+            linksLbl = Label(mainWindow.right_part, text=str(item) + '. ' + link, fg='#266cc7', font=('Arial', 13), justify=LEFT, anchor=W, cursor='hand2')
+            linksLbl.bind('<Button-1>', partial(self.callLink, link))
+            linksLbl.pack()
+            item+=1
+
+    def APPython(self, mainWindow, event):
+        self.routine()
+        mainWindow.RIGHT_LABEL['text'] = 'Автоматизация процессов'
+        self.TEXT['text'] = 'Автоматизация процессов стала полноценным «трендом»\nнашего времени и продолжает расширять свое влияние\nпрактически во всех сферах деятельности:\nначиная с сельского хозяйства и заканчивая «умными домами»\nили искусственным интеллектом.'
+        self.TEXT.pack()
+        self.showContent('APPython', mainWindow)
+
+    def MLPython(self, mainWindow, event):
+        self.routine()
+        mainWindow.RIGHT_LABEL['text'] = 'Машинное обучение'
+        self.TEXT['text'] = 'По сути, машинное обучение — это технология,\nкоторая помогает приложениям на основе искусственного интеллекта\nобучаться и выдавать результаты автоматически,\nбез человеческого вмешательства.\nPython лучше всего подходит для выполнения таких задач,\nпотому что он довольно понятный по сравнению с другими языками.'
+        self.TEXT.pack()
+        self.ml = ImageTk.PhotoImage(file='img/ML.jpg')
+        mlLogo = Label(self.FRAME1, image=self.ml)
+        mlLogo.pack()
+        self.showContent('MLPython', mainWindow)
+
+
+    def WEBPython(self, mainWindow, event):
+        self.routine()
+        self.TEXT['text'] = 'Согласно данным опроса разработчиков Python в 2019,\nDjango и Flask являются самыми популярными веб фреймворками\nсреди разработчиков.\nВы вряд ли ошибетесь, выбрав один из этих фреймворков\nдля работы с вашим новым веб приложением.\nХотя выбор того, какой из них будет лучше работать для вас\nи ваших целей, есть ряд явных отличий, которые нужно иметь в виду,\nперед тем как сделать выбор.'
+        self.TEXT.pack()
         self.django = ImageTk.PhotoImage(file='img/Django.png')
         self.flask = ImageTk.PhotoImage(file='img/Flask.jpg')
         mainWindow.RIGHT_LABEL['text'] = 'WEB-Python'
@@ -157,23 +198,4 @@ class ProgrammingRecourses:
         flaskLogo = Label(self.FRAME1, image=self.flask)
         djangoLogo.pack(side=LEFT, padx=10)
         flaskLogo.pack(side=LEFT, padx=10)
-        PROMPT = Label(mainWindow.right_part, text='Полезные книги:\t\tПолезные ссылки:', font=('Arial', 16, 'bold'), fg='#1c3a61')
-        PROMPT.pack(pady=5)
-        self.GLOBAL_RECOURSES_FRAME = Frame(mainWindow.right_part)
-        self.GLOBAL_RECOURSES_FRAME.pack()
-        self.BOOKS_FRAME = Frame(self.GLOBAL_RECOURSES_FRAME, bg='red')
-        self.LINKS_FRAME = Frame(self.GLOBAL_RECOURSES_FRAME, bg='black')
-        self.BOOKS_FRAME.pack(side=LEFT)
-        self.LINKS_FRAME.pack(side=LEFT)
-
-        item=1
-        for book in self.books['Python']:
-            bookLbl = Label(self.BOOKS_FRAME, text=str(item) + '. ' + book, fg='#262626', font=('Arial', 13), justify=LEFT, anchor=W)
-            bookLbl.pack()
-            item+=1
-        item=1
-
-        for link in self.links['Python']:
-            linkLbl = Label(self.LINKS_FRAME, text=str(item) + '. ' + link, fg='#262626', font=('Arial', 13), justify=RIGHT, anchor=W)
-            linkLbl.pack()
-            item+=1
+        self.showContent('WEBPython', mainWindow)
