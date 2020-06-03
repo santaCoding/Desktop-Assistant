@@ -11,7 +11,7 @@ class MainWindow:
     def initUI(self, bot):
         self.font = None
         self.BG_LIGHT = 'white'
-        self.logoImage = ImageTk.PhotoImage(file="bot.png")
+        self.logoImage = ImageTk.PhotoImage(file="img/bot.png")
         self.top_frame = Frame(self.app, width = 1100, height = 50, bg='#4a4a4a')
         self.NAME = Label(self.top_frame, text='', font=('Arial', 18, 'bold'), fg='white', bg='#4a4a4a')
         self.NAME.pack(pady=10, padx = 10, side=LEFT)
