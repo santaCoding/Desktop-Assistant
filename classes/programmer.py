@@ -130,7 +130,10 @@ class ProgrammingRecourses:
     def __init__(self, manager):
         self.manager = manager
         self.books = {
-            'Python' : ['Django: практика создания Web-сайтов на Python (2018)', ]
+            'Python' : ['Django: практика создания\nWeb-сайтов на Python (2018)', 'Владимир Дронов: Django. Практика\nсоздания веб-сайтов на Python', 'Разработка веб-приложений\nс использованием Flask на языке Python']
+        }
+        self.links = {
+            'Python' : ['https://...']
         }
 
     def WEBPython(self, mainWindow, event):
@@ -154,7 +157,18 @@ class ProgrammingRecourses:
         flaskLogo = Label(self.FRAME1, image=self.flask)
         djangoLogo.pack(side=LEFT, padx=10)
         flaskLogo.pack(side=LEFT, padx=10)
-        PROMPT = Label(mainWindow.right_part, text='Полезные книги:\t\tПолезные ссылки:', font=('Arial', 16, 'bold'), fg='#33465e')
+        PROMPT = Label(mainWindow.right_part, text='Полезные книги:\t\tПолезные ссылки:', font=('Arial', 16, 'bold'), fg='#1c3a61')
         PROMPT.pack(pady=5)
+        self.RECOURSES_FRAME = Frame(mainWindow.right_part)
+        self.RECOURSES_FRAME.pack()
 
-        
+        item=1
+        for book in self.books['Python']:
+            bookLbl = Label(self.RECOURSES_FRAME, text=str(item) + '. ' + book, fg='#262626', font=('Arial', 13), justify=LEFT, anchor=W)
+            bookLbl.pack(side=LEFT)
+            item+=1
+        item=1
+        for link in self.links['Python']:
+            linkLbl = Label(self.RECOURSES_FRAME, text=str(item) + '. ' + link, fg='#262626', font=('Arial', 13), justify=RIGHT, anchor=W)
+            linkLbl.pack(side=RIGHT)
+            item+=1
