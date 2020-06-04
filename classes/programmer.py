@@ -117,7 +117,9 @@ class ProgrammingManager:
         FRONT = Label(self.FRAME, text='FrontEnd-разработка', font=('Arial', 17), fg='#3573a6', cursor='hand2', bg='#cfd3ff')
         DESKTOP = Label(self.FRAME, text='Desktop', font=('Arial', 17), fg='#3573a6', cursor='hand2', bg='#cfd3ff')
         FRONT.bind('<Button-1>', partial(self.recourses.JSFront, mainWindow))
+        DESKTOP.bind('<Button-1>', partial(self.recourses.JSDesktop, mainWindow))
         FRONT.pack(pady=10)
+        DESKTOP.pack(pady=10)
 
     def Cpp(self, mainWindow, name_lang, event):
         pass
@@ -167,7 +169,8 @@ class ProgrammingRecourses:
             'Csh' : ['C# для профессионалов - Джон Скит', 'Изучаем C#', 'C# 7.0. Карманный справочник', 'Microsoft Visual C#. Подробное руководство'],
             'JavaAndroid' : ['«Философия Java», Брюс Эккель', '«Java 8. Руководство для начинающих», Герберт Шилдт', 'Hello, Android', 'Android. Сборник рецептов'],
             'JavaBack' : ['Изучаем Java EE 7', 'EJB 3 в действии'],
-            'JSFront' : ['Илья Кантор «Современный учебник JavaScript»', 'Флэнаган Дэвид «JavaScript. Подробное руководство»', 'Кайл Симпсон «Вы не знаете JS»', 'Нік Морган «JavaScript для дітей. Веселий вступ до програмування»']
+            'JSFront' : ['Илья Кантор «Современный учебник JavaScript»', 'Флэнаган Дэвид «JavaScript. Подробное руководство»', 'Кайл Симпсон «Вы не знаете JS»', 'Нік Морган «JavaScript для дітей. Веселий вступ до програмування»'],
+            'JSDesktop' : ['Фримен, Робсон – Изучаем программирование на JavaScript', 'Минник, Холланд – JavaScript для чайников', 'Д. Крокфорд – Как устроен JavaScript']
         }
         self.links = {
             'WEBPython' : ['https://habr.com/ru/post/346306/', 'https://python-scripts.com/flask-or-django', 'https://developer.mozilla.org/ru/docs/Learn/Server-side/Django'],
@@ -177,7 +180,8 @@ class ProgrammingRecourses:
             'Csh' : ['https://levelup.ua/gde-v-sovremennom-mire-primenyaetsya-c', 'https://metanit.com/sharp/tutorial/1.1.php', 'https://professorweb.ru/my/csharp/charp_theory/level1/infonet.php'],
             'JavaAndroid' : ['https://javarush.ru/groups/posts/1079-gde-ispoljhzuetsja-java', 'https://habr.com/ru/post/335332/', 'https://apptractor.ru/learn/plan-izucheniya-android-razrabotki-dlya-nachinayushhih.html'],
             'JavaBack' : ['https://tproger.ru/translations/building-a-web-app-with-java-servlets/', 'https://webformyself.com/primenenie-java-dlya-veb-razrabotki/', 'https://javarush.ru/groups/posts/2125-veb-prilozhenie-na-java'],
-            'JSFront' : ['https://tproger.ru/curriculum/intro-to-frontend-development/', 'https://itvdn.com/ru/specialities/frontend-developer', 'https://klondike-studio.ru/wiki/front-end/']
+            'JSFront' : ['https://tproger.ru/curriculum/intro-to-frontend-development/', 'https://itvdn.com/ru/specialities/frontend-developer', 'https://klondike-studio.ru/wiki/front-end/'],
+            'JSDesktop' : ['https://habr.com/ru/post/272389/', 'https://medium.com/web-standards/desktop-app-5b9f008966cd', 'https://tproger.ru/translations/desktop-js-app-with-electron/']
         }
     def callLink(self, link, event):
         webbrowser.open_new_tab(link)
@@ -214,6 +218,13 @@ class ProgrammingRecourses:
             linksLbl.pack()
             item += 1
     
+    def JSDesktop(self, mainWindow, event):
+        self.routine()
+        mainWindow.RIGHT_LABEL['text'] = 'Desktop-разработка'
+        self.TEXT['text'] = 'Ни для кого не секрет, что в наше время\nJavaScript стал одним из самых популярных\nязыков программирования. В далекие 90е годы,\nв момент зарождения языка, когда он был создан с\nединственной целью добавить интерактивность веб страницам\nи улучшить процесс взаимодействия с пользователем, кто\nбы мог подумать, что он достигнет столь небывалых высот.\nВедь сейчас на нем можно делать практически все что угодно.\nХотите написать сайт: и бэкэнд и фронтэнд на JavaScript?\nпожалуйста! Хотите написать мобильное приложение\nна JavaScript? нет проблем. Программируете микроконтроллер –\nи тут вам на помощь придет JavaScript.'
+        self.TEXT.pack()
+        self.showContent('JSDesktop', mainWindow)
+
     def JSFront(self, mainWindow, event):
         self.routine()
         mainWindow.RIGHT_LABEL['text'] = 'FrontEnd-разработка'
