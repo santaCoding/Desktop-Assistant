@@ -5,7 +5,7 @@ from tkinter import messagebox
 
 class CustomFunctions:
     def __init__(self):
-        self.access_funcs = {'Менеджер Программирования' : True, 'Менеджер Авторизации' : True, 'Менеджер Конвертирования' : True, 'Менеджер Извлечения' : True}
+        self.access_funcs = {'Менеджер Программирования' : False, 'Менеджер Авторизации' : True, 'Менеджер Конвертирования' : False, 'Менеджер Извлечения' : False}
         self.price = 50
 
     def getAccess(self) -> dict:
@@ -43,14 +43,11 @@ class CustomFunctions:
             if answer:
                 if user.balance >= self.price:
                     user.balance -= self.price
-                    print(user.balance)
-                    print(self.access_funcs[name_function])
                     self.access_funcs[name_function] = True
-                    print(self.access_funcs[name_function])
-                    print(f'self.access_funcs: {self.access_funcs}')
                     messagebox.showinfo('Покупка', f'Вы приобрели функцию {name_function}!')
                     self.FRAME.destroy()
                     showData()
+                    main_window.BALANCE['text'] = 'Ваш баланс равен ' + str(user.balance)
                     return f'Спасибо за покупку!'
                 else:
                     messagebox.showerror('Ошибка', 'На Вашем счету недостаточно средств!')
@@ -157,8 +154,8 @@ class CustomFunctions:
         '''
         if admin_access:
             return '\\admin - права админа\n\\nf - новая функция (админ)\n\\new - новый вход\n\sys - системная информация\
-                \n\ma - менеджер авторизаций\n\mc - менеджер конвертирования\n\me - менеджер извлечения\n\mr - менеджер напоминания\
+                \n\ma - менеджер авторизаций\n\mc - менеджер конвертирования\n\me - менеджер извлечения\n\mp - менеджер программирования\
                 \n\whoami - что знает бот\n\whoay - информация о боте\n\cany - что может бот \n\exit - выход из админа\
-                \n\buy - покупка функций'
+                \n\\buy - покупка функций'
         else:
             return 'У Вас нет доступа к функциям такого типа!\nВойдите под администратором'

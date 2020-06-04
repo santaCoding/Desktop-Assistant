@@ -7,8 +7,8 @@ class MetaSystem:
         self.app = Tk()
         self.app.title('Бот Alex')
         self.app.configure(background = 'white')
-        self.bot = classes.bot.Assistant(self.app) #экземпляр главного окна
-        self.center(self.app) #центрирование приложения
+        self.bot = classes.bot.Assistant(self.app)
+        self.center(self.app)
         self.runApp()
 
     def center(self, app):

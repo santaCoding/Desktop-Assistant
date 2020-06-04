@@ -162,7 +162,13 @@ class ProgrammingManager:
     
     # основная функция
     def showContent(self, access:dict, mainWindow):
-        def selectLangs():
+        def selectLangs(event):
+            try:
+                self.TITLE.destroy()
+                self.FRAME_USER_LANG.destroy()
+            except:
+                pass
+            self.PROMPT.pack(pady=7)
             self.FRAME = Frame(mainWindow.right_part)
             self.FRAME.pack(pady=40)
             iteration = 0
@@ -183,8 +189,7 @@ class ProgrammingManager:
             self.BUTTON_EXIT.place(x= 230, y=500, width = 90, height = 40)
             self.PROMPT = Label(mainWindow.right_part, text='Выберите язык программирования', font=('Arial', 14), fg='grey')
             if not self.user_languages:
-                self.PROMPT.pack(pady=7)
-                selectLangs()
+                selectLangs(None)
                 return 'Менеджер Программирования'
             else:
                 self.TITLE = Label(mainWindow.right_part, text='Выбранные языки программирования:', font=('Arial', 15, 'bold'), fg='#223e63')
@@ -195,6 +200,10 @@ class ProgrammingManager:
                     langLbl = Label(self.FRAME_USER_LANG, text=lang, bg='#2d5487', fg='white', font=('Arial', 14, 'bold'), cursor='hand2')
                     langLbl.bind('<Button-1>', partial(eval(f'self.{lang}'), mainWindow, lang))
                     langLbl.pack(pady=10)
+                
+                self.EXTRA = Label(self.FRAME_USER_LANG, text='Просмотреть каталог языков программирования', font=('Arial', 13), fg='#034ba8', cursor='hand2')
+                self.EXTRA.bind('<Button-1>', selectLangs)
+                self.EXTRA.pack(pady=10)
                 return 'Менеджер Программирования'
         else:
             return 'К сожалению, администратор запретил\nдоступ к этому Менеджеру.\nЧтобы получить доступ\nтребуется купить эту функцию.'
@@ -235,7 +244,11 @@ class ProgrammingRecourses:
             self.manager.ADD_LANG1.destroy()
             self.manager.ADD_LANG2.destroy()
         except:
+            pass
+        try:
             self.manager.DELETE_LANG.destroy()
+        except:
+            pass
         self.manager.FRAME.destroy()
         self.manager.PROMPT.destroy()
         self.FRAME1 = Frame(mainWindow.right_part)
@@ -355,7 +368,6 @@ class ProgrammingRecourses:
         mlLogo = Label(self.FRAME1, image=self.ml)
         mlLogo.pack()
         self.showContent('MLPython', mainWindow)
-
 
     def WEBPython(self, mainWindow, event):
         self.routine(mainWindow)
