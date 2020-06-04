@@ -25,7 +25,7 @@ class ConvertManager:
             self.BUTTON_DOCX_TO_PDF = Button(self.mainWindow.right_part,  cursor='hand2',text = 'DOCX в PDF', width = 20, height = 2, highlightbackground='#0077ff', fg='#0c3b70', font=(self.font, 14))
             self.BUTTON_TXT_TO_CSV = Button(self.mainWindow.right_part, cursor='hand2', text = 'TXT в CSV', width = 20, height = 2, highlightbackground='#0077ff', fg='#0c3b70', font=(self.font, 14))
             self.BUTTON_TO_BMP = Button(self.mainWindow.right_part, cursor='hand2', text = 'JPG в BMP', width = 20, height = 2, highlightbackground='#0077ff', fg='#0c3b70', font=(self.font, 14))
-            self.BUTTON_EXIT = Button(self.mainWindow.right_part, cursor='hand2', text='Выход', font=('Trebuchet MS', 14), highlightbackground='#3b6ecc', highlightthickness=30, fg='white')
+            self.BUTTON_EXIT = Button(self.mainWindow.right_part, cursor='hand2', text='Выход', font=('Trebuchet MS', 14, 'bold'), highlightbackground='#3b6ecc', highlightthickness=30, fg='white')
             self.LABEL_NOTE = Label(self.mainWindow.right_part, text = '', font = (self.font, 14), bg='white', fg='#8ea2d4', pady=20)
             self.BUTTON_TO_PNG.pack()
             self.BUTTON_TO_JPG.pack()

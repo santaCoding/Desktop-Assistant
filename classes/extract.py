@@ -31,7 +31,7 @@ class Extraction:
             self.LABEL_CHOICE = Label(self.mainWindow.right_part, text = 'Что вы хотите извлечь?', font = (self.font, 15, 'bold'), bg='white', fg='#0e131a', pady=20)
             self.TXT_FROM_PDF = Button(self.mainWindow.right_part,  cursor='hand2',text = 'Текст из PDF', width = 20, height = 2, highlightbackground='#0077ff', fg='#0c3b70', font=(self.font, 14))
             self.MP3_FROM_MP4 = Button(self.mainWindow.right_part, cursor='hand2', text = 'Звук из видео', width = 20, height = 2, highlightbackground='#0077ff', fg='#0c3b70', font=(self.font, 14))
-            self.BUTTON_EXIT = Button(self.mainWindow.right_part, cursor='hand2', text='Выход', font=('Trebuchet MS', 14), highlightbackground='#3b6ecc', highlightthickness=30, fg='white')
+            self.BUTTON_EXIT = Button(self.mainWindow.right_part, cursor='hand2', text='Выход', font=('Trebuchet MS', 14, 'bold'), highlightbackground='#3b6ecc', highlightthickness=30, fg='white')
             self.LABEL_NOTE = Label(self.mainWindow.right_part, text = '', font = (self.font, 14, 'bold'), bg='white', fg='#8ea2d4', pady=20)
             self.LABEL_CHOICE.pack()
             self.TXT_FROM_PDF.pack()
