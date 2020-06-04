@@ -76,7 +76,7 @@ class ProgrammingManager:
         BACKEND.bind('<Button-1>', partial(self.recourses.PHP, mainWindow))
         BACKEND.pack(pady=40)
         
-    def Cpp(self, mainWindow, name_lang, event):
+    def Csh(self, mainWindow, name_lang, event):
         mainWindow.RIGHT_LABEL['text'] = 'C#'
         mainWindow.RIGHT_LABEL['font'] = ('Arial', 25, 'bold')
         mainWindow.RIGHT_LABEL['fg'] = '#3573a6'
@@ -85,7 +85,9 @@ class ProgrammingManager:
         self.FRAME.pack()
         self.PROMPT['text'] = 'Выберите категорию применения языка'
         self.checkExistence(mainWindow, name_lang)
-        DOT_NET = Label(self.FRAME, )
+        DOT_NET = Label(self.FRAME, text='.NET', font=('Arial', 17), fg='#3573a6', cursor='hand2', bg='#cfd3ff')
+        DOT_NET.bind('<Button-1>', partial(self.recourses.Csh, mainWindow))
+        DOT_NET.pack(pady=40)
 
     def Java(self, mainWindow, event):
         pass
@@ -93,7 +95,7 @@ class ProgrammingManager:
     def JavaScript(self, mainWindow, event):
         pass
 
-    def Csh(self, mainWindow, event):
+    def Cpp(self, mainWindow, name_lang, event):
         pass
 
 
@@ -137,13 +139,15 @@ class ProgrammingRecourses:
             'WEBPython' : ['Django: практика создания Web-сайтов на Python (2018)', 'Владимир Дронов: Django. Практика создания веб-сайтов на Python', 'Разработка веб-приложений с использованием Flask на языке Python'],
             'MLPython' : ['Python и машинное обучение', 'Гудфеллоу Я., Бенджио И., Курвилль А. − Глубокое обучение, 2017 г.', 'Орельен Жерон − Прикладное машинное обучение, 2018 г.', 'Адриан Роузброк − Deep Learning for Computer Vision with Python, 2017 г.'],
             'APPython' : ['Автоматизация рутинных задач с помощью Python - Эл Свейгарт'],
-            'PHP' : ['Изучаем PHP и MySQL (Линн Бейли)', 'PHP. Объекты, шаблоны и методики программирования (Мэт Зандстра)', 'Самоучитель PHP 7 – Игорь Симдянов', 'Изучаем PHP 7 – Дэвид Скляр']
+            'PHP' : ['Изучаем PHP и MySQL (Линн Бейли)', 'PHP. Объекты, шаблоны и методики программирования (Мэт Зандстра)', 'Самоучитель PHP 7 – Игорь Симдянов', 'Изучаем PHP 7 – Дэвид Скляр'],
+            'Csh' : ['C# для профессионалов - Джон Скит', 'Изучаем C#', 'C# 7.0. Карманный справочник', 'Microsoft Visual C#. Подробное руководство']
         }
         self.links = {
             'WEBPython' : ['https://habr.com/ru/post/346306/', 'https://python-scripts.com/flask-or-django', 'https://developer.mozilla.org/ru/docs/Learn/Server-side/Django'],
             'MLPython' : ['https://habr.com/ru/post/319288/', 'https://tproger.ru/experts/how-to-learn-machine-learning/', 'https://netology.ru/blog/2019-01-machine-learning-python'],
             'APPython' : ['https://habr.com/ru/company/huawei/blog/314008/', 'https://python-scripts.com/web-automation-with-python-and-selenium'],
-            'PHP' : ['https://www.php.net/manual/ru/intro-whatis.php', 'https://web-creator.ru/articles/php', 'https://skillbox.ru/media/code/5_zabluzhdeniy_o_razrabotke_na_php/']
+            'PHP' : ['https://www.php.net/manual/ru/intro-whatis.php', 'https://web-creator.ru/articles/php', 'https://skillbox.ru/media/code/5_zabluzhdeniy_o_razrabotke_na_php/'],
+            'Csh' : ['https://levelup.ua/gde-v-sovremennom-mire-primenyaetsya-c', 'https://metanit.com/sharp/tutorial/1.1.php', 'https://professorweb.ru/my/csharp/charp_theory/level1/infonet.php']
         }
     def callLink(self, link, event):
         webbrowser.open_new_tab(link)
@@ -180,6 +184,16 @@ class ProgrammingRecourses:
             linksLbl.pack()
             item+=1
     
+    def Csh(self, mainWindow, event):
+        self.routine()
+        mainWindow.RIGHT_LABEL['text'] = '.NET'
+        self.dotNet = ImageTk.PhotoImage(file='img/dotNet.jpg')
+        dotNetImg = Label(self.FRAME1, image=self.dotNet)
+        dotNetImg.pack()
+        self.TEXT['text'] = 'Среда .NET Framework и язык C# базируются на принципах\nобъектно-ориентированного программирования.\nКомпоненты ADO.NET предоставляют доступ к реляционным\nбазам данных и другим источникам данных, файловой\nсистеме и каталогам. Повышенная безопасность и высокая\nстепень контроля за использованием сборок\nнравится разработчикам.'
+        self.TEXT.pack()
+        self.showContent('Csh', mainWindow)
+
     def PHP(self, mainWindow, event):
         self.routine()
         mainWindow.RIGHT_LABEL['text'] = 'BackEnd - разработка'
