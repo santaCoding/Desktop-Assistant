@@ -100,16 +100,24 @@ class ProgrammingManager:
         self.checkExistence(mainWindow, name_lang)
         ANDROID = Label(self.FRAME, text='Android', font=('Arial', 17), fg='#3573a6', cursor='hand2', bg='#cfd3ff')
         BACKEND = Label(self.FRAME, text='BackEnd-разработка', font=('Arial', 17), fg='#3573a6', cursor='hand2', bg='#cfd3ff')
-        DESKTOP = Label(self.FRAME, text='Desktop', font=('Arial', 17), fg='#3573a6', cursor='hand2', bg='#cfd3ff')
         ANDROID.bind('<Button-1>', partial(self.recourses.JavaAndroid, mainWindow))
         BACKEND.bind('<Button-1>', partial(self.recourses.JavaBack, mainWindow))
-        DESKTOP.bind('<Button-1>', partial(self.recourses.JavaDesktop, mainWindow))
         ANDROID.pack(pady=10)
         BACKEND.pack(pady=10)
-        DESKTOP.pack(pady=10)
 
-    def JavaScript(self, mainWindow, event):
-        pass
+    def JavaScript(self, mainWindow, name_lang, event):
+        mainWindow.RIGHT_LABEL['text'] = 'JavaScript'
+        mainWindow.RIGHT_LABEL['font'] = ('Arial', 25, 'bold')
+        mainWindow.RIGHT_LABEL['fg'] = '#3573a6'
+        self.FRAME.destroy()
+        self.FRAME = Frame(mainWindow.right_part)
+        self.FRAME.pack()
+        self.PROMPT['text'] = 'Выберите категорию применения языка'
+        self.checkExistence(mainWindow, name_lang)
+        FRONT = Label(self.FRAME, text='FrontEnd-разработка', font=('Arial', 17), fg='#3573a6', cursor='hand2', bg='#cfd3ff')
+        DESKTOP = Label(self.FRAME, text='Desktop', font=('Arial', 17), fg='#3573a6', cursor='hand2', bg='#cfd3ff')
+        FRONT.bind('<Button-1>', partial(self.recourses.JSFront, mainWindow))
+        FRONT.pack(pady=10)
 
     def Cpp(self, mainWindow, name_lang, event):
         pass
@@ -158,7 +166,8 @@ class ProgrammingRecourses:
             'PHP' : ['Изучаем PHP и MySQL (Линн Бейли)', 'PHP. Объекты, шаблоны и методики программирования (Мэт Зандстра)', 'Самоучитель PHP 7 – Игорь Симдянов', 'Изучаем PHP 7 – Дэвид Скляр'],
             'Csh' : ['C# для профессионалов - Джон Скит', 'Изучаем C#', 'C# 7.0. Карманный справочник', 'Microsoft Visual C#. Подробное руководство'],
             'JavaAndroid' : ['«Философия Java», Брюс Эккель', '«Java 8. Руководство для начинающих», Герберт Шилдт', 'Hello, Android', 'Android. Сборник рецептов'],
-            'JavaBack' : ['Изучаем Java EE 7', 'EJB 3 в действии']
+            'JavaBack' : ['Изучаем Java EE 7', 'EJB 3 в действии'],
+            'JSFront' : ['Илья Кантор «Современный учебник JavaScript»', 'Флэнаган Дэвид «JavaScript. Подробное руководство»', 'Кайл Симпсон «Вы не знаете JS»', 'Нік Морган «JavaScript для дітей. Веселий вступ до програмування»']
         }
         self.links = {
             'WEBPython' : ['https://habr.com/ru/post/346306/', 'https://python-scripts.com/flask-or-django', 'https://developer.mozilla.org/ru/docs/Learn/Server-side/Django'],
@@ -167,7 +176,8 @@ class ProgrammingRecourses:
             'PHP' : ['https://www.php.net/manual/ru/intro-whatis.php', 'https://web-creator.ru/articles/php', 'https://skillbox.ru/media/code/5_zabluzhdeniy_o_razrabotke_na_php/'],
             'Csh' : ['https://levelup.ua/gde-v-sovremennom-mire-primenyaetsya-c', 'https://metanit.com/sharp/tutorial/1.1.php', 'https://professorweb.ru/my/csharp/charp_theory/level1/infonet.php'],
             'JavaAndroid' : ['https://javarush.ru/groups/posts/1079-gde-ispoljhzuetsja-java', 'https://habr.com/ru/post/335332/', 'https://apptractor.ru/learn/plan-izucheniya-android-razrabotki-dlya-nachinayushhih.html'],
-            'JavaBack' : ['https://tproger.ru/translations/building-a-web-app-with-java-servlets/', 'https://webformyself.com/primenenie-java-dlya-veb-razrabotki/', 'https://javarush.ru/groups/posts/2125-veb-prilozhenie-na-java']
+            'JavaBack' : ['https://tproger.ru/translations/building-a-web-app-with-java-servlets/', 'https://webformyself.com/primenenie-java-dlya-veb-razrabotki/', 'https://javarush.ru/groups/posts/2125-veb-prilozhenie-na-java'],
+            'JSFront' : ['https://tproger.ru/curriculum/intro-to-frontend-development/', 'https://itvdn.com/ru/specialities/frontend-developer', 'https://klondike-studio.ru/wiki/front-end/']
         }
     def callLink(self, link, event):
         webbrowser.open_new_tab(link)
@@ -204,15 +214,31 @@ class ProgrammingRecourses:
             linksLbl.pack()
             item += 1
     
+    def JSFront(self, mainWindow, event):
+        self.routine()
+        mainWindow.RIGHT_LABEL['text'] = 'FrontEnd-разработка'
+        self.react = ImageTk.PhotoImage(file='img/React.jpg')
+        self.node = ImageTk.PhotoImage(file='img/Node.jpg')
+        self.angular = ImageTk.PhotoImage(file='img/Angular.jpg')
+        self.jquery = ImageTk.PhotoImage(file='img/jQuery.jpg')
+        reactImg = Label(self.FRAME1, image=self.react)
+        nodeImg = Label(self.FRAME1, image=self.node)
+        angularImg = Label(self.FRAME1, image=self.angular)
+        jqueryImg = Label(self.FRAME1, image=self.jquery)
+        reactImg.pack(side=LEFT, padx=5)
+        nodeImg.pack(side=LEFT, padx=5)
+        angularImg.pack(side=LEFT, padx=5)
+        jqueryImg.pack(side=LEFT, padx=5)
+        self.TEXT['text'] = 'Изменения во фронтенде и веб-разработке\nпроисходят невероятно быстро. Сегодня, если вы\nне мастер Webpack, React Hooks, Jest, Vue и NG, вы,\nвероятно, чувствуете разделяющую вас от топовых\nпрофессионалов пропасть, которая продолжает расширяться.\nНо всё меняется.'
+        self.TEXT.pack()
+        self.showContent('JSFront', mainWindow)
+
     def JavaBack(self, mainWindow, event):
         self.routine()
         mainWindow.RIGHT_LABEL['text'] = 'BackEnd-разработка'
         self.TEXT['text'] = 'Одной из самых приятных особенностей Java\nявляется её многогранная природа. Конечно, создание\nтрадиционных десктопных и даже мобильных приложений — это здорово.\nНо что, если вы хотите уйти с проторенных дорожек\nи зайти на территорию разработки web приложений на Java?\nДля вас есть хорошая новость: в комплекте с языком идёт\nполноценный Servlet API, который позволяет вам\nсоздавать надёжные веб-приложения без особых хлопот.'
         self.TEXT.pack()
         self.showContent('JavaBack', mainWindow)
-
-    def JavaDesktop(self, mainWindow, event):
-        pass
     
     def JavaAndroid(self, mainWindow, event):
         self.routine()
