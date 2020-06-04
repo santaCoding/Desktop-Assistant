@@ -76,10 +76,16 @@ class ProgrammingManager:
         BACKEND.bind('<Button-1>', partial(self.recourses.PHP, mainWindow))
         BACKEND.pack(pady=40)
         
-        
-
-    def Cpp(self, mainWindow, event):
-        pass
+    def Cpp(self, mainWindow, name_lang, event):
+        mainWindow.RIGHT_LABEL['text'] = 'C#'
+        mainWindow.RIGHT_LABEL['font'] = ('Arial', 25, 'bold')
+        mainWindow.RIGHT_LABEL['fg'] = '#3573a6'
+        self.FRAME.destroy()
+        self.FRAME = Frame(mainWindow.right_part)
+        self.FRAME.pack()
+        self.PROMPT['text'] = 'Выберите категорию применения языка'
+        self.checkExistence(mainWindow, name_lang)
+        DOT_NET = Label(self.FRAME, )
 
     def Java(self, mainWindow, event):
         pass
