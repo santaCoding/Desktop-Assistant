@@ -146,6 +146,26 @@ class CustomFunctions:
         else:
             return 'У Вас нет доступа к функциям такого типа!\nВойдите под администратором'
 
+    def signUp(self, mainWindow, event):
+        pass
+
+    def enter(self, mainWindow, event):
+        mainWindow.RIGHT_LABEL['text'] = 'Вход'
+        mainWindow.RIGHT_LABEL['pady'] = 30
+        mainWindow.RIGHT_LABEL['font'] = ('Arial', 31, 'bold')
+        self.ENTER_FRAME = Frame(mainWindow.right_part)
+        self.ENTER_FRAME.pack()
+        self.LOGIN_LBL = Label(self.ENTER_FRAME, text='Введите логин:', font=('Arial', 17, 'bold'), fg='#707070', justify=LEFT, anchor=W)
+        self.LOGIN_LBL.pack(pady=10)
+        self.LOGIN_INPUT = Entry(self.ENTER_FRAME, font=('Arial', 17), width=25)
+        self.LOGIN_INPUT.pack(pady=10)
+        self.PASSWORD_LBL = Label(self.ENTER_FRAME, text='Введите пароль:', font=('Arial', 17, 'bold'), fg='#707070', justify=LEFT, anchor=W)
+        self.PASSWORD_LBL.pack(pady=10)
+        self.PASS_INPUT = Entry(self.ENTER_FRAME, font=('Arial', 17), width=25, show='*')
+        self.PASS_INPUT.pack(pady=10)
+        self.SIGNUP_LINK = Label(self.ENTER_FRAME, text='Зарегистрироваться', font=('Arial', 15), fg='#2f62a3', cursor='hand2')
+        self.SIGNUP_LINK.bind('<Button-1>', partial(self.signUp, mainWindow))
+        self.SIGNUP_LINK.pack(pady=10)
 
     def showAdminComands(self, admin_access:bool) -> str:
         '''
