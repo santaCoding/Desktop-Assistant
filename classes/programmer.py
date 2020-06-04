@@ -89,8 +89,24 @@ class ProgrammingManager:
         DOT_NET.bind('<Button-1>', partial(self.recourses.Csh, mainWindow))
         DOT_NET.pack(pady=40)
 
-    def Java(self, mainWindow, event):
-        pass
+    def Java(self, mainWindow, name_lang, event):
+        mainWindow.RIGHT_LABEL['text'] = 'Java'
+        mainWindow.RIGHT_LABEL['font'] = ('Arial', 25, 'bold')
+        mainWindow.RIGHT_LABEL['fg'] = '#3573a6'
+        self.FRAME.destroy()
+        self.FRAME = Frame(mainWindow.right_part)
+        self.FRAME.pack()
+        self.PROMPT['text'] = 'Выберите категорию применения языка'
+        self.checkExistence(mainWindow, name_lang)
+        ANDROID = Label(self.FRAME, text='Android', font=('Arial', 17), fg='#3573a6', cursor='hand2', bg='#cfd3ff')
+        BACKEND = Label(self.FRAME, text='BackEnd-разработка', font=('Arial', 17), fg='#3573a6', cursor='hand2', bg='#cfd3ff')
+        DESKTOP = Label(self.FRAME, text='Desktop', font=('Arial', 17), fg='#3573a6', cursor='hand2', bg='#cfd3ff')
+        ANDROID.bind('<Button-1>', partial(self.recourses.JavaAndroid, mainWindow))
+        BACKEND.bind('<Button-1>', partial(self.recourses.JavaBack, mainWindow))
+        DESKTOP.bind('<Button-1>', partial(self.recourses.JavaDesktop, mainWindow))
+        ANDROID.pack(pady=10)
+        BACKEND.pack(pady=10)
+        DESKTOP.pack(pady=10)
 
     def JavaScript(self, mainWindow, event):
         pass
@@ -140,14 +156,16 @@ class ProgrammingRecourses:
             'MLPython' : ['Python и машинное обучение', 'Гудфеллоу Я., Бенджио И., Курвилль А. − Глубокое обучение, 2017 г.', 'Орельен Жерон − Прикладное машинное обучение, 2018 г.', 'Адриан Роузброк − Deep Learning for Computer Vision with Python, 2017 г.'],
             'APPython' : ['Автоматизация рутинных задач с помощью Python - Эл Свейгарт'],
             'PHP' : ['Изучаем PHP и MySQL (Линн Бейли)', 'PHP. Объекты, шаблоны и методики программирования (Мэт Зандстра)', 'Самоучитель PHP 7 – Игорь Симдянов', 'Изучаем PHP 7 – Дэвид Скляр'],
-            'Csh' : ['C# для профессионалов - Джон Скит', 'Изучаем C#', 'C# 7.0. Карманный справочник', 'Microsoft Visual C#. Подробное руководство']
+            'Csh' : ['C# для профессионалов - Джон Скит', 'Изучаем C#', 'C# 7.0. Карманный справочник', 'Microsoft Visual C#. Подробное руководство'],
+            'Java' : ['«Философия Java», Брюс Эккель', '«Java 8. Руководство для начинающих», Герберт Шилдт', 'Hello, Android', 'Android. Сборник рецептов']
         }
         self.links = {
             'WEBPython' : ['https://habr.com/ru/post/346306/', 'https://python-scripts.com/flask-or-django', 'https://developer.mozilla.org/ru/docs/Learn/Server-side/Django'],
             'MLPython' : ['https://habr.com/ru/post/319288/', 'https://tproger.ru/experts/how-to-learn-machine-learning/', 'https://netology.ru/blog/2019-01-machine-learning-python'],
             'APPython' : ['https://habr.com/ru/company/huawei/blog/314008/', 'https://python-scripts.com/web-automation-with-python-and-selenium'],
             'PHP' : ['https://www.php.net/manual/ru/intro-whatis.php', 'https://web-creator.ru/articles/php', 'https://skillbox.ru/media/code/5_zabluzhdeniy_o_razrabotke_na_php/'],
-            'Csh' : ['https://levelup.ua/gde-v-sovremennom-mire-primenyaetsya-c', 'https://metanit.com/sharp/tutorial/1.1.php', 'https://professorweb.ru/my/csharp/charp_theory/level1/infonet.php']
+            'Csh' : ['https://levelup.ua/gde-v-sovremennom-mire-primenyaetsya-c', 'https://metanit.com/sharp/tutorial/1.1.php', 'https://professorweb.ru/my/csharp/charp_theory/level1/infonet.php'],
+            'Java' : ['https://javarush.ru/groups/posts/1079-gde-ispoljhzuetsja-java', 'https://habr.com/ru/post/335332/', 'https://apptractor.ru/learn/plan-izucheniya-android-razrabotki-dlya-nachinayushhih.html']
         }
     def callLink(self, link, event):
         webbrowser.open_new_tab(link)
@@ -184,6 +202,22 @@ class ProgrammingRecourses:
             linksLbl.pack()
             item+=1
     
+    def JavaBack(self, mainWindow, event):
+        pass
+
+    def JavaDesktop(self, mainWindow, event):
+        pass
+    
+    def JavaAndroid(self, mainWindow, event):
+        self.routine()
+        mainWindow.RIGHT_LABEL['text'] = 'Android-разработка'
+        self.andr = ImageTk.PhotoImage(file='img/Android.jpg')
+        andrImg = Label(self.FRAME1, image=self.andr)
+        andrImg.pack()
+        self.TEXT['text'] = 'Среди программистов на Java то и дело слышны разговоры\nо разработке под Android. Именно Android держит\nJava на первом плане в последние несколько лет. Насколько\nже важно понимать или знать Android для разработчиков на\nJava? Ну, зависит от того, нравится ли вам разработка\nприложений и хотите ли вы, чтобы вашими приложениями\nпользовалось множество\nлюдей. Если да, то Android даст вам эту возможность.'
+        self.TEXT.pack()
+        self.showContent('Java', mainWindow)
+
     def Csh(self, mainWindow, event):
         self.routine()
         mainWindow.RIGHT_LABEL['text'] = '.NET'
