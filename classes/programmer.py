@@ -157,7 +157,8 @@ class ProgrammingRecourses:
             'APPython' : ['Автоматизация рутинных задач с помощью Python - Эл Свейгарт'],
             'PHP' : ['Изучаем PHP и MySQL (Линн Бейли)', 'PHP. Объекты, шаблоны и методики программирования (Мэт Зандстра)', 'Самоучитель PHP 7 – Игорь Симдянов', 'Изучаем PHP 7 – Дэвид Скляр'],
             'Csh' : ['C# для профессионалов - Джон Скит', 'Изучаем C#', 'C# 7.0. Карманный справочник', 'Microsoft Visual C#. Подробное руководство'],
-            'Java' : ['«Философия Java», Брюс Эккель', '«Java 8. Руководство для начинающих», Герберт Шилдт', 'Hello, Android', 'Android. Сборник рецептов']
+            'JavaAndroid' : ['«Философия Java», Брюс Эккель', '«Java 8. Руководство для начинающих», Герберт Шилдт', 'Hello, Android', 'Android. Сборник рецептов'],
+            'JavaBack' : ['Изучаем Java EE 7', 'EJB 3 в действии']
         }
         self.links = {
             'WEBPython' : ['https://habr.com/ru/post/346306/', 'https://python-scripts.com/flask-or-django', 'https://developer.mozilla.org/ru/docs/Learn/Server-side/Django'],
@@ -165,7 +166,8 @@ class ProgrammingRecourses:
             'APPython' : ['https://habr.com/ru/company/huawei/blog/314008/', 'https://python-scripts.com/web-automation-with-python-and-selenium'],
             'PHP' : ['https://www.php.net/manual/ru/intro-whatis.php', 'https://web-creator.ru/articles/php', 'https://skillbox.ru/media/code/5_zabluzhdeniy_o_razrabotke_na_php/'],
             'Csh' : ['https://levelup.ua/gde-v-sovremennom-mire-primenyaetsya-c', 'https://metanit.com/sharp/tutorial/1.1.php', 'https://professorweb.ru/my/csharp/charp_theory/level1/infonet.php'],
-            'Java' : ['https://javarush.ru/groups/posts/1079-gde-ispoljhzuetsja-java', 'https://habr.com/ru/post/335332/', 'https://apptractor.ru/learn/plan-izucheniya-android-razrabotki-dlya-nachinayushhih.html']
+            'JavaAndroid' : ['https://javarush.ru/groups/posts/1079-gde-ispoljhzuetsja-java', 'https://habr.com/ru/post/335332/', 'https://apptractor.ru/learn/plan-izucheniya-android-razrabotki-dlya-nachinayushhih.html'],
+            'JavaBack' : ['https://tproger.ru/translations/building-a-web-app-with-java-servlets/', 'https://webformyself.com/primenenie-java-dlya-veb-razrabotki/', 'https://javarush.ru/groups/posts/2125-veb-prilozhenie-na-java']
         }
     def callLink(self, link, event):
         webbrowser.open_new_tab(link)
@@ -200,10 +202,14 @@ class ProgrammingRecourses:
             linksLbl = Label(mainWindow.right_part, text=str(item) + '. ' + link, fg='#266cc7', font=('Arial', 13), justify=LEFT, anchor=W, cursor='hand2')
             linksLbl.bind('<Button-1>', partial(self.callLink, link))
             linksLbl.pack()
-            item+=1
+            item += 1
     
     def JavaBack(self, mainWindow, event):
-        pass
+        self.routine()
+        mainWindow.RIGHT_LABEL['text'] = 'BackEnd-разработка'
+        self.TEXT['text'] = 'Одной из самых приятных особенностей Java\nявляется её многогранная природа. Конечно, создание\nтрадиционных десктопных и даже мобильных приложений — это здорово.\nНо что, если вы хотите уйти с проторенных дорожек\nи зайти на территорию разработки web приложений на Java?\nДля вас есть хорошая новость: в комплекте с языком идёт\nполноценный Servlet API, который позволяет вам\nсоздавать надёжные веб-приложения без особых хлопот.'
+        self.TEXT.pack()
+        self.showContent('JavaBack', mainWindow)
 
     def JavaDesktop(self, mainWindow, event):
         pass
@@ -216,7 +222,7 @@ class ProgrammingRecourses:
         andrImg.pack()
         self.TEXT['text'] = 'Среди программистов на Java то и дело слышны разговоры\nо разработке под Android. Именно Android держит\nJava на первом плане в последние несколько лет. Насколько\nже важно понимать или знать Android для разработчиков на\nJava? Ну, зависит от того, нравится ли вам разработка\nприложений и хотите ли вы, чтобы вашими приложениями\nпользовалось множество\nлюдей. Если да, то Android даст вам эту возможность.'
         self.TEXT.pack()
-        self.showContent('Java', mainWindow)
+        self.showContent('JavaAndroid', mainWindow)
 
     def Csh(self, mainWindow, event):
         self.routine()
