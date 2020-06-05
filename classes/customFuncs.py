@@ -8,6 +8,7 @@ class CustomFunctions:
     def __init__(self):
         self.access_funcs = {'Менеджер Программирования' : False, 'Менеджер Авторизации' : True, 'Менеджер Конвертирования' : False, 'Менеджер Извлечения' : False}
         self.price = 50
+        self.db = DB('/Users/alexfedorenko/Documents/GitHub/CDA-OOP/DB.json')
 
     def getAccess(self) -> dict:
         return self.access_funcs
@@ -147,6 +148,13 @@ class CustomFunctions:
         else:
             return 'У Вас нет доступа к функциям такого типа!\nВойдите под администратором'
 
+    def clearDB(self, admin):
+        if admin:
+            self.db.resetdb()
+            return 'База данных очищена!'
+        else:
+            return 'У Вас нет доступа к функциям такого типа!\nВойдите под администратором'
+
     def user_exit(self, mainWindow, user, event):
         mainWindow.BALANCE['text'] = ''
         mainWindow.NAME['text'] = 'Здравствуй, гость'
@@ -165,9 +173,6 @@ class CustomFunctions:
             new_login = self.LOGIN_INPUT.get()
             new_password = self.PASS_INPUT.get()
             check_pass = self.CHECK_PASS_INPUT.get()
-            self.LOGIN_INPUT.delete(0, END)
-            self.PASS_INPUT.delete(0, END)
-            self.CHECK_PASS_INPUT.delete(0, END)
 
             if new_login == '' or new_password == '' or check_pass == '':
                 self.WARNING['text'] = 'Вы ввели не все данные'
@@ -176,9 +181,16 @@ class CustomFunctions:
                 except:
                     pass
             else:
+                self.LOGIN_INPUT.delete(0, END)
+                self.PASS_INPUT.delete(0, END)
+                self.CHECK_PASS_INPUT.delete(0, END)
                 if str(check_pass) == str(new_password):
                     self.db.set(new_login, {'password' : new_password, 'age' : None, 'balance' : 0, 'name' : None, 'admin' : False})
                     self.ENTER_FRAME.destroy()
+                    try:
+                        self.WARNING.destroy()
+                    except:
+                        pass
                     self.enter(mainWindow, user, None)
                 else:
                     self.WARNING['text'] = 'Пароли не совпадают!'
@@ -186,7 +198,10 @@ class CustomFunctions:
                         self.WARNING.place(x=285, y=550)
                     except:
                         pass
-
+        try:
+            self.WARNING.destroy()
+        except:
+            pass
         mainWindow.RIGHT_LABEL['text'] = 'Регистрация'
         self.LOGIN_LBL['text'] = 'Придумайте логин:'
         self.PASSWORD_LBL['text'] = 'Придумайте пароль:'
@@ -194,6 +209,8 @@ class CustomFunctions:
         self.CHECK_PASS = Label(self.ENTER_FRAME, text='Подтвердите пароль:', font=('Arial', 17, 'bold'), fg='#707070', justify=LEFT, anchor=W)
         self.CHECK_PASS_INPUT = Entry(self.ENTER_FRAME, font=('Arial', 17), width=25, show='*')
         self.CHECK_PASS_INPUT.bind('<Return>', check_and_up)
+        self.PASS_INPUT.bind('<Return>', check_and_up)
+        self.LOGIN_INPUT.bind('<Return>', check_and_up)
         self.CHECK_PASS.pack(pady=10)
         self.CHECK_PASS_INPUT.pack(pady=10)
         self.SIGNUP_LINK.destroy()
@@ -201,9 +218,9 @@ class CustomFunctions:
         self.SIGNUP_LINK['text'] = 'Вход'
         self.SIGNUP_LINK.bind('<Button-1>', partial(self.signUp, mainWindow, user))
         self.SIGNUP_LINK.pack()
+        self.WARNING = Label(mainWindow.right_part, text='', cursor='X_cursor', width=30, height = 2, font=('Arial', 14), bg='#b54141', fg='white')
 
     def enter(self, mainWindow, user, event):
-        self.db = DB('/Users/alexfedorenko/Documents/GitHub/CDA-OOP/DB.json')
         def signin(event):
             login = self.LOGIN_INPUT.get()
             password = self.PASS_INPUT.get()
@@ -282,6 +299,6 @@ class CustomFunctions:
             return '\\admin - права админа\n\\nf - новая функция (админ)\n\\new - новый вход\n\sys - системная информация\
                 \n\ma - менеджер авторизаций\n\mc - менеджер конвертирования\n\me - менеджер извлечения\n\mp - менеджер программирования\
                 \n\whoami - что знает бот\n\whoay - информация о боте\n\cany - что может бот \n\exit - выход из админа\
-                \n\\buy - покупка функций'
+                \n\\buy - покупка функций\n\cleardb - очистить базу данных'
         else:
             return 'У Вас нет доступа к функциям такого типа!\nВойдите под администратором'

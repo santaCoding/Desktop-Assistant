@@ -25,7 +25,7 @@ class ModuleWindow:
         self.flag = False
         def check_password(event):
                 password = self.MODULE_INPUT.get()
-                if password == 'q':
+                if password == 'admin':
                     self.flag = True
                     self.moduleWindowTk.destroy()
                 else:
