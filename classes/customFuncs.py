@@ -147,10 +147,23 @@ class CustomFunctions:
         else:
             return 'У Вас нет доступа к функциям такого типа!\nВойдите под администратором'
 
+    def user_exit(self, mainWindow, user, event):
+        mainWindow.BALANCE['text'] = ''
+        mainWindow.NAME['text'] = 'Здравствуй, гость'
+        mainWindow.ENTER['text'] = 'Вход'
+        mainWindow.ENTER.bind('<Button-1>', partial(self.enter, mainWindow, user))
+        user.name = None
+        user.age = None
+        user.balance = None
+        user.admin = False
+        mainWindow.RIGHT_LABEL['pady'] = 260
+        mainWindow.RIGHT_LABEL['font'] = ('Arial', 16, 'bold')
+        mainWindow.RIGHT_LABEL['text'] = 'Вы вышли из аккаунта'
+
     def signUp(self, mainWindow, event):
         pass
 
-    def enter(self, mainWindow, event):
+    def enter(self, mainWindow, user, event):
         def signin(event):
             login = self.LOGIN_INPUT.get()
             password = self.PASS_INPUT.get()
@@ -161,16 +174,27 @@ class CustomFunctions:
                 db = DB('/Users/alexfedorenko/Documents/GitHub/CDA-OOP/DB.json')
                 data = db.get(login)
                 if data:
-                    if data['password'] == password:
+                    if str(data['password']) == password:
+                        mainWindow.ENTER.bind('<Button-1>', partial(self.user_exit, mainWindow, user))
+                        mainWindow.ENTER['text'] = 'Выход'
                         if data['name'] is not None:
-                            mainWindow.user.name = data['name']
+                            user.name = data['name']
                             mainWindow.NAME['text'] = 'Здравствуй, ' + data['name']
                         if data['age'] is not None:
-                            mainWindow.user.age = data['age']
+                            user.age = data['age']
                         if data['balance'] is not None:
-                            mainWindow.user.balance = data['balance']
+                            user.balance = data['balance']
+                            mainWindow.BALANCE['text'] = 'Ваш баланс равен ' + str(data['balance'])
                         if data['admin'] is not None:
-                            mainWindow.user.admin = data['admin']
+                            user.admin = data['admin']
+                        self.ENTER_FRAME.destroy()
+                        mainWindow.RIGHT_LABEL['text'] = f'Добро пожаловать, {user.name}!'
+                        mainWindow.RIGHT_LABEL['pady'] = 260
+                        mainWindow.RIGHT_LABEL['font'] = ('Arial', 16, 'bold')
+                        try:
+                            self.WARNING.destroy()
+                        except:
+                            pass
                     else:
                         try:
                             self.WARNING['text'] = 'Неверно введен пароль!'

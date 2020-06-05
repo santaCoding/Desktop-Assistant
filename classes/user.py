@@ -16,7 +16,7 @@ class UserDescriptor:
 class User:
     name, age, balance, admin = UserDescriptor(), UserDescriptor(), UserDescriptor(), UserDescriptor()
 
-    def __init__(self, name, age, balance=100, admin = False):
+    def __init__(self, name, age, balance=None, admin = False):
         self.admin = admin
         self.name = name
         self.age = age

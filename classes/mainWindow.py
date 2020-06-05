@@ -20,7 +20,7 @@ class MainWindow:
         self.BALANCE = Label(self.top_frame, text='', font=('Arial', 15), fg='white', bg='#4a4a4a')
         self.BALANCE.pack(pady=12, padx = 10, side=LEFT)
         self.ENTER = Label(self.top_frame, text='Войти', font=('Arial', 16), fg='white', bg='#6091d1', cursor='hand2')
-        self.ENTER.bind('<Button-1>', partial(self.bot.CF.enter, self))
+        self.ENTER.bind('<Button-1>', partial(self.bot.CF.enter, self, self.bot.user))
         self.left_part = Frame(self.app, width = 550, height = 600, bg = '#e3e3e3')
         self.right_part = Frame(self.app, width = 550, height = 600, bg = self.BG_LIGHT)
         self.frame_bot = Frame(self.left_part, width = 550, bg = '#e3e3e3', height = 700)
