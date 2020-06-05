@@ -160,10 +160,50 @@ class CustomFunctions:
         mainWindow.RIGHT_LABEL['font'] = ('Arial', 16, 'bold')
         mainWindow.RIGHT_LABEL['text'] = 'Вы вышли из аккаунта'
 
-    def signUp(self, mainWindow, event):
-        pass
+    def signUp(self, mainWindow, user, event):
+        def check_and_up(event):
+            new_login = self.LOGIN_INPUT.get()
+            new_password = self.PASS_INPUT.get()
+            check_pass = self.CHECK_PASS_INPUT.get()
+            self.LOGIN_INPUT.delete(0, END)
+            self.PASS_INPUT.delete(0, END)
+            self.CHECK_PASS_INPUT.delete(0, END)
+
+            if new_login == '' or new_password == '' or check_pass == '':
+                self.WARNING['text'] = 'Вы ввели не все данные'
+                try:
+                    self.WARNING.place(x=285, y=550)
+                except:
+                    pass
+            else:
+                if str(check_pass) == str(new_password):
+                    self.db.set(new_login, {'password' : new_password, 'age' : None, 'balance' : 0, 'name' : None, 'admin' : False})
+                    self.ENTER_FRAME.destroy()
+                    self.enter(mainWindow, user, None)
+                else:
+                    self.WARNING['text'] = 'Пароли не совпадают!'
+                    try:
+                        self.WARNING.place(x=285, y=550)
+                    except:
+                        pass
+
+        mainWindow.RIGHT_LABEL['text'] = 'Регистрация'
+        self.LOGIN_LBL['text'] = 'Придумайте логин:'
+        self.PASSWORD_LBL['text'] = 'Придумайте пароль:'
+        self.PASS_INPUT.bind(None)
+        self.CHECK_PASS = Label(self.ENTER_FRAME, text='Подтвердите пароль:', font=('Arial', 17, 'bold'), fg='#707070', justify=LEFT, anchor=W)
+        self.CHECK_PASS_INPUT = Entry(self.ENTER_FRAME, font=('Arial', 17), width=25, show='*')
+        self.CHECK_PASS_INPUT.bind('<Return>', check_and_up)
+        self.CHECK_PASS.pack(pady=10)
+        self.CHECK_PASS_INPUT.pack(pady=10)
+        self.SIGNUP_LINK.destroy()
+        self.SIGNUP_LINK = Label(self.ENTER_FRAME, font=('Arial', 15), fg='#2f62a3', cursor='hand2')
+        self.SIGNUP_LINK['text'] = 'Вход'
+        self.SIGNUP_LINK.bind('<Button-1>', partial(self.signUp, mainWindow, user))
+        self.SIGNUP_LINK.pack()
 
     def enter(self, mainWindow, user, event):
+        self.db = DB('/Users/alexfedorenko/Documents/GitHub/CDA-OOP/DB.json')
         def signin(event):
             login = self.LOGIN_INPUT.get()
             password = self.PASS_INPUT.get()
@@ -171,8 +211,7 @@ class CustomFunctions:
                 self.WARNING['text'] = 'Вы ввели не все данные'
                 self.WARNING.place(x=285, y=550)
             else:
-                db = DB('/Users/alexfedorenko/Documents/GitHub/CDA-OOP/DB.json')
-                data = db.get(login)
+                data = self.db.get(login)
                 if data:
                     if str(data['password']) == password:
                         mainWindow.ENTER.bind('<Button-1>', partial(self.user_exit, mainWindow, user))
@@ -188,9 +227,10 @@ class CustomFunctions:
                         if data['admin'] is not None:
                             user.admin = data['admin']
                         self.ENTER_FRAME.destroy()
-                        mainWindow.RIGHT_LABEL['text'] = f'Добро пожаловать, {user.name}!'
+                        mainWindow.RIGHT_LABEL['text'] = f'Добро пожаловать, {login}!'
                         mainWindow.RIGHT_LABEL['pady'] = 260
                         mainWindow.RIGHT_LABEL['font'] = ('Arial', 16, 'bold')
+                        mainWindow.INPUT.focus_set()
                         try:
                             self.WARNING.destroy()
                         except:
@@ -229,7 +269,7 @@ class CustomFunctions:
         self.PASS_INPUT.bind('<Return>', signin)
         self.PASS_INPUT.pack(pady=10)
         self.SIGNUP_LINK = Label(self.ENTER_FRAME, text='Зарегистрироваться', font=('Arial', 15), fg='#2f62a3', cursor='hand2')
-        self.SIGNUP_LINK.bind('<Button-1>', partial(self.signUp, mainWindow))
+        self.SIGNUP_LINK.bind('<Button-1>', partial(self.signUp, mainWindow, user))
         self.SIGNUP_LINK.pack(pady=10)
         self.WARNING = Label(mainWindow.right_part, text='', cursor='X_cursor', width=30, height = 2, font=('Arial', 14), bg='#b54141', fg='white')
 

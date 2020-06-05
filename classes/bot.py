@@ -11,9 +11,9 @@ class Assistant:
         self.CF = classes.customFuncs.CustomFunctions()
         self.user = user.User(None, None) # экземпляр пользователя
         self.mainWindow = mainWindow.MainWindow(self.app, self)
-        if self.user.balance is not None:
+        if self.user.balance != 'Я не знаю такой информации(':
             self.mainWindow.BALANCE['text'] =  'Ваш баланс равен ' + str(self.user.balance)
-        if self.user.name is None:
+        if self.user.name == 'Я не знаю такой информации(':
             self.mainWindow.NAME['text'] = 'Здравствуй, гость'
             self.mainWindow.ENTER.pack(side=RIGHT, padx=10)
         self.autho = authorization.AuthorizationManager(self.user)
