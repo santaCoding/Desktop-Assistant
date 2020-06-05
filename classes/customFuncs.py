@@ -2,6 +2,7 @@ from platform import *
 from tkinter import *
 from functools import partial
 from tkinter import messagebox
+from classes.DB import DB
 
 class CustomFunctions:
     def __init__(self):
@@ -150,6 +151,44 @@ class CustomFunctions:
         pass
 
     def enter(self, mainWindow, event):
+        def signin(event):
+            login = self.LOGIN_INPUT.get()
+            password = self.PASS_INPUT.get()
+            if login == '' or password == '':
+                self.WARNING['text'] = 'Вы ввели не все данные'
+                self.WARNING.place(x=285, y=550)
+            else:
+                db = DB('/Users/alexfedorenko/Documents/GitHub/CDA-OOP/DB.json')
+                data = db.get(login)
+                if data:
+                    if data['password'] == password:
+                        if data['name'] is not None:
+                            mainWindow.user.name = data['name']
+                            mainWindow.NAME['text'] = 'Здравствуй, ' + data['name']
+                        if data['age'] is not None:
+                            mainWindow.user.age = data['age']
+                        if data['balance'] is not None:
+                            mainWindow.user.balance = data['balance']
+                        if data['admin'] is not None:
+                            mainWindow.user.admin = data['admin']
+                    else:
+                        try:
+                            self.WARNING['text'] = 'Неверно введен пароль!'
+                            self.WARNING.place(x=285, y=550)
+                        except:
+                            self.WARNING['text'] = 'Неверно введен пароль!'
+                        self.LOGIN_INPUT.delete(0, END)
+                        self.PASS_INPUT.delete(0, END)
+                else:
+                    try:
+                        self.WARNING['text'] = 'Такого пользователя\nне существует!'
+                        self.WARNING.place(x=285, y=550)
+                    except:
+                        self.WARNING['text'] = 'Такого пользователя\nне существует!'
+                    self.LOGIN_INPUT.delete(0, END)
+                    self.PASS_INPUT.delete(0, END)
+
+
         mainWindow.RIGHT_LABEL['text'] = 'Вход'
         mainWindow.RIGHT_LABEL['pady'] = 30
         mainWindow.RIGHT_LABEL['font'] = ('Arial', 31, 'bold')
@@ -159,13 +198,16 @@ class CustomFunctions:
         self.LOGIN_LBL.pack(pady=10)
         self.LOGIN_INPUT = Entry(self.ENTER_FRAME, font=('Arial', 17), width=25)
         self.LOGIN_INPUT.pack(pady=10)
+        self.LOGIN_INPUT.focus_set()
         self.PASSWORD_LBL = Label(self.ENTER_FRAME, text='Введите пароль:', font=('Arial', 17, 'bold'), fg='#707070', justify=LEFT, anchor=W)
         self.PASSWORD_LBL.pack(pady=10)
         self.PASS_INPUT = Entry(self.ENTER_FRAME, font=('Arial', 17), width=25, show='*')
+        self.PASS_INPUT.bind('<Return>', signin)
         self.PASS_INPUT.pack(pady=10)
         self.SIGNUP_LINK = Label(self.ENTER_FRAME, text='Зарегистрироваться', font=('Arial', 15), fg='#2f62a3', cursor='hand2')
         self.SIGNUP_LINK.bind('<Button-1>', partial(self.signUp, mainWindow))
         self.SIGNUP_LINK.pack(pady=10)
+        self.WARNING = Label(mainWindow.right_part, text='', cursor='X_cursor', width=30, height = 2, font=('Arial', 14), bg='#b54141', fg='white')
 
     def showAdminComands(self, admin_access:bool) -> str:
         '''

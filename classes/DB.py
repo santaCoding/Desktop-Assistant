@@ -35,7 +35,6 @@ class DB(object):
         try:
             return self.db[key]
         except KeyError:
-            print("No Value Can Be Found for " + str(key))
             return False
 
     def delete(self , key):
@@ -49,8 +48,3 @@ class DB(object):
         self.db={}
         self.dumpdb()
         return True
-
-db = DB('/Users/alexfedorenko/Documents/GitHub/CDA-OOP/DB.json')
-db.set('Alex', {'age' : 19, 'login' : 'santa', 'password' : 1234})
-db.set('Maria', {'age' : 23, 'login' : 'mashka', 'password' : 'wdwdwdw'})
-print(db.get('Alex'))
