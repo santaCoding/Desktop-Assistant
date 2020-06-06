@@ -16,12 +16,26 @@ class CustomFunctions:
         '''Возвращает все основные параметры системы'''
         return f'Платформа :\n{platform()}\nСистема : {system()},\nИздано : {release()},\nМашина : {machine()},\nПроцессор: : {processor()},\nАрхитектура : {architecture()[0]}'
 
-    def showFuncsToBuy(self, main_window, user):
+    def showFuncsToBuy(self, main_window, user, db):
         '''
         Принимает ссылку на главное окно
         Показывает функции для пользовательской покупки
         Изменяет словарь функций если функция была куплена
         '''
+        def exit(event):
+            try:
+                self.FRAME.destroy()
+            except:
+                pass
+            try:
+                self.LABEL.destroy()
+            except:
+                pass
+            self.EXIT_BUTTON.destroy()
+            main_window.RIGHT_LABEL['text'] = 'Скажите Боту что-то сделать'
+            main_window.RIGHT_LABEL['pady'] = 260
+            main_window.LABEL['text'] = 'Да да?'
+
         def showData():
             self.FRAME = Frame(main_window.right_part)
             self.FRAME.pack()
@@ -44,7 +58,9 @@ class CustomFunctions:
             if answer:
                 if user.balance >= self.price:
                     user.balance -= self.price
+                    db.setValue(user.nickname, user.balance, 'balance')
                     user.access_funcs[name_function] = True
+                    db.setValue(user.nickname, user.access_funcs, 'access_funcs')
                     messagebox.showinfo('Покупка', f'Вы приобрели функцию {name_function}!')
                     self.FRAME.destroy()
                     showData()
@@ -54,10 +70,16 @@ class CustomFunctions:
                     messagebox.showerror('Ошибка', 'На Вашем счету недостаточно средств!')
                     return '('
 
-        main_window.RIGHT_LABEL['text'] = 'Купить платную функцию'
-        main_window.RIGHT_LABEL['pady'] = 40
-        showData()
-        return 'Вас счет чуть выше'
+        if user.nickname is not None:
+            main_window.RIGHT_LABEL['text'] = 'Купить платную функцию'
+            main_window.RIGHT_LABEL['pady'] = 40
+            showData()
+            self.EXIT_BUTTON = Button(main_window.right_part, cursor='hand2', text='Выход', highlightbackground='#3b6ecc', highlightthickness=30, fg='white')
+            self.EXIT_BUTTON.bind('<Button-1>', exit)
+            self.EXIT_BUTTON.place(x = 400, y = 545, width = 90, height = 40)
+            return 'Вас счет чуть выше'
+        else:
+            return 'Вы должны зайти в аккаунт пользователя,\nчтобы купить функции.'
 
 
     def addPaidOption(self, main_window, user, admin_access:bool) -> str:
@@ -163,6 +185,9 @@ class CustomFunctions:
         user.age = None
         user.balance = None
         user.admin = False
+        user.languages = []
+        user.access_funcs = {'mp' : False, 'ma' : True, 'mc' : False, 'me' : False}
+        user.nickname = None
         mainWindow.RIGHT_LABEL['pady'] = 260
         mainWindow.RIGHT_LABEL['font'] = ('Arial', 16, 'bold')
         mainWindow.RIGHT_LABEL['text'] = 'Вы вышли из аккаунта'
@@ -184,7 +209,7 @@ class CustomFunctions:
                 self.PASS_INPUT.delete(0, END)
                 self.CHECK_PASS_INPUT.delete(0, END)
                 if str(check_pass) == str(new_password):
-                    self.db.set(new_login, {'password' : new_password, 'age' : None, 'balance' : 0, 'name' : None, 'admin' : False, 'access_funcs' : {'Менеджер Программирования' : False, 'Менеджер Авторизации' : True, 'Менеджер Конвертирования' : False, 'Менеджер Извлечения' : False}, 'languages' : []})
+                    self.db.set(new_login, {'password' : new_password, 'age' : None, 'balance' : 0, 'name' : None, 'admin' : False, 'access_funcs' : {'mp' : False, 'ma' : True, 'mc' : False, 'me' : False}, 'languages' : []})
                     self.ENTER_FRAME.destroy()
                     try:
                         self.WARNING.destroy()
@@ -242,6 +267,8 @@ class CustomFunctions:
                             mainWindow.BALANCE['text'] = 'Ваш баланс равен ' + str(data['balance'])
                         if data['admin'] is not None:
                             user.admin = data['admin']
+                        user.access_funcs = data['access_funcs']
+                        user.languages = data['languages']
                         user.nickname = str(login)
                         self.ENTER_FRAME.destroy()
                         mainWindow.RIGHT_LABEL['text'] = f'Добро пожаловать, {login}!'

@@ -12,7 +12,7 @@ class ConvertManager:
         self.files_paths = None
 
     def convert(self, access):
-        if access['Менеджер Конвертирования'] == True:
+        if access['mc'] == True:
             self.font = 'Arial'
             self.mainWindow.RIGHT_LABEL['text'] = 'Конвертирование'
             self.mainWindow.RIGHT_LABEL['pady'] = 25

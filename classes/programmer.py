@@ -180,7 +180,7 @@ class ProgrammingManager:
                 lang_label.pack(side=LEFT, padx=60)
                 iteration += 1 
 
-        if access['Менеджер Программирования'] == True:
+        if access['mp'] == True:
             mainWindow.RIGHT_LABEL['text'] = self.title
             mainWindow.RIGHT_LABEL['pady'] = 30
             self.BUTTON_EXIT = Button(mainWindow.right_part, cursor='hand2', text='Выход', font=('Trebuchet MS', 14, 'bold'), highlightbackground='#3b6ecc', highlightthickness=30, fg='white')
@@ -189,7 +189,7 @@ class ProgrammingManager:
             self.PROMPT = Label(mainWindow.right_part, text='Выберите язык программирования', font=('Arial', 14), fg='grey')
             if not user.languages:
                 selectLangs(None)
-                return 'Менеджер Программирования'
+                return self.title
             else:
                 self.TITLE = Label(mainWindow.right_part, text='Выбранные языки программирования:', font=('Arial', 15, 'bold'), fg='#223e63')
                 self.TITLE.pack()
@@ -203,7 +203,7 @@ class ProgrammingManager:
                 self.EXTRA = Label(self.FRAME_USER_LANG, text='Просмотреть каталог языков программирования', font=('Arial', 13), fg='#034ba8', cursor='hand2')
                 self.EXTRA.bind('<Button-1>', selectLangs)
                 self.EXTRA.pack(pady=10)
-                return 'Менеджер Программирования'
+                return self.title
         else:
             return 'К сожалению, администратор запретил\nдоступ к этому Менеджеру.\nЧтобы получить доступ\nтребуется купить эту функцию.'
 

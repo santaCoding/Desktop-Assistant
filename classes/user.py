@@ -23,7 +23,7 @@ class User:
     nickname = UserDescriptor()
 
     def __init__(self, name, age, balance=None, admin = False, nickname=None):
-        self.access_funcs = {'Менеджер Программирования' : False, 'Менеджер Авторизации' : True, 'Менеджер Конвертирования' : False, 'Менеджер Извлечения' : False}
+        self.access_funcs = {'mp' : False, 'ma' : True, 'mc' : False, 'me' : False}
         self.admin = admin
         self.name = name
         self.age = age
@@ -110,9 +110,11 @@ class User:
         else:
             return 'Вы уже являетесь администратором!'
 
-    def exitAdmin(self, mainWindow):
+    def exitAdmin(self, mainWindow, db):
         if self.admin:
             self.admin = False
+            if self.nickname is not None:
+                db.setValue(self.nickname, self.admin, 'admin')
             mainWindow.app.title('Бот Alex')
             return 'Вы вышли из режима администратора!'
         else:

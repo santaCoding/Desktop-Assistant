@@ -9,7 +9,7 @@ class AuthorizationManager:
         self.items = [] # список ссылок на экземпляры пунктов
 
     def showContent(self, right_frame, mainWindow, access):
-        if access['Менеджер Авторизации'] == True:
+        if access['ma'] == True:
             mainWindow.RIGHT_LABEL['text'] = self.title
             mainWindow.RIGHT_LABEL['pady'] = 40
             if self.items:

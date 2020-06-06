@@ -22,7 +22,7 @@ class Extraction:
         self.mainWindow.LABEL['text'] = 'Да да?'
 
     def extract(self, access):
-        if access['Менеджер Извлечения'] == True:
+        if access['me'] == True:
             self.font = 'Arial'
             self.mainWindow.RIGHT_LABEL['text'] = self.title
             self.mainWindow.RIGHT_LABEL['pady'] = 20
