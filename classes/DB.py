@@ -28,8 +28,14 @@ class DB(object):
             self.db[str(key)] = value
             self.dumpdb()
         except Exception as e:
-            print("[X] Error Saving Values to Database : " + str(e))
             return False
+
+    def setValue(self, nickname, value, operator):
+        temp_dict = self.db[nickname]
+        temp_dict[operator] = value
+        self.db[nickname] = temp_dict
+        self.dumpdb()
+        return True
 
     def get(self , key):
         try:

@@ -7,7 +7,6 @@ import webbrowser
 class ProgrammingManager:
     def __init__(self, mainWindow):
         self.title = 'Менеджер Программирования'
-        self.user_languages = []
         self.recourses = ProgrammingRecourses(self, mainWindow)
         self.logos = {'Python' : ImageTk.PhotoImage(file='img/Python.png'),
         'PHP' : ImageTk.PhotoImage(file='img/PHP.png'),
@@ -18,28 +17,28 @@ class ProgrammingManager:
         }
 
     # добавление в список
-    def add(self, mainWindow, name_lang, event):
-        self.user_languages.append(name_lang)
+    def add(self, mainWindow, name_lang, user, event):
+        user.languages.append(name_lang)
         self.ADD_LANG1.destroy()
         self.ADD_LANG2.destroy()
         messagebox.showinfo('Добавление языка', f'Язык программирования {name_lang} добавлен в Ваш набор!')
         self.checkExistence(mainWindow, name_lang)
 
     # удаление из списка
-    def delete(self, mainWindow, name_lang, event):
-        index = self.user_languages.index(name_lang)
-        self.user_languages.pop(index)
+    def delete(self, mainWindow, name_lang, user, event):
+        index = user.languages.index(name_lang)
+        user.languages.pop(index)
         self.DELETE_LANG.destroy()
         messagebox.showinfo('Удаление языка', f'Язык программирования {name_lang} удален из Вашего набора!')
         self.checkExistence(mainWindow, name_lang)
 
     # проверка на существование в списке
-    def checkExistence(self, mainWindow, name_lang):
-        if name_lang not in self.user_languages:
+    def checkExistence(self, mainWindow, name_lang, user):
+        if name_lang not in user.languages:
             self.ADD_LANG1 = Label(mainWindow.right_part, bg='#177a63', cursor='hand2')
             self.ADD_LANG2 = Label(mainWindow.right_part, bg='#177a63', cursor='hand2')
-            self.ADD_LANG1.bind('<Button-1>', partial(self.add, mainWindow, name_lang))
-            self.ADD_LANG2.bind('<Button-1>', partial(self.add, mainWindow, name_lang))
+            self.ADD_LANG1.bind('<Button-1>', partial(self.add, mainWindow, name_lang, user))
+            self.ADD_LANG2.bind('<Button-1>', partial(self.add, mainWindow, name_lang, user))
             self.ADD_LANG1.place(x=343, y=51, width=5, height=15)
             self.ADD_LANG2.place(x=338, y=56, width=15, height=5)
         else:
@@ -48,7 +47,7 @@ class ProgrammingManager:
             self.DELETE_LANG.place(x=338, y=56, width=15, height=5)
 
     # общая для всех функция (рутина)
-    def routine(self, mainWindow, name_lang):
+    def routine(self, mainWindow, name_lang, user):
         self.PROMPT['text'] = 'Выберите категорию применения языка'
         self.PROMPT.pack()
         mainWindow.RIGHT_LABEL['font'] = ('Arial', 25, 'bold')
@@ -64,10 +63,10 @@ class ProgrammingManager:
             pass
         self.FRAME = Frame(mainWindow.right_part)
         self.FRAME.pack()
-        self.checkExistence(mainWindow, name_lang)
+        self.checkExistence(mainWindow, name_lang, user)
 
-    def Python(self, mainWindow, name_lang, event):
-        self.routine(mainWindow, name_lang)
+    def Python(self, mainWindow, name_lang, user, event):
+        self.routine(mainWindow, name_lang, user)
         mainWindow.RIGHT_LABEL['text'] = 'Python'
         WEB_LBL = Label(self.FRAME, text = 'WEB-разработка', font=('Arial', 17), fg='#3573a6', cursor='hand2', bg='#cfd3ff')
         ML_LBL = Label(self.FRAME, text = 'Machine Learning', font=('Arial', 17), fg='#3573a6', cursor='hand2', bg='#cfd3ff')
@@ -79,23 +78,23 @@ class ProgrammingManager:
         ML_LBL.pack(pady=10)
         AP_LBL.pack(pady=10)
 
-    def PHP(self, mainWindow, name_lang, event):
+    def PHP(self, mainWindow, name_lang, user, event):
         mainWindow.RIGHT_LABEL['text'] = 'PHP'
-        self.routine(mainWindow, name_lang)
+        self.routine(mainWindow, name_lang, user)
         BACKEND = Label(self.FRAME, text = 'BackEnd разработка', font=('Arial', 17), fg='#3573a6', cursor='hand2', bg='#cfd3ff')
         BACKEND.bind('<Button-1>', partial(self.recourses.PHP, mainWindow))
         BACKEND.pack(pady=40)
         
-    def Csh(self, mainWindow, name_lang, event):
+    def Csh(self, mainWindow, name_lang, user, event):
         mainWindow.RIGHT_LABEL['text'] = 'C#'
-        self.routine(mainWindow, name_lang)
+        self.routine(mainWindow, name_lang, user)
         DOT_NET = Label(self.FRAME, text='.NET', font=('Arial', 17), fg='#3573a6', cursor='hand2', bg='#cfd3ff')
         DOT_NET.bind('<Button-1>', partial(self.recourses.Csh, mainWindow))
         DOT_NET.pack(pady=40)
 
-    def Java(self, mainWindow, name_lang, event):
+    def Java(self, mainWindow, name_lang, user, event):
         mainWindow.RIGHT_LABEL['text'] = 'Java'
-        self.routine(mainWindow, name_lang)
+        self.routine(mainWindow, name_lang, user)
         ANDROID = Label(self.FRAME, text='Android', font=('Arial', 17), fg='#3573a6', cursor='hand2', bg='#cfd3ff')
         BACKEND = Label(self.FRAME, text='BackEnd-разработка', font=('Arial', 17), fg='#3573a6', cursor='hand2', bg='#cfd3ff')
         ANDROID.bind('<Button-1>', partial(self.recourses.JavaAndroid, mainWindow))
@@ -103,9 +102,9 @@ class ProgrammingManager:
         ANDROID.pack(pady=10)
         BACKEND.pack(pady=10)
 
-    def JavaScript(self, mainWindow, name_lang, event):
+    def JavaScript(self, mainWindow, name_lang, user, event):
         mainWindow.RIGHT_LABEL['text'] = 'JavaScript'
-        self.routine(mainWindow, name_lang)
+        self.routine(mainWindow, name_lang, user)
         FRONT = Label(self.FRAME, text='FrontEnd-разработка', font=('Arial', 17), fg='#3573a6', cursor='hand2', bg='#cfd3ff')
         DESKTOP = Label(self.FRAME, text='Desktop', font=('Arial', 17), fg='#3573a6', cursor='hand2', bg='#cfd3ff')
         FRONT.bind('<Button-1>', partial(self.recourses.JSFront, mainWindow))
@@ -113,9 +112,9 @@ class ProgrammingManager:
         FRONT.pack(pady=10)
         DESKTOP.pack(pady=10)
 
-    def Cpp(self, mainWindow, name_lang, event):
+    def Cpp(self, mainWindow, name_lang, user, event):
         mainWindow.RIGHT_LABEL['text'] = 'C++'
-        self.routine(mainWindow, name_lang)
+        self.routine(mainWindow, name_lang, user)
         GAME = Label(self.FRAME, text='GameDev', font=('Arial', 17), fg='#3573a6', cursor='hand2', bg='#cfd3ff')
         GAME.bind('<Button-1>', partial(self.recourses.CppGame, mainWindow))
         GAME.pack(pady=10)
@@ -161,7 +160,7 @@ class ProgrammingManager:
             pass
     
     # основная функция
-    def showContent(self, access:dict, mainWindow):
+    def showContent(self, access:dict, mainWindow, user):
         def selectLangs(event):
             try:
                 self.TITLE.destroy()
@@ -177,7 +176,7 @@ class ProgrammingManager:
                     self.labels_frame = Frame(self.FRAME)
                     self.labels_frame.pack(pady=10)
                 lang_label = Label(self.labels_frame, image=self.logos[lang], cursor='hand2')
-                lang_label.bind('<Button-1>', partial(eval(f'self.{lang}'), mainWindow, lang))
+                lang_label.bind('<Button-1>', partial(eval(f'self.{lang}'), mainWindow, lang, user))
                 lang_label.pack(side=LEFT, padx=60)
                 iteration += 1 
 
@@ -188,7 +187,7 @@ class ProgrammingManager:
             self.BUTTON_EXIT.bind('<Button-1>', partial(self.exit, mainWindow))
             self.BUTTON_EXIT.place(x= 230, y=500, width = 90, height = 40)
             self.PROMPT = Label(mainWindow.right_part, text='Выберите язык программирования', font=('Arial', 14), fg='grey')
-            if not self.user_languages:
+            if not user.languages:
                 selectLangs(None)
                 return 'Менеджер Программирования'
             else:
@@ -196,9 +195,9 @@ class ProgrammingManager:
                 self.TITLE.pack()
                 self.FRAME_USER_LANG = Frame(mainWindow.right_part)
                 self.FRAME_USER_LANG.pack()
-                for lang in self.user_languages:
+                for lang in user.languages:
                     langLbl = Label(self.FRAME_USER_LANG, text=lang, bg='#2d5487', fg='white', font=('Arial', 14, 'bold'), cursor='hand2')
-                    langLbl.bind('<Button-1>', partial(eval(f'self.{lang}'), mainWindow, lang))
+                    langLbl.bind('<Button-1>', partial(eval(f'self.{lang}'), mainWindow, lang, user))
                     langLbl.pack(pady=10)
                 
                 self.EXTRA = Label(self.FRAME_USER_LANG, text='Просмотреть каталог языков программирования', font=('Arial', 13), fg='#034ba8', cursor='hand2')

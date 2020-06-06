@@ -3,7 +3,7 @@ import tkinter
 class UserDescriptor:
     def __get__(self, instance, owner):
         if instance.__dict__[self.name] is None:
-            return 'Я не знаю такой информации('
+            return None
         else:
             return instance.__dict__[self.name]
 
@@ -14,15 +14,24 @@ class UserDescriptor:
         self.name = name
 
 class User:
-    name, age, balance, admin = UserDescriptor(), UserDescriptor(), UserDescriptor(), UserDescriptor()
+    name = UserDescriptor()
+    age = UserDescriptor()
+    balance = UserDescriptor()
+    admin = UserDescriptor()
+    access_funcs = UserDescriptor()
+    languages = UserDescriptor()
+    nickname = UserDescriptor()
 
-    def __init__(self, name, age, balance=None, admin = False):
+    def __init__(self, name, age, balance=None, admin = False, nickname=None):
+        self.access_funcs = {'Менеджер Программирования' : False, 'Менеджер Авторизации' : True, 'Менеджер Конвертирования' : False, 'Менеджер Извлечения' : False}
         self.admin = admin
         self.name = name
         self.age = age
         self.balance = balance
+        self.languages = []
+        self.nickname = nickname
 
-    def setName(self, mainWindow):
+    def setName(self, mainWindow, db):
         def set(event):
             self.name = INPUT.get()
             INPUT.delete(0, tkinter.END)
@@ -31,6 +40,8 @@ class User:
                 self.name = None
                 mainWindow.LABEL['text'] = 'Вы ничего не ввели'
             else:
+                if self.nickname is not None:
+                    db.setValue(self.nickname, self.name, 'name')
                 mainWindow.LABEL['text'] = f'Я запомнил, что Вас зовут {self.name}!'
                 mainWindow.NAME['text'] = 'Здравствуйте, ' + self.name
             mainWindow.RIGHT_LABEL['text'] = 'Скажите Боту что-то сделать'
@@ -65,7 +76,7 @@ class User:
         else:
             return 'Я и так не знаю этой информации!'
 
-    def setAge(self, mainWindow):
+    def setAge(self, mainWindow, db):
         def set(event):
             self.age = INPUT.get()
             mainWindow.INPUT.focus_set()
@@ -73,6 +84,8 @@ class User:
                 self.age = None
                 mainWindow.LABEL['text'] = 'Вы ничего не ввели'
             else:
+                if self.nickname is not None:
+                    db.setValue(self.nickname, self.age, 'age')
                 mainWindow.LABEL['text'] = f'Я запомнил, что Вам {self.age}!'
             mainWindow.RIGHT_LABEL['text'] = 'Скажите Боту что-то сделать'
             INPUT.destroy()
@@ -82,12 +95,14 @@ class User:
         INPUT.bind('<Return>', set)
         return 'Жду ввода возраста...'
 
-    def getAdminStatus(self, mainWindow, app):
+    def getAdminStatus(self, mainWindow, app, db):
         if self.admin is False:
             self.admin = mainWindow.setModuleWindow(self.admin, content = {'textButton' : 'Подтвердить', 'textLabel' : 'Введите пароль:', 'show' : True, 'func' : 'check_password'})
             app.focus_set()
             mainWindow.INPUT.focus_set()
             if self.admin:
+                if self.nickname is not None:
+                    db.setValue(self.nickname, self.admin, 'admin')
                 mainWindow.app.title('Бот Alex ~ admin')
                 return 'Добро пожаловать, администратор!'
             else:

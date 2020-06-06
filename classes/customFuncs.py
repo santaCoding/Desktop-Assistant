@@ -6,12 +6,11 @@ from classes.DB import DB
 
 class CustomFunctions:
     def __init__(self):
-        self.access_funcs = {'Менеджер Программирования' : False, 'Менеджер Авторизации' : True, 'Менеджер Конвертирования' : False, 'Менеджер Извлечения' : False}
         self.price = 50
         self.db = DB('/Users/alexfedorenko/Documents/GitHub/CDA-OOP/DB.json')
 
-    def getAccess(self) -> dict:
-        return self.access_funcs
+    def getDB(self):
+        return self.db
 
     def system_info(self):
         '''Возвращает все основные параметры системы'''
@@ -30,8 +29,8 @@ class CustomFunctions:
             self.LABEL.pack(pady=5)
             item=0
             empty = True
-            for manager in self.access_funcs:
-                if list(self.access_funcs.values())[item] == False:
+            for manager in user.access_funcs:
+                if list(user.access_funcs.values())[item] == False:
                     func = Label(self.FRAME, width = 25, text = manager, bg='#485259', cursor='hand2', fg='white', pady=10, padx=10)
                     func.bind('<Button-1>', partial(buyFunc, manager, user))
                     func.pack(pady = 5)
@@ -45,7 +44,7 @@ class CustomFunctions:
             if answer:
                 if user.balance >= self.price:
                     user.balance -= self.price
-                    self.access_funcs[name_function] = True
+                    user.access_funcs[name_function] = True
                     messagebox.showinfo('Покупка', f'Вы приобрели функцию {name_function}!')
                     self.FRAME.destroy()
                     showData()
@@ -61,8 +60,8 @@ class CustomFunctions:
         return 'Вас счет чуть выше'
 
 
-    def addPaidOption(self, main_window, admin_access:bool) -> str:
-        self.copied_funcs = self.access_funcs.copy()
+    def addPaidOption(self, main_window, user, admin_access:bool) -> str:
+        self.copied_funcs = user.access_funcs.copy()
         '''
         Принимает на вход ссылку на главное окно, статус админа и словарь функций
         Возвращает строку с результатом
@@ -80,11 +79,11 @@ class CustomFunctions:
         def save(event):
             self.SAVE_BUTTON['text'] = 'Сохранено'
             self.SAVE_BUTTON['highlightbackground'] = '#76a897'
-            if self.access_funcs == self.copied_funcs:
-                self.access_funcs = self.copied_funcs
+            if user.access_funcs == self.copied_funcs:
+                user.access_funcs = self.copied_funcs
                 main_window.LABEL['text'] = 'Функции остались прежними!'
             else:
-                self.access_funcs = self.copied_funcs
+                user.access_funcs = self.copied_funcs
                 main_window.LABEL['text'] = 'Функции обновлены!'
 
         def show_data():
@@ -185,7 +184,7 @@ class CustomFunctions:
                 self.PASS_INPUT.delete(0, END)
                 self.CHECK_PASS_INPUT.delete(0, END)
                 if str(check_pass) == str(new_password):
-                    self.db.set(new_login, {'password' : new_password, 'age' : None, 'balance' : 0, 'name' : None, 'admin' : False})
+                    self.db.set(new_login, {'password' : new_password, 'age' : None, 'balance' : 0, 'name' : None, 'admin' : False, 'access_funcs' : {'Менеджер Программирования' : False, 'Менеджер Авторизации' : True, 'Менеджер Конвертирования' : False, 'Менеджер Извлечения' : False}, 'languages' : []})
                     self.ENTER_FRAME.destroy()
                     try:
                         self.WARNING.destroy()
@@ -243,6 +242,7 @@ class CustomFunctions:
                             mainWindow.BALANCE['text'] = 'Ваш баланс равен ' + str(data['balance'])
                         if data['admin'] is not None:
                             user.admin = data['admin']
+                        user.nickname = str(login)
                         self.ENTER_FRAME.destroy()
                         mainWindow.RIGHT_LABEL['text'] = f'Добро пожаловать, {login}!'
                         mainWindow.RIGHT_LABEL['pady'] = 260

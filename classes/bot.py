@@ -11,9 +11,9 @@ class Assistant:
         self.CF = classes.customFuncs.CustomFunctions()
         self.user = user.User(None, None) # экземпляр пользователя
         self.mainWindow = mainWindow.MainWindow(self.app, self)
-        if self.user.balance != 'Я не знаю такой информации(':
+        if self.user.balance is not None:
             self.mainWindow.BALANCE['text'] =  'Ваш баланс равен ' + str(self.user.balance)
-        if self.user.name == 'Я не знаю такой информации(':
+        if self.user.name is None:
             self.mainWindow.NAME['text'] = 'Здравствуй, гость'
             self.mainWindow.ENTER.pack(side=RIGHT, padx=10)
         self.autho = authorization.AuthorizationManager(self.user)
@@ -54,28 +54,28 @@ class Assistant:
         self.data = {
             'твое_имя тебя_зовут' : 'f\'Меня зовут {self.getName()}\'',
             'как_меня_зовут как_мое_имя' : 'self.user.name',
-            'меня_зовут запиши_мое_имя запомни_мое_имя' : 'self.user.setName(self.mainWindow)',
+            'меня_зовут запиши_мое_имя запомни_мое_имя' : 'self.user.setName(self.mainWindow, self.CF.getDB())',
             'забудь_мое_имя удали_мое_имя забудь_меня забудь_как_меня_зовут' : 'self.user.delData(self.mainWindow, \'name\', \'Мне забыть что Вас зовут \')',
-            'запомни_мой_возраст запиши_мой_возраст запомни_сколько_мне_лет запиши_сколько_мне_лет' : 'self.user.setAge(self.mainWindow)',
+            'запомни_мой_возраст запиши_мой_возраст запомни_сколько_мне_лет запиши_сколько_мне_лет' : 'self.user.setAge(self.mainWindow, self.CF.getDB())',
             'забудь_мой_возраст удали_мой_возраст' : 'self.user.delData(self.mainWindow, \'age\', \'Мне забыть что Вам \')',
             'сколько_мне_лет мой_возраст' : 'self.user.age',
             'что_ты_знаешь что_ты_помнишь \whoami' : 'self.getInfo()',
             'забудь' : 'self.forgetData()'
         }
         self.customFuncs = {
-            '\\admin я_админ зайти_в_админку доступ_админ админ_доступ' : 'self.user.getAdminStatus(self.mainWindow, self.app)',
+            '\\admin я_админ зайти_в_админку доступ_админ админ_доступ' : 'self.user.getAdminStatus(self.mainWindow, self.app, self.CF.getDB())',
             'выйти_из_админа выйти_из_администратора я_не_админ выйти_из_режима_администратора выйти_из_под_админа \exit' : 'self.user.exitAdmin(self.mainWindow)',
-            'новая_авторизация авторизация занести_авторизацию занести_логин_и_пароль запомнить_авторизацию новый_вход новая_авторизация \new' : 'self.autho.addItem(self.mainWindow.right_part, self.mainWindow, self.CF.getAccess())',
-            'менеджер_авторизаций покажи_авторизации покажи_логины покажи_пароли логины пароли \ma' : 'self.autho.showContent(self.mainWindow.right_part, self.mainWindow, self.CF.getAccess())',
-            'какой_логин какой_пароль какая_авторизация какой_пункт' : 'self.autho.getItem(self.mainWindow, self.CF.getAccess())',
-            'очистить_менеджер удалить_пункты удалить_все_пункты очистить_пункты' : 'self.autho.clearManager(self.CF.getAccess())',
-            'конверт \mc' : 'self.convert.convert(self.CF.getAccess())',
-            'извлечь извлечение \me' : 'self.extract.extract(self.CF.getAccess())',
+            'новая_авторизация авторизация занести_авторизацию занести_логин_и_пароль запомнить_авторизацию новый_вход новая_авторизация \new' : 'self.autho.addItem(self.mainWindow.right_part, self.mainWindow, self.user.access_funcs)',
+            'менеджер_авторизаций покажи_авторизации покажи_логины покажи_пароли логины пароли \ma' : 'self.autho.showContent(self.mainWindow.right_part, self.mainWindow, self.user.access_funcs',
+            'какой_логин какой_пароль какая_авторизация какой_пункт' : 'self.autho.getItem(self.mainWindow, self.user.access_funcs)',
+            'очистить_менеджер удалить_пункты удалить_все_пункты очистить_пункты' : 'self.autho.clearManager(self.user.access_funcs)',
+            'конверт \mc' : 'self.convert.convert(self.user.access_funcs)',
+            'извлечь извлечение \me' : 'self.extract.extract(self.user.access_funcs)',
             'системная_информация \sys' : 'self.CF.system_info()',
-            'добавить_функцию изменить_функцию добавить_опцию новая_функция новая_опция \nf' : 'self.CF.addPaidOption(self.mainWindow, self.user.admin)',
+            'добавить_функцию изменить_функцию добавить_опцию новая_функция новая_опция \nf' : 'self.CF.addPaidOption(self.mainWindow, self.user, self.user.admin)',
             'показать_горячие показать_клавиши горячие быстрые_переходы команды команды_админа' : 'self.CF.showAdminComands(self.user.admin)',
             'купить покупка купить_функцию донат платные_функции \\buy' : 'self.CF.showFuncsToBuy(self.mainWindow, self.user)',
-            '\mp менеджер_программиста менеджер_программирования язык программирование' : 'self.programmer.showContent(self.CF.getAccess(), self.mainWindow)',
+            '\mp менеджер_программиста менеджер_программирования язык программирование' : 'self.programmer.showContent(self.user.access_funcs, self.mainWindow, self.user)',
             '\cleardb очистить_базу_данных очистить_бд' : 'self.CF.clearDB(self.user.admin)'
         }
 
