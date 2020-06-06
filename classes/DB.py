@@ -6,6 +6,9 @@ class DB(object):
         self.location = os.path.expanduser(location)
         self.load(self.location)
 
+    def getDB(self):
+        return self.db
+
     def load(self , location):
         if os.path.exists(location):
             self._load()

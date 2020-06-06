@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 APP = ['main.py']
-DATA_FILES = ['bot.png']
+DATA_FILES = ['img/bot.png']
 APP_NAME = 'Бот Alex'
 OPTIONS = {
     'argv_emulation' : True,

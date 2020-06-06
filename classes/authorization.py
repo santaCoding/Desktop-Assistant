@@ -19,7 +19,7 @@ class AuthorizationManager:
                     self.HEADER.place(x=10, y=90)
                     for item in range(len(self.items)):
                         self.LABEL_SITE = Label(self.MAIN_FRAME, bg='#ababab', cursor='X_cursor',width=60, text = '%-8d%-15s%-25s%s' % (item+1, self.items[item].site, self.items[item].login, self.items[item].password), fg='white', anchor=W)
-                        self.LABEL_SITE.bind('<Button-1>', partial(self.delItem, right_frame, mainWindow, self.items[item], self.ITEMS_FRAME))
+                        self.LABEL_SITE.bind('<Button-1>', partial(self.delItem, right_frame, mainWindow, self.items[item], self.ITEMS_FRAME, access))
                         self.LABEL_SITE.pack(pady=5)
 
                 def myfunction(event):
@@ -100,7 +100,7 @@ class AuthorizationManager:
         
 
     def addItem(self, right_frame, mainWindow, access) -> str:
-        if access['Менеджер Авторизации'] == True:
+        if access['ma'] == True:
             mainWindow.RIGHT_LABEL['text'] = self.title
             mainWindow.RIGHT_LABEL['pady'] = 50
             mainWindow.RIGHT_LABEL['font'] = ('Arial', 20, 'bold')
@@ -207,7 +207,7 @@ class AuthorizationManager:
         else:
             return 'К сожалению, администратор запретил\nдоступ к этому Менеджеру.\nЧтобы получить доступ\nтребуется купить эту функцию.'
 
-    def delItem(self, right_frame, mainWindow, item_adress, ITEMS_FRAME, event):
+    def delItem(self, right_frame, mainWindow, item_adress, ITEMS_FRAME, access, event):
         answer = messagebox.askyesno('Удаление', f'Удалить вход для {item_adress.site}?')
         if answer == True:
             for item in range(len(self.items)):
@@ -217,10 +217,10 @@ class AuthorizationManager:
                     break
             messagebox.showinfo('Удаление', f'Вход для {item_adress.site} удален!')
             ITEMS_FRAME.destroy()
-            self.showContent(right_frame, mainWindow)
+            self.showContent(right_frame, mainWindow, access)
 
     def getItem(self, mainWindow, access):
-        if access['Менеджер Авторизации'] == True:
+        if access['ma'] == True:
             if self.items:
 
                 def getSite(event):
@@ -261,7 +261,7 @@ class AuthorizationManager:
             return 'К сожалению, администратор запретил\nдоступ к этому Менеджеру.\nЧтобы получить доступ\nтребуется купить эту функцию.'
                 
     def clearManager(self, access):
-        if access['Менеджер Авторизации'] == True:
+        if access['ma'] == True:
             if self.items:
                 answer = messagebox.askyesno('Очистка Менеджера Авторизации', 'Вы уверены, что хотите очистить Менеджер Авторизации?')
                 if answer:
