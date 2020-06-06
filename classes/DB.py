@@ -18,7 +18,7 @@ class DB(object):
 
     def dumpdb(self):
         try:
-            json.dump(self.db , open(self.location, "w+"))
+            json.dump(self.db, open(self.location, "w+"), indent=4)
             return True
         except:
             return False

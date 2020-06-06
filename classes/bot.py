@@ -74,8 +74,8 @@ class Assistant:
             'системная_информация \sys' : 'self.CF.system_info()',
             'добавить_функцию изменить_функцию добавить_опцию новая_функция новая_опция \nf' : 'self.CF.addPaidOption(self.mainWindow, self.user, self.user.admin)',
             'показать_горячие показать_клавиши горячие быстрые_переходы команды команды_админа' : 'self.CF.showAdminComands(self.user.admin)',
-            'купить покупка купить_функцию донат платные_функции \\buy' : 'self.CF.showFuncsToBuy(self.mainWindow, self.user, self.CF.getDB())',
-            '\mp менеджер_программиста менеджер_программирования язык программирование' : 'self.programmer.showContent(self.user.access_funcs, self.mainWindow, self.user)',
+            'купить покупка купить_функцию донат платные_функции \\buy' : 'self.CF.showFuncsToBuy(self.mainWindow, self.user',
+            '\mp менеджер_программиста менеджер_программирования язык программирование' : 'self.programmer.showContent(self.user.access_funcs, self.mainWindow, self.user, self.CF.getDB())',
             '\cleardb очистить_базу_данных очистить_бд' : 'self.CF.clearDB(self.user.admin)'
         }
 

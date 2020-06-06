@@ -16,7 +16,7 @@ class CustomFunctions:
         '''Возвращает все основные параметры системы'''
         return f'Платформа :\n{platform()}\nСистема : {system()},\nИздано : {release()},\nМашина : {machine()},\nПроцессор: : {processor()},\nАрхитектура : {architecture()[0]}'
 
-    def showFuncsToBuy(self, main_window, user, db):
+    def showFuncsToBuy(self, main_window, user):
         '''
         Принимает ссылку на главное окно
         Показывает функции для пользовательской покупки
@@ -45,7 +45,7 @@ class CustomFunctions:
             empty = True
             for manager in user.access_funcs:
                 if list(user.access_funcs.values())[item] == False:
-                    func = Label(self.FRAME, width = 25, text = manager, bg='#485259', cursor='hand2', fg='white', pady=10, padx=10)
+                    func = Label(self.FRAME, width = 25, text = ('Менеджер Программирования' if manager=='mp' else 'Менеджер Конвертирования' if manager=='mc' else 'Менеджер Извлечения'), bg='#485259', cursor='hand2', fg='white', pady=10, padx=10)
                     func.bind('<Button-1>', partial(buyFunc, manager, user))
                     func.pack(pady = 5)
                     empty = False
@@ -58,9 +58,9 @@ class CustomFunctions:
             if answer:
                 if user.balance >= self.price:
                     user.balance -= self.price
-                    db.setValue(user.nickname, user.balance, 'balance')
+                    self.db.setValue(user.nickname, user.balance, 'balance')
                     user.access_funcs[name_function] = True
-                    db.setValue(user.nickname, user.access_funcs, 'access_funcs')
+                    self.db.setValue(user.nickname, user.access_funcs, 'access_funcs')
                     messagebox.showinfo('Покупка', f'Вы приобрели функцию {name_function}!')
                     self.FRAME.destroy()
                     showData()
