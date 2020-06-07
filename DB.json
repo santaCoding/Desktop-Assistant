@@ -1,8 +1,22 @@
 {
-    "1": {
-        "password": "1",
+    "santaCoding": {
+        "password": "1234",
+        "age": 19,
+        "balance": 150.0,
+        "name": "Alex",
+        "admin": true,
+        "access_funcs": {
+            "mp": false,
+            "ma": true,
+            "mc": true,
+            "me": false
+        },
+        "languages": []
+    },
+    "test_account": {
+        "password": "blablabla",
         "age": null,
-        "balance": 100.00,
+        "balance": 0.0,
         "name": null,
         "admin": false,
         "access_funcs": {
@@ -11,45 +25,9 @@
             "mc": false,
             "me": false
         },
-        "languages": [],
-        "items" : []
-    },
-    "test_account": {
-        "password": "1",
-        "age": null,
-        "balance": 0.00,
-        "name": null,
-        "admin": false,
-        "access_funcs": {
-            "mp": true,
-            "ma": true,
-            "mc": true,
-            "me": false
-        },
         "languages": [
             "Python",
-            "Java",
-            "JavaScript",
-            "Cpp"
-        ],
-        "items" : []
-    },
-    "santaCoding":{
-        "password" : "1",
-        "age" : 19,
-        "balance" : 150.00,
-        "name" : "Alex",
-        "admin" : false,
-        "access_funcs" :{
-            "mp": true,
-            "ma" : true,
-            "mc" : true,
-            "me" : false
-        },
-        "languages":[
-            "Python",
             "JavaScript"
-        ],
-        "items" : []
+        ]
     }
 }
