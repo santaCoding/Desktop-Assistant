@@ -99,7 +99,7 @@ class AuthorizationManager:
         mainWindow.LABEL['text'] = 'Да да?'
         
 
-    def addItem(self, right_frame, mainWindow, access) -> str:
+    def addItem(self, right_frame, mainWindow, access, db, user) -> str:
         if access['ma'] == True:
             mainWindow.RIGHT_LABEL['text'] = self.title
             mainWindow.RIGHT_LABEL['pady'] = 50
@@ -118,6 +118,8 @@ class AuthorizationManager:
                     mainWindow.RIGHT_LABEL['pady'] = 260
                     item = AuthorizationItem(self.site, self.login, self.password)
                     self.items.append(item)
+                    if user.nickname is not None:
+                        db.setValue(user.nickname, self.items, 'items')
                     mainWindow.LABEL['text'] = f'Пункт авторизации\nдля сайта {self.site} сохранен!'
                     self.EXIT.destroy()
                     self.WARNING.destroy()

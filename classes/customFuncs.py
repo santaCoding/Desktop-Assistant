@@ -209,7 +209,7 @@ class CustomFunctions:
                 self.PASS_INPUT.delete(0, END)
                 self.CHECK_PASS_INPUT.delete(0, END)
                 if str(check_pass) == str(new_password):
-                    self.db.set(new_login, {'password' : new_password, 'age' : None, 'balance' : 0, 'name' : None, 'admin' : False, 'access_funcs' : {'mp' : False, 'ma' : True, 'mc' : False, 'me' : False}, 'languages' : []})
+                    self.db.set(new_login, {'password' : new_password, 'age' : None, 'balance' : 0.0, 'name' : None, 'admin' : False, 'access_funcs' : {'mp' : False, 'ma' : True, 'mc' : False, 'me' : False}, 'languages' : []})
                     self.ENTER_FRAME.destroy()
                     try:
                         self.WARNING.destroy()

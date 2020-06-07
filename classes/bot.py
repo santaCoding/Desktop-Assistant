@@ -65,7 +65,7 @@ class Assistant:
         self.customFuncs = {
             '\\admin я_админ зайти_в_админку доступ_админ админ_доступ' : 'self.user.getAdminStatus(self.mainWindow, self.app, self.CF.getDB())',
             'выйти_из_админа выйти_из_администратора я_не_админ выйти_из_режима_администратора выйти_из_под_админа \exit' : 'self.user.exitAdmin(self.mainWindow, self.CF.getDB())',
-            'новая_авторизация авторизация занести_авторизацию занести_логин_и_пароль запомнить_авторизацию новый_вход новая_авторизация \new' : 'self.autho.addItem(self.mainWindow.right_part, self.mainWindow, self.user.access_funcs)',
+            'новая_авторизация авторизация занести_авторизацию занести_логин_и_пароль запомнить_авторизацию новый_вход новая_авторизация \new' : 'self.autho.addItem(self.mainWindow.right_part, self.mainWindow, self.user.access_funcs, self.CF.getDB(), self.user)',
             'менеджер_авторизаций покажи_авторизации покажи_логины покажи_пароли логины пароли \ma' : 'self.autho.showContent(self.mainWindow.right_part, self.mainWindow, self.user.access_funcs)',
             'какой_логин какой_пароль какая_авторизация какой_пункт' : 'self.autho.getItem(self.mainWindow, self.user.access_funcs)',
             'очистить_менеджер удалить_пункты удалить_все_пункты очистить_пункты' : 'self.autho.clearManager(self.user.access_funcs)',
@@ -74,7 +74,7 @@ class Assistant:
             'системная_информация \sys' : 'self.CF.system_info()',
             'добавить_функцию изменить_функцию добавить_опцию новая_функция новая_опция \nf' : 'self.CF.addPaidOption(self.mainWindow, self.user, self.user.admin)',
             'показать_горячие показать_клавиши горячие быстрые_переходы команды команды_админа' : 'self.CF.showAdminComands(self.user.admin)',
-            'купить покупка купить_функцию донат платные_функции \\buy' : 'self.CF.showFuncsToBuy(self.mainWindow, self.user',
+            'купить покупка купить_функцию донат платные_функции \\buy' : 'self.CF.showFuncsToBuy(self.mainWindow, self.user)',
             '\mp менеджер_программиста менеджер_программирования язык программирование' : 'self.programmer.showContent(self.user.access_funcs, self.mainWindow, self.user, self.CF.getDB())',
             '\cleardb очистить_базу_данных очистить_бд' : 'self.CF.clearDB(self.user.admin)'
         }
